@@ -113,7 +113,7 @@ function WorkWithUs() {
         <div className="contact-section">
   <h3>{t('workWithUs.contact')}</h3>
   <a 
-    href="https://wa.me/5217202533388?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
+    href="https://wa.me/5215620049114?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
     target="_blank"
     rel="noopener noreferrer"
     className="contact-email whatsapp-link"
