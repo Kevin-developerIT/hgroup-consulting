@@ -1,0 +1,51 @@
+.language-toggle {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: rgba(0, 0, 0, 0.85);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-family: 'Visby CF', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 100001; /* Cambiado de 100 a 10001 para estar por encima de todo */
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  outline: none;
+}
+
+.language-toggle:hover {
+  background: rgba(0, 0, 0, 0.95);
+  transform: scale(1.05);
+}
+
+.language-toggle span {
+  transition: opacity 0.3s ease;
+}
+
+.language-toggle span:not(.active) {
+  opacity: 0.5;
+}
+
+.language-toggle span.active {
+  opacity: 1;
+  color: #CCC5B9;
+}
+
+.language-toggle .divider {
+  margin: 0 8px;
+  opacity: 0.5 !important;
+}
+
+@media (max-width: 768px) {
+  .language-toggle {
+    bottom: 90px;
+    left: 20px;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    z-index: 10001; /* También alto en móvil */
+  }
+}

@@ -1,0 +1,437 @@
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  background: #FFFFFF;
+  font-family: 'Visby CF', sans-serif;
+  animation: pageSlideIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Faster close animation */
+.page-container.closing {
+  animation: pageSlideOut 0.2s ease forwards;
+}
+
+@keyframes pageSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+.page-sidebar {
+  width: 280px;
+  padding: 40px 30px;
+  border-right: 1px solid #e0e0e0;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  background: #FFFFFF;
+}
+
+.page-logo {
+  height: 100px;
+  width: auto;
+  margin-bottom: 80px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.page-logo:hover {
+  transform: scale(1.05);
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+  border-radius: 50%;
+  position: absolute;
+  left: -15px;
+  /* Eliminar cualquier transición o animación */
+  transition: none !important;
+  animation: none !important;
+}
+
+.nav-dot.active {
+  background: #000;
+  /* Asegurar que no haya animación */
+  transition: none !important;
+  animation: none !important;
+}
+.nav-dot,
+.nav-dot.active,
+.nav-dot:hover,
+.nav-dot::before,
+.nav-dot::after {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+/* Eliminar animaciones de puntos en las subpáginas */
+.page-nav .nav-item::before,
+.page-nav .nav-item:hover::before {
+  display: none !important;
+}
+
+/* Asegurar que el nav-dot estático no tenga animaciones */
+.page-nav .nav-dot {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+.page-nav .nav-dot.active {
+  background: #000;
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #403d39;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #000;
+}
+
+/* Social Links */
+.social-links {
+  margin-top: 60px;
+  display: flex;
+  gap: 20px;
+}
+
+.social-link {
+  color: #403d39;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: #000;
+  transform: translateY(-2px);
+}
+
+/* Close Button - Minimalista */
+.close-page-btn {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  color: #000;
+  border: none;
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-page-btn:hover {
+  transform: rotate(90deg);
+  opacity: 0.7;
+}
+
+.close-page-btn:focus {
+  outline: none;
+}
+
+.page-content {
+  margin-left: 280px;
+  padding: 60px 80px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.content-text {
+  margin-bottom: 60px;
+}
+
+.content-text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #403d39;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.contact-section,
+.expertise-section {
+  margin-bottom: 60px;
+}
+
+.contact-section h3,
+.expertise-section h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.contact-email {
+  color: #403d39;
+  text-decoration: underline;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.contact-email:hover {
+  color: #000;
+}
+
+/* H's Section Styles */
+.h-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.h-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+  opacity: 0;
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.h-item:nth-child(1) { animation-delay: 0.1s; }
+.h-item:nth-child(2) { animation-delay: 0.15s; }
+.h-item:nth-child(3) { animation-delay: 0.2s; }
+.h-item:nth-child(4) { animation-delay: 0.25s; }
+.h-item:nth-child(5) { animation-delay: 0.3s; }
+.h-item:nth-child(6) { animation-delay: 0.35s; }
+.h-item:nth-child(7) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.h-item:last-child {
+  border-bottom: none;
+}
+
+.h-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.h-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #666;
+  font-weight: 400;
+}
+
+/* Join Us specific styles */
+.filter-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  padding: 10px 24px;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'Visby CF', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #403d39;
+}
+
+.filter-btn:hover {
+  border-color: #403d39;
+}
+
+.filter-btn.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.job-listings {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.job-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 30px;
+}
+
+.job-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.job-location {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.job-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #403d39;
+  margin-bottom: 20px;
+}
+
+.apply-link {
+  color: #403d39;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.apply-link:hover {
+  color: #000;
+  transform: translateX(5px);
+}
+
+.arrow {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.apply-link:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .page-sidebar {
+    width: 240px;
+  }
+  
+  .page-content {
+    margin-left: 240px;
+    padding: 40px 40px;
+  }
+  
+  .close-page-btn {
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    flex-direction: column;
+  }
+  
+  .page-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 30px 20px;
+  }
+  
+  .page-content {
+    margin-left: 0;
+    padding: 30px 20px;
+  }
+  
+  .social-links {
+    margin-top: 40px;
+    justify-content: center;
+  }
+  
+  .h-list {
+    gap: 20px;
+  }
+  
+  .h-item {
+    padding-bottom: 16px;
+  }
+  
+  .h-name {
+    font-size: 1rem;
+  }
+  
+  .h-description {
+    font-size: 0.9rem;
+  }
+  
+  .close-page-btn {
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+  }
+}
