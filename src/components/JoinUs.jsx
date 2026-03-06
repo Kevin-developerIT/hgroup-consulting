@@ -14,7 +14,7 @@ function JoinUs() {
     navigate('/')
   }
   
-  // Get openings from translations
+  // Get openings from translatio
   const openings = t('joinUs.openings') || []
 
   return (
