@@ -23,7 +23,7 @@ function WorkWithUs() {
   hero: 'https://heromexico.com/',
   halo: 'https://halocontent.mx/',
   here: 'https://hereconvocatorias.com/',
-  hits: 'https://hitspage.netlify.app/',
+  hits: 'https://hitscreativity.com/',
   hook: 'https://hookproductions.mx/',
   hunt: 'https://magical-crisp-a42faf.netlify.app/',
   hype: 'https://hypeagency.mx/',

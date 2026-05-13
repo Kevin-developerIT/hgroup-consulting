@@ -14,7 +14,7 @@ const holdingLinks = {
   hero: 'https://heromexico.com/',
   halo: 'https://halocontent.mx/',
   here: 'https://hereconvocatorias.com/',
-  hits: 'https://hitspage.netlify.app/',
+  hits: 'https://hitscreativity.com/',
   hook: 'https://hookproductions.mx/',
   hunt: 'https://huntmedia.mx/',
   hype: 'https://hypeagency.mx/',
