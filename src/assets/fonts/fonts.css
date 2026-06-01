@@ -1,8 +1,17 @@
 @font-face {
   font-family: 'Visby CF';
-  src: url('./VisbyCF-Regular.woff2') format('woff2'),
-       url('./VisbyCF-Regular.woff') format('woff');
-  font-weight: 400;
+  src: url('./VisbyCF-Thin.woff2') format('woff2'),
+       url('./VisbyCF-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Visby CF';
+  src: url('./VisbyCF-Light.woff2') format('woff2'),
+       url('./VisbyCF-Light.woff') format('woff');
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }

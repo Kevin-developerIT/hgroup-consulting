@@ -45,6 +45,9 @@ function JoinUs() {
             <Link to="/100-voices" className="nav-item">{t('nav.hundredVoices')}</Link>
           </div>
           <div className="page-nav">
+            <Link to="/contact" className="nav-item">{t('nav.contact')}</Link>
+          </div>
+          <div className="page-nav">
             <a href="https://www.instagram.com/hgroupp_/" target="_blank" rel="noopener noreferrer" className="nav-item">
               {t('nav.followUs')} <span style={{fontSize: '0.8rem', marginLeft: '4px'}}>↗</span>
             </a>

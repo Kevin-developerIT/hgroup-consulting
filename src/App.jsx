@@ -1,12 +1,22 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { logohgroup, holdingsLogos } from './assets/logos'
+import { logohgroup, logohgroupWord, holdingsLogos } from './assets/logos'
 import { images } from './assets'
 import WorkWithUs from './components/WorkWithUs'
 import JoinUs from './components/JoinUs'
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext'
 import LanguageToggle from './components/LanguageToggle'
 import HundredVoices from './components/HundredVoices'
+import Contact from './components/Contact'
+import HsAccordion from './components/HsAccordion'
+import haloBannerVideo from './assets/mp4/halovideo.mp4'
+
+/* ----------------------------------------------------------------
+   HERO_VIDEO — currently reusing HALO's video by request.
+   Swap the import above for a dedicated hero video when ready.
+   Set to `null` for the white-background fallback.
+   ---------------------------------------------------------------- */
+const HERO_VIDEO = haloBannerVideo
 import gsap from 'gsap'
 import './App.css'
 
@@ -70,20 +80,20 @@ function HomePage() {
   }, [])
 
   useEffect(() => {
+    /* Show the loading overlay every time the user lands on `/`
+       directly (refresh, new tab, deep link). Subpage → home
+       navigation still skips it so the back-button feels instant. */
     const isFromSubpage = location.state?.fromSubpage
-    const sessionVisited = sessionStorage.getItem('hasVisited')
-    
-    if (!isFromSubpage && !sessionVisited) {
+
+    if (!isFromSubpage) {
       setIsInitialLoad(true)
       setShowPresentation(true)
-      
-      sessionStorage.setItem('hasVisited', 'true')
-      
+
       const timer = setTimeout(() => {
         setShowPresentation(false)
         setIsInitialLoad(false)
-      }, 4300)
-      
+      }, 4000) /* ~4s total loading experience (rotation + fade) */
+
       return () => clearTimeout(timer)
     } else {
       setIsInitialLoad(false)
@@ -413,194 +423,99 @@ function HomePage() {
       {showPresentation && isInitialLoad && (
         <div className="presentation-overlay">
           <div className="presentation-content">
-            <img 
-              src={logohgroup} 
-              alt="HGROUP" 
+            <img
+              src={logohgroup}
+              alt="HGROUP"
               className="presentation-logo"
             />
           </div>
         </div>
       )}
 
-      <header className={`main-header ${!showMainHeader ? 'hidden' : ''}`}>
-        <div className="header-content">
-          <div className="logo-container">
-            <img 
-              src={logohgroup} 
-              alt="HGROUP" 
-              className="logo"
-              onClick={() => {
-                setActivePage('home')
-                navigate('/', { state: { fromSubpage: false } })
-              }}
-              style={{ cursor: 'pointer' }}
+      <section className={`hero-banner ${HERO_VIDEO ? 'has-video' : ''}`}>
+        <div className="hero-stage">
+        {HERO_VIDEO ? (
+          <>
+            <video
+              className="hero-video"
+              src={HERO_VIDEO}
+              autoPlay
+              muted
+              loop
+              playsInline
             />
-          </div>
-          
-          <nav className="main-nav">
-            <ul className="nav-list">
-              <li className="nav-item">
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavigation('work', '/work-with-us')
-                  }}
-                  className={`nav-link ${activePage === 'work' ? 'active' : ''}`}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <span className="nav-text">{t('nav.workWithUs')}</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavigation('join', '/join-us')
-                  }}
-                  className={`nav-link ${activePage === 'join' ? 'active' : ''}`}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <span className="nav-text">{t('nav.joinUs')}</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavigation('hundred', '/100-voices')
-                  }}
-                  className={`nav-link ${activePage === 'hundred' ? 'active' : ''}`}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <span className="nav-text">{t('nav.hundredVoices')}</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a 
-                  href="https://www.instagram.com/hgroupp_/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="nav-link"
-                >
-                  <span className="nav-text">{t('nav.followUs')}</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+            <div className="hero-scrim" aria-hidden="true" />
+          </>
+        ) : (
+          <div className="hero-bg" />
+        )}
+        <div className="hero-overlay" />
 
-          <div className="holdings-list-vertical">
-            {holdingsLogos.map((holding, index) => (
-              <div
-                key={holding.id} 
-                className="holding-list-item"
-                style={{ animationDelay: `${index * 0.1}s` }}
-                onClick={() => handleHoldingClick(holding.id)}
+        <nav className="hero-nav">
+          <ul className="hero-nav-list">
+            <li>
+              <a
+                onClick={(e) => { e.preventDefault(); handleNavigation('work', '/work-with-us') }}
+                className="hero-nav-link"
               >
-                <span className="holding-name-wrapper">
-                  <span className="holding-name">{holding.name}</span>
-                </span>
-                <span className="holding-arrow">↗</span>
-              </div>
-            ))}
-          </div>
+                {t('nav.workWithUs')}
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={(e) => { e.preventDefault(); handleNavigation('join', '/join-us') }}
+                className="hero-nav-link"
+              >
+                {t('nav.joinUs')}
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={(e) => { e.preventDefault(); handleNavigation('hundred', '/100-voices') }}
+                className="hero-nav-link"
+              >
+                {t('nav.hundredVoices')}
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={(e) => { e.preventDefault(); handleNavigation('contact', '/contact') }}
+                className="hero-nav-link"
+              >
+                {t('nav.contact')}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/hgroupp_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-nav-link"
+              >
+                {t('nav.followUs')} <span className="hero-nav-arrow">↗</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
 
-          <div className="view-work-btn">
-            <button 
-              onClick={() => setShowFilterMenu(!showFilterMenu)}
-              className={`filter-toggle ${getActiveFilterCount() > 0 ? 'has-filters' : ''}`}
-            >
-              {t('nav.viewWorkBy')} : {getFilterDisplayText()}
-              {getActiveFilterCount() > 0 && (
-                <span className="filter-count">{getActiveFilterCount()}</span>
-              )}
-              <span className={`arrow ${showFilterMenu ? 'up' : 'down'}`}>▼</span>
-            </button>
-            
-            {showFilterMenu && (
-              <div className="filter-dropdown">
-                <div className="filter-dropdown-content">
-                  <button 
-                    className="filter-close-mobile"
-                    onClick={() => setShowFilterMenu(false)}
-                    aria-label="Close filters"
-                  >
-                    ×
-                  </button>
-                  
-                  {getActiveFilterCount() > 0 && (
-                    <div className="filter-actions">
-                      <button 
-                        onClick={clearAllFilters}
-                        className="clear-all-btn"
-                      >
-                        {t('nav.clearAll')} ({getActiveFilterCount()})
-                      </button>
-                    </div>
-                  )}
-                  
-                  {getUniqueCategories().length > 0 && (
-                    <div className="filter-section">
-                      <h4>{t('nav.byH')}</h4>
-                      {getUniqueCategories().map(category => (
-                        <label key={category} className="filter-checkbox">
-                          <input
-                            type="checkbox"
-                            checked={selectedCategories.includes(category)}
-                            onChange={() => handleCategoryToggle(category)}
-                          />
-                          <span className="checkmark"></span>
-                          <span className="filter-label">{category}</span>
-                        </label>
-                      ))}
-                    </div>
-                  )}
-                  
-                  <div className="filter-section">
-                    <h4>{t('nav.byCompany')}</h4>
-                    {getUniqueCompanies().map(company => (
-                      <label key={company} className="filter-checkbox">
-                        <input
-                          type="checkbox"
-                          checked={selectedCompanies.includes(company)}
-                          onChange={() => handleCompanyToggle(company)}
-                        />
-                        <span className="checkmark"></span>
-                        <span className="filter-label">{company}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="hero-content">
+          <img src={logohgroupWord} alt="HGROUP" className="hero-logo" />
         </div>
-      </header>
-            {/* Holdings Submenu - Solo móvil */}
-<section className={`holdings-menu ${!showMainHeader ? 'fixed' : ''} ${!showHoldingsMenu ? 'hidden' : ''}`}>
-  <div className="holdings-container">
-    {holdingsLogos.map((holding, index) => (
-      <div
-        key={holding.id} 
-        className="holding-item"
-        style={{ animationDelay: `${0.5 + index * 0.1}s` }}
-        onClick={() => handleHoldingClick(holding.id)}
-      >
-        <img 
-          src={holding.logo} 
-          alt={holding.alt} 
-          className="holding-logo"
-          onError={(e) => {
-            e.target.style.display = 'none'
-            e.target.nextSibling.style.display = 'flex'
-          }}
-        />
-        <div className="holding-placeholder" style={{ display: 'none' }}>
-          {holding.name}
         </div>
-      </div>
-    ))}
-  </div>
-</section>
+
+        {/* White scroll cue strip — separates the hero from the
+            menu below and invites the user to scroll down */}
+        <div className="hero-scroll-cue" aria-hidden="true">
+          <span className="hero-scroll-cue-label">Scroll</span>
+          <span className="hero-scroll-cue-arrow">↓</span>
+        </div>
+      </section>
+
+      {/* Unified menu + H showcase — video bg + interactive list with
+          inline description + CTA on the active H. Replaces both the
+          old menu section and the per-H gallery sections. */}
+      <HsAccordion />
+
       <nav className={`horizontal-nav ${!showMainHeader ? 'visible' : ''}`}>
         <div className="nav-content">
           <img 
@@ -659,7 +574,7 @@ function HomePage() {
               </a>
             </li>
             <li>
-              <a 
+              <a
                 onClick={(e) => {
                   e.preventDefault()
                   handleNavigation('hundred', '/100-voices')
@@ -672,7 +587,20 @@ function HomePage() {
               </a>
             </li>
             <li>
-              <a 
+              <a
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleNavigation('contact', '/contact')
+                  setMobileMenuOpen(false)
+                }}
+                className={activePage === 'contact' ? 'active' : ''}
+                style={{ cursor: 'pointer' }}
+              >
+                {t('nav.contact')}
+              </a>
+            </li>
+            <li>
+              <a
                 href="https://www.instagram.com/hgroupp_/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -695,112 +623,6 @@ function HomePage() {
         </div>
       </nav>
 
-      <div className="zoom-controls">
-        <button 
-          className={`zoom-btn zoom-plus ${isAnimating ? 'animating' : ''}`}
-          onClick={handleZoomIn}
-          disabled={gridColumns === 1 || isAnimating}
-        >
-          +
-        </button>
-        <div className="zoom-divider"></div>
-        <button 
-          className={`zoom-btn zoom-minus ${isAnimating ? 'animating' : ''}`}
-          onClick={handleZoomOut}
-          disabled={gridColumns === 7 || isAnimating}
-        >
-          −
-        </button>
-      </div>
-
-      <main className="main-content">
-        <section className="portfolio-section">
-          <div 
-            ref={portfolioRef}
-            className="portfolio-masonry"
-            data-columns={gridColumns}
-            style={{ gridTemplateColumns: `repeat(${gridColumns}, 1fr)` }}
-            onTouchStart={isMobile ? handleTouchStart : undefined}
-            onTouchMove={isMobile ? handleTouchMove : undefined}
-            onTouchEnd={isMobile ? handleTouchEnd : undefined}
-          >
-            {filteredProjects.map((project, index) => (
-              <div 
-                key={`${project.id}-${index}`} 
-                className="portfolio-item-wrapper"
-                onClick={() => openProject(project)}
-              >
-                <div className="portfolio-item-inner">
-                  {project.type === 'image' ? (
-                    <img 
-                      src={project.image} 
-                      alt={project.alt}
-                      className="portfolio-image"
-                    />
-                  ) : (
-                    <video 
-                      src={project.video}
-                      className="portfolio-video"
-                      muted
-                      loop
-                      autoPlay
-                      playsInline
-                    />
-                  )}
-                  <div className="project-info-container">
-                    {project.category && (
-                      <span className="project-tag">{project.category}</span>
-                    )}
-                    {project.company && (
-                      <span className="project-tag company">{project.company}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {filteredProjects.length === 0 && getActiveFilterCount() > 0 && (
-            <div className="no-results">
-              <h3>{t('nav.noResults')}</h3>
-              <p>{t('nav.tryAdjusting')} <button onClick={clearAllFilters} className="clear-link">{t('nav.clearFilters')}</button></p>
-            </div>
-          )}
-        </section>
-      </main>
-
-      {selectedProject && (
-        <div className="fullscreen-modal" onClick={closeProject}>
-          <button className="close-modal" onClick={closeProject}>
-            ×
-          </button>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            {selectedProject.type === 'image' ? (
-              <img 
-                src={selectedProject.image} 
-                alt={selectedProject.alt}
-                className="modal-image"
-              />
-            ) : (
-              <video 
-                src={selectedProject.video}
-                className="modal-video"
-                controls
-                autoPlay
-                loop
-              />
-            )}
-            <div className="modal-info">
-              {selectedProject.category && (
-                <span className="modal-tag">{selectedProject.category}</span>
-              )}
-              {selectedProject.company && (
-                <span className="modal-tag company">{selectedProject.company}</span>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
       <LanguageToggle />
     </div>
@@ -818,6 +640,7 @@ function App() {
           <Route path="/work-with-us" element={<WorkWithUs />} />
           <Route path="/join-us" element={<JoinUs />} />
           <Route path="/100-voices" element={<HundredVoices />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Router>
     </LanguageProvider>

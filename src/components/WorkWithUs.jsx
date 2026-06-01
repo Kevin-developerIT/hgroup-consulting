@@ -18,22 +18,20 @@ function WorkWithUs() {
     navigate('/')
   }
 
-  // Holdings external links
+  // Holdings external links — kept in sync with the home page
+  // (App.jsx `holdingLinks` + HSections.jsx `HOLDING_LINKS`)
   const holdingLinks = {
-  hero: 'https://heromexico.com/',
-  halo: 'https://halocontent.mx/',
-  here: 'https://hereconvocatorias.com/',
-  hits: 'https://hitscreativity.com/',
-  hook: 'https://hookproductions.mx/',
-  hunt: 'https://magical-crisp-a42faf.netlify.app/',
-  hype: 'https://hypeagency.mx/',
-  hack: 'https://hackdigital.mx/',
-  home: 'https://homemalls.mx/',
-  hope: 'https://hopepage.netlify.app/'
-    // Agrega más links cuando los tengas:
-    // hype: 'https://hype-website.com',
-    // hack: 'https://hack-website.com',
-    // etc...
+    hero: 'https://heromexico.com/',
+    halo: 'https://halocontent.mx/',
+    here: 'https://hereconvocatorias.com/',
+    hits: 'https://hitscreativity.com/',
+    hook: 'https://hookproductions.mx/',
+    hunt: 'https://huntmedia.mx/',
+    hype: 'https://hypeagency.mx/',
+    hack: 'https://hackdigital.mx/',
+    home: 'https://homemalls.mx/',
+    hope: 'https://hopeadvertising.mx/',
+    huge: 'https://hugeproperties.mx/',
   }
 
   const handleHoldingClick = (e, holdingName) => {
@@ -75,6 +73,9 @@ function WorkWithUs() {
             <Link to="/100-voices" className="nav-item">{t('nav.hundredVoices')}</Link>
           </div>
           <div className="page-nav">
+            <Link to="/contact" className="nav-item">{t('nav.contact')}</Link>
+          </div>
+          <div className="page-nav">
             <a href="https://www.instagram.com/hgroupp_/" target="_blank" rel="noopener noreferrer" className="nav-item">
               {t('nav.followUs')} <span style={{fontSize: '0.8rem', marginLeft: '4px'}}>↗</span>
             </a>
@@ -113,7 +114,7 @@ function WorkWithUs() {
         <div className="contact-section">
   <h3>{t('workWithUs.contact')}</h3>
   <a 
-    href="https://wa.me/5215620049114?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
+    href="https://wa.me/5215535358818?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
     target="_blank"
     rel="noopener noreferrer"
     className="contact-email whatsapp-link"
@@ -126,23 +127,28 @@ function WorkWithUs() {
         <div className="expertise-section">
           <h3>{t('workWithUs.ourHs')}</h3>
           <div className="h-list">
-            {expertise.map((item, index) => (
-              <div key={index} className="h-item">
-                <div className="h-header">
-                  <h4 className="h-name">{item.name}</h4>
-                  <a 
-                    href={holdingLinks[item.name.toLowerCase()] || `#${item.name.toLowerCase()}`}
-                    className="h-link"
-                    onClick={(e) => handleHoldingClick(e, item.name)}
-                    target={holdingLinks[item.name.toLowerCase()] ? "_blank" : "_self"}
-                    rel={holdingLinks[item.name.toLowerCase()] ? "noopener noreferrer" : undefined}
-                  >
-                    {t('workWithUs.viewMore')} <span className="h-arrow">↗</span>
-                  </a>
+            {expertise
+              /* HUGE is hidden from the public list per business
+                 decision — uncomment its filter line to bring it
+                 back without touching the translation source. */
+              .filter((item) => item.name !== 'HUGE')
+              .map((item, index) => (
+                <div key={index} className="h-item">
+                  <div className="h-header">
+                    <h4 className="h-name">{item.name}</h4>
+                    <a
+                      href={holdingLinks[item.name.toLowerCase()] || `#${item.name.toLowerCase()}`}
+                      className="h-link"
+                      onClick={(e) => handleHoldingClick(e, item.name)}
+                      target={holdingLinks[item.name.toLowerCase()] ? "_blank" : "_self"}
+                      rel={holdingLinks[item.name.toLowerCase()] ? "noopener noreferrer" : undefined}
+                    >
+                      {t('workWithUs.viewMore')} <span className="h-arrow">↗</span>
+                    </a>
+                  </div>
+                  <p className="h-description">{item.description}</p>
                 </div>
-                <p className="h-description">{item.description}</p>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
        

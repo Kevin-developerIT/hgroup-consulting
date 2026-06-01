@@ -1,0 +1,459 @@
+/* ==============================================================
+   H SECTIONS — editorial 2-col layout, sticky left info + clean
+                aligned gallery on white
+   --------------------------------------------------------------
+   Per H section:
+     • LEFT column (sticky) — H name (click → menu), description,
+       View Site CTA. Dark gradient on the left edge keeps white
+       text readable over either the cinematic image (during the
+       100vh stage) or the white gallery (below).
+     • RIGHT column — 100vh transparent stage that exposes the
+       fixed bg image/video, then a white gallery with editorial
+       pairs of imagery (perfectly aligned, no offset).
+   --------------------------------------------------------------
+   The fixed image/video stack stays present throughout — its
+   crossfade animation between H sections is handled globally
+   by the parent and is unchanged here.
+   ============================================================== */
+
+:root {
+  --hsec-bg: #FFFFFF;
+  --hsec-ink: #0d0d0d;
+  --hsec-ink-soft: rgba(13, 13, 13, 0.6);
+  --hsec-ink-line: rgba(13, 13, 13, 0.18);
+  --hsec-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.h-sections {
+  position: relative;
+  width: 100%;
+  font-family: 'Visby CF', sans-serif;
+  color: var(--hsec-ink);
+  background: var(--hsec-bg);
+}
+
+/* -------------------- Fixed background stack -------------------- */
+.h-bg-stack {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.h-bg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: opacity, transform;
+}
+
+.h-bg-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.h-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.30) 0%,
+      rgba(0, 0, 0, 0.05) 30%,
+      rgba(0, 0, 0, 0.05) 70%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+}
+
+/* -------------------- Section + main content -------------------- */
+.h-section {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* -------------------- LEFT · Floating overlay --------------------
+   Absolute container spans the full section height. Its sticky
+   inner child stays at viewport top while the section is in view
+   → the H info "floats" above the imagery without subtracting
+   width from the main content.
+   pointer-events on the wrapper are off so clicks pass through
+   to the gallery; the inner panel re-enables them so the title
+   and CTA stay clickable.
+   ------------------------------------------------------------- */
+.h-section-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: clamp(280px, 32%, 480px);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* HGROUP logo — top-left of the floating overlay (white via filter) */
+.h-side-logo {
+  position: absolute;
+  top: clamp(24px, 4vh, 48px);
+  left: clamp(28px, 4vw, 56px);
+  z-index: 6;
+  display: block;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.4s var(--hsec-ease), transform 0.4s var(--hsec-ease);
+}
+
+.h-side-logo:hover,
+.h-side-logo:focus-visible {
+  opacity: 0.7;
+  transform: scale(0.97);
+}
+
+.h-side-logo img {
+  display: block;
+  height: clamp(34px, 4.5vh, 48px);
+  width: auto;
+  /* Invert the dark logo to white over the cinematic image */
+  filter: brightness(0) invert(1);
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.h-side-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: clamp(80px, 10vh, 140px) clamp(32px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(20px, 3vh, 32px);
+  color: #ffffff;
+  pointer-events: auto;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.70) 0%,
+    rgba(0, 0, 0, 0.50) 35%,
+    rgba(0, 0, 0, 0.20) 75%,
+    transparent 100%
+  );
+}
+
+/* H name — large, thin, click-to-back-to-menu */
+.h-side-title {
+  position: relative;
+  margin: 0;
+  font-family: 'Visby CF', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 100;             /* Visby Thin */
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    opacity 0.5s var(--hsec-ease),
+    transform 0.5s var(--hsec-ease);
+}
+
+.h-side-title:focus { outline: none; }
+
+.h-side-title:hover,
+.h-side-title:focus-visible {
+  opacity: 0.65;
+  transform: translateX(6px);
+}
+
+/* Hover hint — small "↩ all Hs" reveal under the title */
+.h-side-title::after {
+  content: '↩ all Hs';
+  display: block;
+  margin-top: 14px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.5s var(--hsec-ease),
+    transform 0.5s var(--hsec-ease);
+}
+
+.h-side-title:hover::after,
+.h-side-title:focus-visible::after {
+  opacity: 0.75;
+  transform: translateX(0);
+}
+
+/* Description */
+.h-side-desc {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 36ch;
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* View Site CTA — pill button */
+.h-side-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition:
+    background-color 0.4s var(--hsec-ease),
+    color 0.4s var(--hsec-ease),
+    border-color 0.4s var(--hsec-ease),
+    transform 0.4s var(--hsec-ease);
+}
+
+.h-side-cta:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateX(4px);
+}
+
+.h-side-cta-arrow {
+  font-size: 0.75rem;
+}
+
+/* -------------------- MAIN content — full-width edge-to-edge -------------------- */
+.h-section-main {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.h-section-stage-blank {
+  height: 100vh;
+  /* transparent so the fixed image/video shows through */
+  background: transparent;
+}
+
+/* -------------------- Gallery — full-bleed, no margins, no gap --------------------
+   Edge-to-edge editorial mosaic. The floating side overlay sits
+   on top of the leftmost column; the dark gradient on its right
+   edge ensures the items behind it remain visible.
+   --------------------------------------------------------------- */
+.h-section-gallery {
+  position: relative;
+  z-index: 1;
+  background: var(--hsec-bg);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  align-items: stretch;
+  width: 100%;
+}
+
+.h-gallery-item {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: #f4f3ef;
+  aspect-ratio: 4 / 5;
+}
+
+.h-gallery-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.001);
+  transition: transform 1.8s var(--hsec-ease);
+}
+
+.h-gallery-item:hover .h-gallery-media {
+  transform: scale(1.05);
+}
+
+.h-gallery-caption {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+
+.h-gallery-caption-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.h-gallery-caption-title {
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 1024px) {
+  .h-section-side {
+    width: clamp(220px, 36%, 380px);
+  }
+  .h-side-title {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+  }
+  .h-side-desc {
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  /* On mobile the floating overlay drops to NORMAL FLOW —
+     stacked at the top of the section as a banner with dark
+     gradient. Cleaner than overlapping the stage; the user gets:
+     side panel → video stage → gallery, in that order. */
+  .h-section {
+    min-height: auto;
+  }
+  .h-section-side {
+    position: relative;
+    top: auto;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    pointer-events: auto;
+  }
+  .h-side-inner {
+    position: relative;
+    top: auto;
+    height: auto;
+    padding: 80px 24px 48px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.65) 70%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+    gap: 16px;
+    pointer-events: auto;
+  }
+  .h-side-logo {
+    top: 20px;
+    left: 24px;
+  }
+  .h-side-logo img {
+    height: 30px;
+    opacity: 0.95;
+  }
+  .h-side-title {
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
+  }
+  .h-side-title::after {
+    display: none;
+  }
+  .h-side-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 100%;
+  }
+  .h-side-cta {
+    font-size: 0.65rem;
+    padding: 10px 22px;
+    letter-spacing: 2px;
+  }
+  .h-section-stage-blank {
+    height: 60vh;
+    min-height: 360px;
+  }
+  .h-gallery-item {
+    /* Less tall than 4/5 on phones — readable scroll feel */
+    aspect-ratio: 3 / 4;
+  }
+  .h-section-gallery {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .h-gallery-caption {
+    left: 16px;
+    bottom: 16px;
+  }
+}
+
+/* Extra-small phones — 480px and below */
+@media (max-width: 480px) {
+  .h-side-inner {
+    padding: 70px 20px 36px;
+  }
+  .h-side-title {
+    font-size: clamp(2rem, 13vw, 3rem);
+  }
+  .h-side-desc {
+    font-size: 0.88rem;
+  }
+  .h-section-stage-blank {
+    height: 52vh;
+    min-height: 300px;
+  }
+}
+
+/* Touch devices — disable hover-only effects since they can stick
+   on tap. Tablets that report touch but support hover still get
+   the desktop interactions through (hover: hover). */
+@media (hover: none) {
+  .h-gallery-item:hover .h-gallery-media,
+  .h-side-title:hover,
+  .h-side-logo:hover,
+  .h-side-cta:hover {
+    transform: none !important;
+  }
+  .h-side-title:hover::after {
+    opacity: 0 !important;
+  }
+}
+
+/* -------------------- Reduced motion -------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .h-gallery-media,
+  .h-gallery-item:hover .h-gallery-media,
+  .h-side-title,
+  .h-side-cta {
+    transition: none !important;
+    transform: none !important;
+  }
+}

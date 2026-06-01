@@ -1,7 +1,8 @@
 
 // Holdings logos - add your actual logo files here
 // Example: import holding1Logo from './holding1.png'
-import logohgroup from './logoprincipalh-negro.png'
+import logohgroup from './logoprincipalh-negro.png'   // H mark — used by the loading-screen 3D spin
+import logohgroupWord from './HGROUP.png'             // full HGROUP wordmark — used in the hero banner
 import herologo from './HEROlogo_negro.png'
 import hacklogo from './HACKlogo_negro.png'
 import halologo from './HALOlogo_negro.png'
@@ -19,6 +20,7 @@ import hooklogo from './HOOKlogo_negro.png'
 // Export individual logos
 export {
   logohgroup,
+  logohgroupWord,
   herologo,
   hacklogo,
   halologo,

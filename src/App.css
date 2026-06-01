@@ -327,7 +327,9 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  animation: fadeOutPresentation 0.8s ease 3.5s forwards; /* Adjusted timing */
+  /* Fades out at 3.6s (just as the logo rotation ends) so the
+     whole loading experience lands at ~4.0s. */
+  animation: fadeOutPresentation 0.4s ease 3.6s forwards;
 }
 
 .presentation-content {
@@ -335,6 +337,9 @@
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  /* Enables true 3D depth for the logo spin below.
+     1200px ≈ subtle, premium parallax (smaller = more dramatic). */
+  perspective: 1200px;
 }
 
 .presentation-text {
@@ -360,12 +365,45 @@
   animation: fadeIn 0.6s ease 2s forwards; /* Appears sooner */
 }
 
+/* Loading-screen logo — minimalist 360° 3D spin around the Y axis
+   (like a coin spinning on its edge). The parent's `perspective`
+   gives the rotation real depth: the logo narrows as it turns
+   side-on, reads its back face briefly, and resolves back to
+   front. Because the HGROUP "H" is left-right symmetric, the
+   back face reads identically → perfectly clean visually.
+   3.3s + 0.3s delay = settles at 3.6s, right as the overlay
+   starts to fade. Total loading: ~4.0s. */
 .presentation-logo {
   height: 400px;
   width: auto;
   object-fit: contain;
   opacity: 0;
-  animation: fadeInLogo 0.6s ease 1.2s forwards; /* Appears sooner */
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  animation: presentationLogoSpin 3.3s cubic-bezier(0.83, 0, 0.17, 1) 0.3s forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes presentationLogoSpin {
+  0% {
+    opacity: 0;
+    transform: rotateY(0deg);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(360deg);
+  }
+}
+
+/* Reduced motion → skip the rotation, just fade in. */
+@media (prefers-reduced-motion: reduce) {
+  .presentation-logo {
+    animation: fadeInLogo 0.6s ease 0.4s forwards;
+  }
 }
 
 /* Hide cursor after typewriter completes */
@@ -2187,4 +2225,257 @@ html {
   .main-content {
     padding-bottom: 80px; /* Espacio para el holdings menu */
   }
+
+  .hero-banner {
+    height: 100vh;
+    min-height: 560px;
+  }
+
+  .hero-scroll-cue {
+    flex: 0 0 clamp(80px, 14vh, 120px);
+    gap: 8px;
+  }
+
+  .hero-scroll-cue-label {
+    font-size: 0.62rem;
+    letter-spacing: 3px;
+  }
+
+  .hero-nav {
+    padding: 24px 24px;
+    justify-content: center;
+  }
+
+  .hero-nav-list {
+    gap: 18px;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-logo {
+    width: min(70vw, 260px);
+  }
+}
+
+/* Extra-small phones — hero banner refinements */
+@media (max-width: 480px) {
+  .hero-banner {
+    height: 100vh;
+    min-height: 520px;
+  }
+  .hero-scroll-cue {
+    flex: 0 0 clamp(70px, 12vh, 100px);
+  }
+  .hero-scroll-cue-label {
+    font-size: 0.58rem;
+  }
+  .hero-nav {
+    padding: 20px 16px;
+  }
+  .hero-nav-list {
+    gap: 14px;
+    font-size: 0.62rem;
+    letter-spacing: 1.2px;
+  }
+  .hero-logo {
+    width: min(70vw, 220px);
+  }
+}
+
+/* ============================================
+   HERO BANNER
+   ============================================ */
+.hero-banner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  /* Full viewport: stage on top + white scroll cue strip at bottom.
+     Together they fill the device's view with a clear separation
+     before the Hs menu starts scrolling. */
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  /* Aparece después de que el overlay de presentación termina */
+  animation: heroFadeIn 1s ease 3.6s both;
+}
+
+/* Hero stage — top zone with video + logo + nav */
+.hero-stage {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;          /* fills the remaining viewport above the cue */
+  min-height: 0;           /* lets flex shrink correctly inside */
+  overflow: hidden;
+}
+
+/* White scroll cue strip at the bottom of the hero — explicit
+   visual separation from the Hs menu that follows. */
+.hero-scroll-cue {
+  flex: 0 0 clamp(96px, 18vh, 160px);
+  width: 100%;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Visby CF', sans-serif;
+  color: #0d0d0d;
+  position: relative;
+  z-index: 5;
+}
+
+.hero-scroll-cue-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.hero-scroll-cue-arrow {
+  font-size: 1.05rem;
+  opacity: 0.75;
+  animation: heroScrollCueBob 1.8s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes heroScrollCueBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Placeholder claro. Reemplazar por <video> o <img> cuando haya media. */
+  background: #FFFFFF;
+}
+
+/* --------------------------------------------------------------
+   Hero video background — activated when HERO_VIDEO is set
+   in App.jsx. Full-bleed, scrim on top keeps the logo legible.
+   -------------------------------------------------------------- */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* Vertical scrim: lighter at the centre where the logo sits,
+     darker top + bottom so the nav text and any chrome stays
+     readable. Tuned for either a dark or a bright video. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.30) 30%,
+      rgba(255, 255, 255, 0.20) 60%,
+      rgba(255, 255, 255, 0.50) 100%
+    );
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Tinte muy sutil sobre fondo claro — apenas perceptible */
+  background: rgba(255, 255, 255, 0.0);
+  pointer-events: none;
+}
+
+.hero-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  padding: 36px 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 40px;
+  font-family: 'Visby CF', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero-nav-link {
+  /* Texto negro sobre fondo blanco */
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.hero-nav-link:hover {
+  opacity: 1;
+}
+
+.hero-nav-arrow {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.75rem;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo {
+  width: min(40vw, 360px);
+  height: auto;
+  /* Invierte el PNG negro a blanco puro + drop-shadow sutil para
+     que se lea sobre cualquier frame del video del banner. */
+  filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+  opacity: 0;
+  animation: heroLogoIn 1.4s ease 4s forwards;
+}
+
+@keyframes heroLogoIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 }

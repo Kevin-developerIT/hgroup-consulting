@@ -1,0 +1,376 @@
+/* ==============================================================
+   HS MENU — unified showcase (menu + video bg + inline detail)
+   --------------------------------------------------------------
+   Layout per item:
+     ┌────────────────────────┬─────────────────────────────────┐
+     │ 01 HERO                │ (collapsed — empty)             │
+     ├────────────────────────┼─────────────────────────────────┤
+     │ 02 HACK   ◄─ active    │ Digital strategies… View Site ↗ │
+     ├────────────────────────┼─────────────────────────────────┤
+     │ 03 HALO                │ (collapsed)                     │
+     └────────────────────────┴─────────────────────────────────┘
+
+   The active row expands its detail; others collapse. Background
+   video crossfades with the conveyor slide animation handled in
+   the JSX (GSAP).
+   ============================================================== */
+
+:root {
+  --hs-menu-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --hs-menu-ink: #ffffff;
+}
+
+/* -------------------- Scroll-driven shell --------------------
+   • Outer container is tall (50vh per H × 10 = 500vh) → provides
+     the scroll length that ScrollTrigger maps to selectedIndex.
+   • Inner wrapper sticks to the top of the viewport so the menu
+     UI stays on screen for the entire 500vh of scrolling.
+   ----------------------------------------------------- */
+.hs-menu-container {
+  position: relative;
+  width: 100%;
+  /* 100vh sticky pane + ~9 viewports of scroll range = 1000vh
+     means each H advances roughly every 100vh of scroll. */
+  height: 1000vh;
+  z-index: 10;
+}
+
+.hs-menu-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hs-menu {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: #0a0a0a;
+  color: var(--hs-menu-ink);
+  font-family: 'Visby CF', sans-serif;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* -------------------- Video stack -------------------- */
+.hs-menu-bg-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hs-menu-bg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.hs-menu-bg-layer video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hs-menu-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* Diagonal dark wash → keeps the menu text readable */
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.70) 0%,
+    rgba(0, 0, 0, 0.48) 40%,
+    rgba(0, 0, 0, 0.28) 75%,
+    rgba(0, 0, 0, 0.20) 100%
+  );
+  will-change: opacity;
+}
+
+/* -------------------- Menu list -------------------- */
+.hs-menu-list {
+  position: relative;
+  z-index: 5;
+  margin: 0;
+  padding: clamp(80px, 10vh, 140px) clamp(40px, 8vw, 120px);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  max-width: 1600px;
+}
+
+/* -------------------- Individual H row --------------------
+   Grid: [name button] | [detail panel]
+   Detail collapses when inactive (max-height: 0).
+   ----------------------------------------------------- */
+.hs-menu-item {
+  display: grid;
+  grid-template-columns: minmax(220px, 28%) 1fr;
+  column-gap: clamp(36px, 5vw, 80px);
+  align-items: start;
+  padding: 2px 0;
+}
+
+/* -------------------- Button (name + index) -------------------- */
+.hs-menu-link {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: clamp(14px, 1.6vw, 22px);
+  color: var(--hs-menu-ink);
+  opacity: 0.55;
+  text-align: left;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform, opacity;
+  transform-origin: left center;
+  transition:
+    opacity 0.55s var(--hs-menu-ease),
+    transform 0.55s var(--hs-menu-ease);
+}
+
+.hs-menu-link:focus { outline: none; }
+
+.hs-menu-item.is-active .hs-menu-link {
+  opacity: 1;
+  transform: translateX(20px);
+}
+
+.hs-menu-link:focus-visible .hs-menu-name {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+/* Index number "01" - "10" — small chapter mark, always subtle */
+.hs-menu-index {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.45;
+  transition: opacity 0.5s var(--hs-menu-ease);
+}
+
+.hs-menu-item.is-active .hs-menu-index {
+  opacity: 0.7;
+}
+
+/* H name — small menu-style by default, expands to headline when active */
+.hs-menu-name {
+  font-size: clamp(0.95rem, 1.25vw, 1.2rem);
+  font-weight: 300;             /* Visby Light → editorial menu link */
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  position: relative;
+  white-space: nowrap;
+  transition:
+    font-size 0.7s var(--hs-menu-ease),
+    letter-spacing 0.7s var(--hs-menu-ease);
+}
+
+/* ACTIVE → bloated headline. Thin weight + tight tracking + big size
+   transforms the menu line into a magazine headline. */
+.hs-menu-item.is-active .hs-menu-name {
+  font-size: clamp(2.8rem, 6.2vw, 5.2rem);
+  font-weight: 100;             /* Visby Thin → premium at scale */
+  letter-spacing: -0.025em;
+}
+
+/* Selected marker — small dot before the index of the persistently
+   selected H. Stays put regardless of hover. */
+.hs-menu-item.is-selected .hs-menu-link::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--hs-menu-ink);
+  transform: translateY(-50%);
+  transition: opacity 0.3s var(--hs-menu-ease);
+}
+
+.hs-menu-link {
+  position: relative;
+}
+
+/* -------------------- Detail panel (description + CTA) --------------------
+   Collapsed by default (max-height 0). Active row expands.
+   Slides in from the left with a slight translate while opacity fades.
+   ------------------------------------------------------------------------ */
+.hs-menu-detail {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-16px);
+  pointer-events: none;
+  transition:
+    max-height 0.7s var(--hs-menu-ease),
+    opacity 0.5s var(--hs-menu-ease),
+    transform 0.6s var(--hs-menu-ease),
+    padding 0.5s var(--hs-menu-ease);
+}
+
+.hs-menu-item.is-active .hs-menu-detail {
+  max-height: 280px;
+  opacity: 1;
+  transform: translateX(0);
+  padding: clamp(10px, 1.6vh, 18px) 0 clamp(8px, 1vh, 16px);
+  pointer-events: auto;
+}
+
+.hs-menu-desc {
+  margin: 0 0 18px;
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.55;
+  max-width: 42ch;
+  color: var(--hs-menu-ink);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+}
+
+.hs-menu-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  color: var(--hs-menu-ink);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition:
+    background-color 0.4s var(--hs-menu-ease),
+    color 0.4s var(--hs-menu-ease),
+    border-color 0.4s var(--hs-menu-ease),
+    transform 0.4s var(--hs-menu-ease);
+}
+
+.hs-menu-cta:hover {
+  background-color: var(--hs-menu-ink);
+  color: #000000;
+  border-color: var(--hs-menu-ink);
+  transform: translateX(4px);
+}
+
+.hs-menu-cta-arrow {
+  font-size: 0.78rem;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 1024px) {
+  .hs-menu-item {
+    grid-template-columns: minmax(180px, 32%) 1fr;
+    column-gap: clamp(28px, 4vw, 48px);
+  }
+  .hs-menu-item.is-active .hs-menu-name {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stack name + detail vertically on small screens */
+  .hs-menu-list {
+    padding: clamp(80px, 12vh, 120px) 24px;
+    gap: 2px;
+  }
+  .hs-menu-item {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    column-gap: 0;
+  }
+  .hs-menu-link {
+    gap: 14px;
+  }
+  .hs-menu-name {
+    font-size: clamp(0.9rem, 3.6vw, 1.05rem);
+    letter-spacing: 3px;
+  }
+  .hs-menu-item.is-active .hs-menu-name {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+    letter-spacing: -0.02em;
+    white-space: normal;
+  }
+  .hs-menu-item.is-active .hs-menu-link {
+    transform: translateX(10px);
+  }
+  .hs-menu-item.is-selected .hs-menu-link::before {
+    left: -16px;
+    width: 5px;
+    height: 5px;
+  }
+  .hs-menu-item.is-active .hs-menu-detail {
+    max-height: 360px;
+    padding: 12px 0 16px;
+  }
+  .hs-menu-desc {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 100%;
+  }
+  .hs-menu-cta {
+    font-size: 0.65rem;
+    padding: 10px 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hs-menu-list {
+    padding: 100px 20px;
+  }
+  .hs-menu-name {
+    font-size: clamp(0.85rem, 3.8vw, 1rem);
+  }
+  .hs-menu-item.is-active .hs-menu-name {
+    font-size: clamp(1.9rem, 10vw, 2.6rem);
+  }
+  .hs-menu-desc {
+    font-size: 0.85rem;
+  }
+}
+
+/* -------------------- Touch devices --------------------
+   No hover events → all interaction via click. Disable hover-
+   only transforms to avoid sticky-hover artifacts.
+   ------------------------------------------------------- */
+@media (hover: none) {
+  .hs-menu-cta:hover {
+    transform: none !important;
+  }
+}
+
+/* -------------------- Reduced motion -------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .hs-menu-link,
+  .hs-menu-detail,
+  .hs-menu-cta {
+    transition-duration: 0.15s !important;
+    transform: none !important;
+  }
+}
