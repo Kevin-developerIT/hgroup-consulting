@@ -393,24 +393,33 @@
   .page-container {
     flex-direction: column;
   }
-  
+
   .page-sidebar {
     position: relative;
     width: 100%;
     height: auto;
     border-right: none;
     border-bottom: 1px solid #e0e0e0;
-    padding: 30px 20px;
+    padding: 20px 20px 16px;
   }
-  
+
+  .page-logo {
+    height: 60px;
+    margin-bottom: 20px;
+  }
+
+  .sidebar-content {
+    gap: 14px;
+  }
+
   .page-content {
     margin-left: 0;
-    padding: 30px 20px;
+    padding: 24px 20px 100px; /* extra bottom to clear the fixed EN/ES */
   }
-  
+
   .social-links {
-    margin-top: 40px;
-    justify-content: center;
+    margin-top: 16px;
+    justify-content: flex-start;
   }
   
   .h-list {

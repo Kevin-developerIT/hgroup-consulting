@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import { images } from '../assets'
 import './Pages.css'
 
 function HundredVoices() {
   const navigate = useNavigate()
-  const { t, language } = useLanguage()
+  const { t } = useLanguage()
   
   const handleClose = () => {
     navigate('/')

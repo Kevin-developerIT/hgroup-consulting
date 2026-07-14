@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 import './Contact.css'
 
 /* ==============================================================
-   Contact — submits to alberto.v@hgroup.consulting via FormSubmit
+   Contact — submits to kevin.martinez@hgroup.consulting via FormSubmit
    --------------------------------------------------------------
    FormSubmit (formsubmit.co) is a free no-account email-forwarding
    service. The very first submission triggers a verification email
@@ -18,7 +18,7 @@ import './Contact.css'
    in-page success state instead of a redirect.
    ============================================================== */
 
-const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/alberto.v@hgroup.consulting'
+const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/kevin.martinez@hgroup.consulting'
 
 function Contact() {
   const navigate = useNavigate()
@@ -54,7 +54,11 @@ function Contact() {
         body: JSON.stringify(payload),
       })
 
-      if (response.ok) {
+      /* FormSubmit responds 200 even when the endpoint isn't activated
+         yet, or when validation fails — success lives in the JSON body
+         as a STRING ("true" / "false"), not as an HTTP status. */
+      const data = await response.json().catch(() => null)
+      if (response.ok && data?.success === 'true') {
         setStatus('success')
         formEl.reset()
       } else {

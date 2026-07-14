@@ -3,13 +3,13 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { holdingsLogos } from '../assets/logos'
 import { holdingLinks } from '../data/holdings'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../contexts/useLanguage'
 
 /* Reuse the same H videos already imported by HSections — Vite
    deduplicates the chunks so this doesn't add bundle weight. */
 import heroVideo from '../assets/mp4/herovideo.mp4'
 import hackVideo from '../assets/mp4/videohalo.mp4'
-import haloVideo from '../assets/mp4/halovideo.mp4'
+import haloVideo from '../assets/mp4/halovideo1.webm'
 import hereVideo from '../assets/mp4/herevideo.mp4'
 import hitsVideo from '../assets/mp4/hitsvideo.mp4'
 import homeVideo from '../assets/mp4/homevideo.mp4'
