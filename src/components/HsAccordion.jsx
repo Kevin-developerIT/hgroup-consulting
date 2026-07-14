@@ -2,17 +2,19 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { holdingsLogos } from '../assets/logos'
+import { holdingLinks } from '../data/holdings'
 import { useLanguage } from '../contexts/LanguageContext'
 
 /* Reuse the same H videos already imported by HSections — Vite
    deduplicates the chunks so this doesn't add bundle weight. */
 import heroVideo from '../assets/mp4/herovideo.mp4'
-import hackVideo from '../assets/mp4/hackvideo.mp4'
+import hackVideo from '../assets/mp4/videohalo.mp4'
 import haloVideo from '../assets/mp4/halovideo.mp4'
 import hereVideo from '../assets/mp4/herevideo.mp4'
 import hitsVideo from '../assets/mp4/hitsvideo.mp4'
 import homeVideo from '../assets/mp4/homevideo.mp4'
 import hopeVideo from '../assets/mp4/hopevideo.mp4'
+import huntVideo from '../assets/mp4/huntvideo.mp4'
 import hypeVideo from '../assets/mp4/HypeVideo.mp4'
 import hookVideo from '../assets/mp4/videoshook.mp4'
 
@@ -47,22 +49,9 @@ const H_VIDEOS = {
   hits: hitsVideo,
   home: homeVideo,
   hope: hopeVideo,
-  hunt: haloVideo,    // reuses HALO video (per business decision)
+  hunt: huntVideo,
   hype: hypeVideo,
   hook: hookVideo,
-}
-
-const HOLDING_LINKS = {
-  hero: 'https://heromexico.com/',
-  hype: 'https://hypeagency.mx/',
-  here: 'https://hereconvocatorias.com/',
-  hunt: 'https://huntmedia.mx/',
-  home: 'https://homemalls.mx/',
-  hope: 'https://hopeadvertising.mx/',
-  halo: 'https://halocontent.mx/',
-  hack: 'https://hackdigital.mx/',
-  hits: 'https://hitscreativity.com/',
-  hook: 'https://hookproductions.mx/',
 }
 
 function HsAccordion() {
@@ -220,23 +209,32 @@ function HsAccordion() {
       aria-label="Our Hs"
       onMouseLeave={() => setHoveredIndex(null)}
     >
-      {/* Video stack — one absolute layer per H, full-bleed */}
+      {/* Video stack — one absolute layer per H, full-bleed.
+          Only active + immediate neighbours mount the <video> so the
+          browser never buffers all 10 clips at once. Layer <div>s stay
+          rendered so GSAP refs & directional transitions still line up. */}
       <div className="hs-menu-bg-stack" aria-hidden="true">
-        {holdingsLogos.map((h, i) => (
-          <div
-            key={h.id}
-            ref={(el) => (videoLayersRef.current[i] = el)}
-            className="hs-menu-bg-layer"
-          >
-            <video
-              src={H_VIDEOS[h.id]}
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            />
-          </div>
-        ))}
+        {holdingsLogos.map((h, i) => {
+          const distance = Math.abs(i - activeIndex)
+          const shouldRenderVideo = distance <= 1
+          return (
+            <div
+              key={h.id}
+              ref={(el) => (videoLayersRef.current[i] = el)}
+              className="hs-menu-bg-layer"
+            >
+              {shouldRenderVideo && (
+                <video
+                  src={H_VIDEOS[h.id]}
+                  muted
+                  loop
+                  playsInline
+                  preload={distance === 0 ? 'auto' : 'metadata'}
+                />
+              )}
+            </div>
+          )
+        })}
         <div ref={overlayRef} className="hs-menu-bg-overlay" />
       </div>
 
@@ -246,7 +244,7 @@ function HsAccordion() {
           const isActive = i === activeIndex
           const isSelected = i === selectedIndex
           const description = descByName[h.name]
-          const link = HOLDING_LINKS[h.id]
+          const link = holdingLinks[h.id]
           return (
             <li
               key={h.id}

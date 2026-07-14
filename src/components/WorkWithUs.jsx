@@ -1,48 +1,27 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
+import { holdingLinks } from '../data/holdings'
 import { useLanguage } from '../contexts/LanguageContext'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 
 function WorkWithUs() {
   const navigate = useNavigate()
-  const { t, language } = useLanguage()
-  
-  const expertise = language === 'en' 
-    ? t('expertise')
-    : t('expertise')
+  const { t } = useLanguage()
 
-  // Direct navigation without loading
+  const expertise = t('expertise')
+
   const handleClose = () => {
     navigate('/')
   }
 
-  // Holdings external links — kept in sync with the home page
-  // (App.jsx `holdingLinks` + HSections.jsx `HOLDING_LINKS`)
-  const holdingLinks = {
-    hero: 'https://heromexico.com/',
-    halo: 'https://halocontent.mx/',
-    here: 'https://hereconvocatorias.com/',
-    hits: 'https://hitscreativity.com/',
-    hook: 'https://hookproductions.mx/',
-    hunt: 'https://huntmedia.mx/',
-    hype: 'https://hypeagency.mx/',
-    hack: 'https://hackdigital.mx/',
-    home: 'https://homemalls.mx/',
-    hope: 'https://hopeadvertising.mx/',
-    huge: 'https://hugeproperties.mx/',
-  }
-
   const handleHoldingClick = (e, holdingName) => {
-    const holdingId = holdingName.toLowerCase()
-    const link = holdingLinks[holdingId]
-    
+    const link = holdingLinks[holdingName.toLowerCase()]
     if (link) {
       e.preventDefault()
       window.open(link, '_blank')
     }
-    // Si no hay link, deja que funcione como ancla normal
   }
 
   return (

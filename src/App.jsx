@@ -1,15 +1,17 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { logohgroup, logohgroupWord, holdingsLogos } from './assets/logos'
 import { images } from './assets'
-import WorkWithUs from './components/WorkWithUs'
-import JoinUs from './components/JoinUs'
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext'
 import LanguageToggle from './components/LanguageToggle'
-import HundredVoices from './components/HundredVoices'
-import Contact from './components/Contact'
 import HsAccordion from './components/HsAccordion'
 import haloBannerVideo from './assets/mp4/halovideo.mp4'
+
+/* Subpages are code-split — the home bundle stays lean. */
+const WorkWithUs = lazy(() => import('./components/WorkWithUs'))
+const JoinUs = lazy(() => import('./components/JoinUs'))
+const HundredVoices = lazy(() => import('./components/HundredVoices'))
+const Contact = lazy(() => import('./components/Contact'))
 
 /* ----------------------------------------------------------------
    HERO_VIDEO — currently reusing HALO's video by request.
@@ -18,21 +20,8 @@ import haloBannerVideo from './assets/mp4/halovideo.mp4'
    ---------------------------------------------------------------- */
 const HERO_VIDEO = haloBannerVideo
 import gsap from 'gsap'
+import { holdingLinks } from './data/holdings'
 import './App.css'
-
-const holdingLinks = {
-  hero: 'https://heromexico.com/',
-  halo: 'https://halocontent.mx/',
-  here: 'https://hereconvocatorias.com/',
-  hits: 'https://hitscreativity.com/',
-  hook: 'https://hookproductions.mx/',
-  hunt: 'https://huntmedia.mx/',
-  hype: 'https://hypeagency.mx/',
-  hack: 'https://hackdigital.mx/',
-  home: 'https://homemalls.mx/',
-  hope: 'https://hopeadvertising.mx/',
-  huge: 'https://hugeproperties.mx/'
-};
 
 function HomePage() {
   const [showMainHeader, setShowMainHeader] = useState(true)
@@ -388,13 +377,8 @@ function HomePage() {
   }
 
   const handleHoldingClick = (holdingId) => {
-    const link = holdingLinks[holdingId];
-    
-    if (link) {
-      window.open(link, '_blank');
-    } else {
-      console.log(`No link available for ${holdingId} yet`);
-    }
+    const link = holdingLinks[holdingId]
+    if (link) window.open(link, '_blank')
   }
 
   const getFilterDisplayText = () => {
@@ -630,18 +614,18 @@ function HomePage() {
 }
 
 function App() {
-  const basename = import.meta.env.BASE_URL || '/'
-  
   return (
     <LanguageProvider>
-      <Router basename={basename}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/work-with-us" element={<WorkWithUs />} />
-          <Route path="/join-us" element={<JoinUs />} />
-          <Route path="/100-voices" element={<HundredVoices />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+      <Router basename={import.meta.env.BASE_URL}>
+        <Suspense fallback={<div className="route-fallback" aria-hidden="true" />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/work-with-us" element={<WorkWithUs />} />
+            <Route path="/join-us" element={<JoinUs />} />
+            <Route path="/100-voices" element={<HundredVoices />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Suspense>
       </Router>
     </LanguageProvider>
   )
