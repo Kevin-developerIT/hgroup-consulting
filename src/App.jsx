@@ -293,7 +293,7 @@ function App() {
             <Route path="/join-us" element={<JoinUs />} />
             <Route path="/100-voices" element={<HundredVoices />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/privacidad" element={<Privacy />} />
+            <Route path="/privacy-policy" element={<Privacy />} />
           </Routes>
         </Suspense>
       </Router>

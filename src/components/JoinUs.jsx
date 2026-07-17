@@ -75,7 +75,7 @@ function JoinUs() {
           </div>
 
           <div className="sidebar-legal">
-            <Link to="/privacidad">Política de Privacidad</Link>
+            <Link to="/privacy-policy">Política de Privacidad</Link>
           </div>
         </div>
       </div>
