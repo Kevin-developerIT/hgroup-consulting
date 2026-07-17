@@ -1,0 +1,39 @@
+# Render Static Site config
+# ---------------------------
+# The `name` MUST match the existing service in Render exactly so the
+# blueprint updates it instead of creating a new one. Check it in the
+# Render dashboard → Settings → Name. Update the value below if it differs.
+services:
+  - type: web
+    name: hgroup-consulting
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    # SPA fallback — React Router owns the URL, so every non-asset path
+    # rewrites to index.html and the client-side router takes over.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), interest-cohort=()
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
