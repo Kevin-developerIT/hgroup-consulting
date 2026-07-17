@@ -149,6 +149,26 @@
   transform: translateY(-2px);
 }
 
+.sidebar-legal {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.sidebar-legal a {
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #78716c;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.sidebar-legal a:hover,
+.sidebar-legal a.active {
+  color: #0d0d0d;
+}
+
 /* Close Button - Minimalista */
 .close-page-btn {
   position: fixed;

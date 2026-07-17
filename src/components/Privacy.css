@@ -1,0 +1,121 @@
+.privacy-article {
+  max-width: 780px;
+  color: #0d0d0d;
+  line-height: 1.75;
+}
+
+.privacy-article h1 {
+  font-family: 'Visby CF', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.privacy-updated {
+  font-size: 0.8rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #78716c;
+  margin-bottom: 48px;
+}
+
+.privacy-lead {
+  font-size: 1.05rem;
+  color: #262626;
+  margin-bottom: 24px;
+}
+
+.privacy-article h2 {
+  font-family: 'Visby CF', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 56px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+  color: #0d0d0d;
+}
+
+.privacy-article h2 .privacy-section-number {
+  display: inline-block;
+  min-width: 34px;
+  color: #a8a29e;
+  font-weight: 500;
+}
+
+.privacy-article p {
+  font-size: 0.95rem;
+  color: #262626;
+  margin-bottom: 16px;
+}
+
+.privacy-article ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+.privacy-article ul li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.95rem;
+  color: #262626;
+  margin-bottom: 10px;
+}
+
+.privacy-article ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 1px;
+  background: #0d0d0d;
+}
+
+.privacy-meta-block {
+  border-left: 2px solid #0d0d0d;
+  padding: 4px 0 4px 20px;
+  margin-bottom: 24px;
+}
+
+.privacy-meta-block p {
+  margin-bottom: 6px;
+}
+
+.privacy-meta-block strong {
+  font-weight: 600;
+  color: #0d0d0d;
+}
+
+.privacy-article a {
+  color: #0d0d0d;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.privacy-article a:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .privacy-article h1 {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+  .privacy-updated {
+    margin-bottom: 32px;
+  }
+  .privacy-article h2 {
+    margin-top: 40px;
+    font-size: 1rem;
+  }
+  .privacy-meta-block {
+    padding-left: 16px;
+  }
+}

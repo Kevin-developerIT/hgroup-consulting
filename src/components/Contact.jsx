@@ -137,6 +137,10 @@ function Contact() {
                 IN
               </a>
             </div>
+
+            <div className="sidebar-legal">
+              <Link to="/privacidad">Política de Privacidad</Link>
+            </div>
           </div>
         </div>
 

@@ -69,15 +69,19 @@ function WorkWithUs() {
             >
               IG
             </a>
-            <a 
-              href="https://www.linkedin.com/company/herohgroup/posts/?feedView=all" 
-              target="_blank" 
+            <a
+              href="https://www.linkedin.com/company/herohgroup/posts/?feedView=all"
+              target="_blank"
               rel="noopener noreferrer"
               className="social-link"
               aria-label="LinkedIn"
             >
               IN
             </a>
+          </div>
+
+          <div className="sidebar-legal">
+            <Link to="/privacidad">Política de Privacidad</Link>
           </div>
         </div>
       </div>

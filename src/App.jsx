@@ -13,6 +13,7 @@ const WorkWithUs = lazy(() => import('./components/WorkWithUs'))
 const JoinUs = lazy(() => import('./components/JoinUs'))
 const HundredVoices = lazy(() => import('./components/HundredVoices'))
 const Contact = lazy(() => import('./components/Contact'))
+const Privacy = lazy(() => import('./components/Privacy'))
 
 /* HERO_VIDEO — currently reusing HALO's video by request.
    Swap the import above for a dedicated hero video when ready.
@@ -292,6 +293,7 @@ function App() {
             <Route path="/join-us" element={<JoinUs />} />
             <Route path="/100-voices" element={<HundredVoices />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacidad" element={<Privacy />} />
           </Routes>
         </Suspense>
       </Router>
