@@ -2,12 +2,14 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { useLanguage } from '../contexts/useLanguage'
+import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 
 function JoinUs() {
   const navigate = useNavigate()
   const { t, language } = useLanguage()
+  useCanonical('Únete — HGROUP')
   
   // Direct navigation without loading
   const handleClose = () => {

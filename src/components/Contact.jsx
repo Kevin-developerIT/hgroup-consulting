@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { useLanguage } from '../contexts/useLanguage'
+import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 import './Contact.css'
@@ -23,6 +24,7 @@ const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/kevin.martinez@hgroup.consu
 function Contact() {
   const navigate = useNavigate()
   const { t } = useLanguage()
+  useCanonical('Contacto — HGROUP')
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
 
   const handleClose = () => {

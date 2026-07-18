@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { holdingLinks } from '../data/holdings'
 import { useLanguage } from '../contexts/useLanguage'
+import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 
 function WorkWithUs() {
   const navigate = useNavigate()
   const { t } = useLanguage()
+  useCanonical('Trabaja con nosotros — HGROUP')
 
   const expertise = t('expertise')
 

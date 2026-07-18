@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { useLanguage } from '../contexts/useLanguage'
+import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import { images } from '../assets'
 import './Pages.css'
@@ -9,6 +10,7 @@ import './Pages.css'
 function HundredVoices() {
   const navigate = useNavigate()
   const { t } = useLanguage()
+  useCanonical('Cien Voces — HGROUP')
   
   const handleClose = () => {
     navigate('/')

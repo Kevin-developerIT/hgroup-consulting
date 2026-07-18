@@ -6,6 +6,7 @@ import { useLanguage } from './contexts/useLanguage'
 import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
 import haloBannerVideo from './assets/mp4/halovideo.mp4'
+import { useCanonical } from './hooks/useCanonical'
 import './App.css'
 
 /* Subpages are code-split — the home bundle stays lean. */
@@ -31,6 +32,8 @@ function HomePage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { t } = useLanguage()
+
+  useCanonical('HGROUP — Holding creativa de 11 marcas')
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768)
