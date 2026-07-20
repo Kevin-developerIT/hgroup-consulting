@@ -70,7 +70,8 @@ export const translations = {
       { name: 'HALO', description: 'Creative content and high-quality video production' },
       { name: 'HACK', description: 'Digital strategies focused on conversion and brand awareness' },
       { name: 'HITS', description: 'Creative studio developing custom proposals for leading brands' },
-      { name: 'HOOK', description: 'Event management and activations.' }
+      { name: 'HOOK', description: 'Event management and activations.' },
+      { name: 'HOLY', description: 'Talent representation, UGC and casting calls — connecting brands with creators through strategies, campaigns and projects that generate authentic content, cultural relevance and business results.' }
     ],
     hundredVoices: {
       subtitle: 'The definitive collection of insights from Mexico\'s most influential business leaders and visionaries.',
@@ -171,7 +172,8 @@ export const translations = {
       { name: 'HALO', description: 'Contenido creativo y producción de video de alta calidad' },
       { name: 'HACK', description: 'Estrategias digitales enfocadas en conversión y brand awareness' },
       { name: 'HITS', description: 'Estudio creativo desarrollando propuestas a la medida para marcas líderes' },
-      { name: 'HOOK', description: 'Gestión de eventos y activaciones.' }
+      { name: 'HOOK', description: 'Gestión de eventos y activaciones.' },
+      { name: 'HOLY', description: 'Vertical de H Group especializada en representación de talento, UGC y convocatorias, conectando marcas con creadores mediante estrategias, campañas y proyectos que generan contenido auténtico, relevancia cultural y resultados de negocio.' }
     ],
     hundredVoices: {
       subtitle: 'La colección definitiva de perspectivas de los líderes empresariales y visionarios más influyentes de México.',

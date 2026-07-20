@@ -103,6 +103,12 @@ export const holdingsLogos = [
     name: 'HOOK',
     logo: hooklogo,
     alt: 'HOOK'
+  },
+  {
+    id: 'holy',
+    name: 'HOLY',
+    logo: null,
+    alt: 'HOLY'
   }
 ]
 

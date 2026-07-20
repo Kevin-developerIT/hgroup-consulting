@@ -18,9 +18,50 @@ import huntVideo from '../assets/mp4/huntvideo.mp4'
 import hypeVideo from '../assets/mp4/HypeVideo.mp4'
 import hookVideo from '../assets/mp4/videoshook.mp4'
 
+import holy1 from '../assets/holy/holy1.jpeg'
+import holy2 from '../assets/holy/holy2.jpeg'
+import holy3 from '../assets/holy/holy3.jpeg'
+import holy4 from '../assets/holy/holy4.jpeg'
+import holy5 from '../assets/holy/holy5.jpeg'
+import holy6 from '../assets/holy/holy6.jpeg'
+import holy7 from '../assets/holy/holy7.jpeg'
+
 import './HsAccordion.css'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const HOLY_IMAGES = [holy1, holy2, holy3, holy4, holy5, holy6, holy7]
+
+/* Auto-advancing crossfade for the HOLY H. Mounts only when
+   `active` is true (parent stops rendering when this layer is
+   more than one slot away from the active H). */
+function HolyCarousel({ active }) {
+  const [idx, setIdx] = useState(0)
+
+  useEffect(() => {
+    if (!active) return
+    const timer = setInterval(() => {
+      setIdx((i) => (i + 1) % HOLY_IMAGES.length)
+    }, 3500)
+    return () => clearInterval(timer)
+  }, [active])
+
+  return (
+    <div className="holy-carousel">
+      {HOLY_IMAGES.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`holy-slide ${i === idx ? 'is-active' : ''}`}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+          draggable={false}
+        />
+      ))}
+    </div>
+  )
+}
 
 /* ==============================================================
    HsAccordion — unified menu + H showcase
@@ -224,13 +265,17 @@ function HsAccordion() {
               className="hs-menu-bg-layer"
             >
               {shouldRenderVideo && (
-                <video
-                  src={H_VIDEOS[h.id]}
-                  muted
-                  loop
-                  playsInline
-                  preload={distance === 0 ? 'auto' : 'metadata'}
-                />
+                h.id === 'holy' ? (
+                  <HolyCarousel active={distance === 0} />
+                ) : (
+                  <video
+                    src={H_VIDEOS[h.id]}
+                    muted
+                    loop
+                    playsInline
+                    preload={distance === 0 ? 'auto' : 'metadata'}
+                  />
+                )
               )}
             </div>
           )
