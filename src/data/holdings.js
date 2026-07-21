@@ -12,6 +12,7 @@ export const holdingLinks = {
   home: 'https://homemalls.mx/',
   hope: 'https://hopeadvertising.mx/',
   huge: 'https://hugeproperties.mx/',
+  holy: 'https://holy.management/',
 }
 
 export const getHoldingLink = (id) => holdingLinks[String(id).toLowerCase()] || null
