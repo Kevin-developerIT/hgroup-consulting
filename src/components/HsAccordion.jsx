@@ -26,11 +26,74 @@ import holy5 from '../assets/holy/holy5.jpeg'
 import holy6 from '../assets/holy/holy6.jpeg'
 import holy7 from '../assets/holy/holy7.jpeg'
 
+import home1 from '../assets/home/home1.mp4'
+import home2 from '../assets/home/home2.mp4'
+import home3 from '../assets/home/home3.mp4'
+import home4 from '../assets/home/home4.mp4'
+import home5 from '../assets/home/home5.mp4'
+import home6 from '../assets/home/home6.mp4'
+import home7 from '../assets/home/home7.mp4'
+import home8 from '../assets/home/home8.mp4'
+
 import './HsAccordion.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const HOLY_IMAGES = [holy1, holy2, holy3, holy4, holy5, holy6, holy7]
+const HOME_VIDEOS = [home1, home2, home3, home4, home5, home6, home7, home8]
+
+/* Auto-advancing video slideshow for the HOME H — stacks the 8
+   short clips, plays one at a time, crossfades on 'ended'. Same
+   mounting rules as the other layers (rendered only when active
+   or adjacent). */
+function HomeSlideshow({ active }) {
+  const [idx, setIdx] = useState(0)
+  const videoRefs = useRef([])
+
+  const advance = () => setIdx((i) => (i + 1) % HOME_VIDEOS.length)
+
+  useEffect(() => {
+    if (!active) {
+      videoRefs.current.forEach((v) => v && v.pause())
+      return
+    }
+    const current = videoRefs.current[idx]
+    if (current) {
+      try { current.currentTime = 0 } catch { /* seek can throw */ }
+      const p = current.play()
+      if (p) p.catch(() => {})
+    }
+    videoRefs.current.forEach((v, i) => {
+      if (v && i !== idx) v.pause()
+    })
+    // Fallback timer in case 'ended' never fires (network hiccup,
+    // Safari edge cases). 12s is longer than any of these clips.
+    const timer = setTimeout(advance, 12000)
+    return () => clearTimeout(timer)
+  }, [active, idx])
+
+  const nextIdx = (idx + 1) % HOME_VIDEOS.length
+
+  return (
+    <div className="home-slideshow">
+      {HOME_VIDEOS.map((src, i) => {
+        const preload = i === idx ? 'auto' : i === nextIdx ? 'metadata' : 'none'
+        return (
+          <video
+            key={src}
+            ref={(el) => (videoRefs.current[i] = el)}
+            src={src}
+            muted
+            playsInline
+            preload={preload}
+            onEnded={i === idx ? advance : undefined}
+            className={`home-slide ${i === idx ? 'is-active' : ''}`}
+          />
+        )
+      })}
+    </div>
+  )
+}
 
 /* Auto-advancing crossfade for the HOLY H. Mounts only when
    `active` is true (parent stops rendering when this layer is
@@ -94,6 +157,11 @@ const H_VIDEOS = {
   hype: hypeVideo,
   hook: hookVideo,
 }
+
+/* H's that render a custom media component (not a single <video>).
+   Their child owns play/pause via the `active` prop, so the parent
+   effects below MUST NOT touch the <video>s inside those layers. */
+const CUSTOM_PLAYER_IDS = new Set(['home', 'holy'])
 
 function HsAccordion() {
   const { t } = useLanguage()
@@ -165,7 +233,9 @@ function HsAccordion() {
 
     videoLayersRef.current.forEach((layer, i) => {
       if (!layer) return
-      const v = layer.querySelector('video')
+      const holdingId = holdingsLogos[i]?.id
+      const isCustom = CUSTOM_PLAYER_IDS.has(holdingId)
+      const v = isCustom ? null : layer.querySelector('video')
 
       if (i === next) {
         // New active: slide in from below or above
@@ -267,6 +337,8 @@ function HsAccordion() {
               {shouldRenderVideo && (
                 h.id === 'holy' ? (
                   <HolyCarousel active={distance === 0} />
+                ) : h.id === 'home' ? (
+                  <HomeSlideshow active={distance === 0} />
                 ) : (
                   <video
                     src={H_VIDEOS[h.id]}

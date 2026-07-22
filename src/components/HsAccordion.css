@@ -410,3 +410,33 @@
     transform: none;
   }
 }
+
+/* HOME slideshow — stacked video clips, crossfade one at a time.
+   Same footprint as the <video> so it slots into the layer stack. */
+.home-slideshow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+.home-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+  user-select: none;
+  will-change: opacity;
+}
+.home-slide.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-slide {
+    transition: opacity 0.3s linear;
+  }
+}
