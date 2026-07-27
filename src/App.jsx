@@ -5,7 +5,7 @@ import { LanguageProvider } from './contexts/LanguageContext'
 import { useLanguage } from './contexts/useLanguage'
 import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
-import heroBannerVideo from './assets/mp4/videohalo.mp4'
+import heroBannerVideo from './assets/mp4/videoprincipal.MOV'
 import { useCanonical } from './hooks/useCanonical'
 import './App.css'
 
@@ -16,8 +16,7 @@ const HundredVoices = lazy(() => import('./components/HundredVoices'))
 const Contact = lazy(() => import('./components/Contact'))
 const Privacy = lazy(() => import('./components/Privacy'))
 
-/* HERO_VIDEO — currently reusing HACK's clip (videohalo.mp4) by request.
-   Swap the import above for a dedicated hero video when ready.
+/* HERO_VIDEO — dedicated hero clip (videoprincipal.MOV).
    Set to `null` for the white-background fallback. */
 const HERO_VIDEO = heroBannerVideo
 
@@ -101,6 +100,7 @@ function HomePage() {
               muted
               loop
               playsInline
+              preload="auto"
             />
             <div className="hero-scrim" aria-hidden="true" />
           </>
