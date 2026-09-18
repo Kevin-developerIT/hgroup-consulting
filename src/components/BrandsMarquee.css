@@ -1,0 +1,107 @@
+/* Cintillo horizontal de logos con auto-scroll infinito.
+   • Desktop (>=768): 6 logos visibles al mismo tiempo.
+   • Mobile (<768):  2 logos visibles.
+   La animación es CSS puro (translateX -50%) sobre un track
+   duplicado, así no hay salto al volver al inicio. */
+
+.brands-marquee {
+  width: 100%;
+  background: #FFFFFF;
+  padding: 32px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  border-bottom: 1px solid #f0efe9;
+}
+
+/* Fade sutil en los bordes izquierdo/derecho para que los logos
+   se disuelvan en el blanco en vez de cortarse en seco. */
+.brands-marquee::before,
+.brands-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.brands-marquee::before {
+  left: 0;
+  background: linear-gradient(to right, #FFFFFF 20%, rgba(255, 255, 255, 0));
+}
+.brands-marquee::after {
+  right: 0;
+  background: linear-gradient(to left, #FFFFFF 20%, rgba(255, 255, 255, 0));
+}
+
+.brands-track {
+  display: flex;
+  width: max-content;
+  animation: brands-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.brands-marquee:hover .brands-track {
+  animation-play-state: paused;
+}
+
+.brands-slot {
+  /* Cada slot es 1/6 del viewport → 6 logos visibles en desktop. */
+  width: calc(100vw / 6);
+  flex: 0 0 calc(100vw / 6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.brands-slot img {
+  max-width: 100%;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.75);
+  transition: filter 0.3s ease;
+  user-select: none;
+}
+
+.brands-slot:hover img {
+  filter: grayscale(0%) opacity(1);
+}
+
+@keyframes brands-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .brands-marquee {
+    padding: 20px 0;
+  }
+  .brands-marquee::before,
+  .brands-marquee::after {
+    width: 40px;
+  }
+  .brands-slot {
+    /* 2 logos visibles en mobile */
+    width: calc(100vw / 2);
+    flex: 0 0 calc(100vw / 2);
+    padding: 0 16px;
+  }
+  .brands-slot img {
+    max-height: 48px;
+  }
+  .brands-track {
+    /* En mobile solo 2 caben → aumento la velocidad ligeramente */
+    animation-duration: 40s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brands-track {
+    animation-duration: 240s;
+  }
+}

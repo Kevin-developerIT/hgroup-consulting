@@ -5,6 +5,7 @@ import { LanguageProvider } from './contexts/LanguageContext'
 import { useLanguage } from './contexts/useLanguage'
 import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
+import BrandsMarquee from './components/BrandsMarquee'
 import heroBannerVideo from './assets/mp4/videoprincipal.MOV'
 import { useCanonical } from './hooks/useCanonical'
 import './App.css'
@@ -168,6 +169,8 @@ function HomePage() {
           <span className="hero-scroll-cue-arrow">↓</span>
         </div>
       </section>
+
+      <BrandsMarquee />
 
       {/* Unified menu + H showcase — video bg + interactive list with
           inline description + CTA on the active H. */}
