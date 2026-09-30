@@ -65,6 +65,27 @@ function HsAccordion() {
   const videoLayersRef = useRef([])
   const overlayRef = useRef(null)
 
+  /* The accordion sits below the hero banner: its footage only starts
+     loading once the section is about to scroll into view, so the hero
+     video has the connection to itself on first load. */
+  const [nearViewport, setNearViewport] = useState(false)
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        setNearViewport(true)
+        io.disconnect()
+      },
+      // The section starts right below the fold, so this fires on the
+      // first bit of scroll — well before the videos are on screen.
+      { rootMargin: '0px' }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   /* Initial state: HERO visible, all others parked below.
      HERO video starts playing immediately. */
   useEffect(() => {
@@ -203,7 +224,7 @@ function HsAccordion() {
       <div className="hs-menu-bg-stack" aria-hidden="true">
         {holdingsLogos.map((h, i) => {
           const distance = Math.abs(i - activeIndex)
-          const shouldRenderVideo = distance <= 1
+          const shouldRenderVideo = nearViewport && distance <= 1
           return (
             <div
               key={h.id}
@@ -218,6 +239,10 @@ function HsAccordion() {
                 ) : (
                   <video
                     src={H_VIDEOS[h.id]}
+                    // Starts the active clip when the stack first mounts
+                    // (see nearViewport); after that the effects above
+                    // play and pause it.
+                    autoPlay={distance === 0}
                     muted
                     loop
                     playsInline

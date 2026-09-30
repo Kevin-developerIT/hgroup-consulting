@@ -88,7 +88,7 @@ function brandNodes(id, meta) {
         slogan: copy.tagline,
         parentOrganization: { '@id': ORG_ID },
       },
-      ...copy.services.map((service, i) => ({
+      ...(copy.services ?? []).map((service, i) => ({
         '@type': 'Service',
         '@id': `${meta.canonical}#service-${i + 1}`,
         name: `${service.title} — ${brand.name}`,

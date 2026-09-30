@@ -4,7 +4,10 @@ import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
-import { images } from '../assets'
+// Direct imports: the '../assets' barrel pulls every file in assets/media
+// into the build (~370 MB) even though this page only shows these two.
+import cienvoces from '../assets/media/100vocesHERO.png'
+import cienvoces2 from '../assets/media/100voces2HERO.jpg'
 import './Pages.css'
 
 function HundredVoices() {
@@ -149,7 +152,7 @@ function HundredVoices() {
           </blockquote>
 
           {/* Imagen principal de 100 voces */}
-          {images.cienvoces && (
+          {cienvoces && (
             <div style={{
               marginBottom: '60px',
               borderRadius: '12px',
@@ -157,7 +160,7 @@ function HundredVoices() {
               boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
             }}>
               <img 
-                src={images.cienvoces} 
+                src={cienvoces} 
                 alt="100 Voces" 
                 style={{
                   width: '100%',
@@ -184,7 +187,7 @@ function HundredVoices() {
           </div>
 
           {/* Segunda imagen opcional */}
-          {images.cienvoces2 && (
+          {cienvoces2 && (
             <div style={{
               marginBottom: '80px',
               borderRadius: '12px',
@@ -192,7 +195,7 @@ function HundredVoices() {
               boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
             }}>
               <img 
-                src={images.cienvoces2} 
+                src={cienvoces2} 
                 alt="100 Voces Evento" 
                 style={{
                   width: '100%',
@@ -251,6 +254,8 @@ function HundredVoices() {
               e.currentTarget.style.color = '#fff';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
+            data-track="whatsapp_click"
+            data-track-url={`https://wa.me/${whatsappNumber}`}
             onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank')}
             >
               <svg 

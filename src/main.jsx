@@ -2,10 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
+import { loadGtm } from './lib/analytics'
 import './assets/fonts/fonts.css'
 import './index.css'
 
 const normalize = (p) => (p === '/' ? '/' : p.replace(/\/+$/, ''))
+
+loadGtm()
 
 const container = document.getElementById('root')
 const tree = (

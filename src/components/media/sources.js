@@ -1,12 +1,15 @@
-import heroVideo from '../../assets/mp4/herovideo.mp4'
-import hackVideo from '../../assets/mp4/videohalo.mp4'
-import haloVideo from '../../assets/mp4/halovideo1.webm'
-import hereVideo from '../../assets/mp4/herevideo.mp4'
-import hitsVideo from '../../assets/mp4/hitsvideo.mp4'
-import hopeVideo from '../../assets/mp4/hopevideo.mp4'
-import huntVideo from '../../assets/mp4/huntvideo.mp4'
-import hypeVideo from '../../assets/mp4/HypeVideo.mp4'
-import hookVideo from '../../assets/mp4/videoshook.mp4'
+/* Web versions of the originals in assets/mp4: H.264 (plays in every
+   browser — the HALO original was AV1), no audio track, max 1920px,
+   faststart so playback begins before the file finishes downloading. */
+import heroVideo from '../../assets/video/hero.mp4'
+import hackVideo from '../../assets/video/hack.mp4'
+import haloVideo from '../../assets/video/halo.mp4'
+import hereVideo from '../../assets/video/here.mp4'
+import hitsVideo from '../../assets/video/hits.mp4'
+import hopeVideo from '../../assets/video/hope.mp4'
+import huntVideo from '../../assets/video/hunt.mp4'
+import hypeVideo from '../../assets/video/hype.mp4'
+import hookVideo from '../../assets/video/hook.mp4'
 
 import holy1 from '../../assets/holy/holy1.jpeg'
 import holy2 from '../../assets/holy/holy2.jpeg'

@@ -14,6 +14,8 @@ import './BrandPage.css'
 gsap.registerPlugin(ScrollTrigger)
 
 const pad = (n) => String(n).padStart(2, '0')
+// Never break "H Group" across two lines.
+const keepTogether = (s) => s.replace(/H Group/g, 'H Group')
 const brandIndex = (id) => holdingsLogos.findIndex((h) => h.id === id)
 
 /* Next H in accordion order that also has its own page, or null. */
@@ -114,22 +116,25 @@ function BrandPage({ brandId }) {
 
       <section className="brand-intro" data-bar="light">
         <p className="brand-label" data-reveal>{copy.tagline}</p>
-        <p className="brand-intro__text" data-reveal>{copy.intro}</p>
+        <p className="brand-intro__text" data-reveal>{keepTogether(copy.intro)}</p>
       </section>
 
-      <section className="brand-section" data-bar="light">
-        <h2 className="brand-label" data-reveal>{t('brand.services')}</h2>
-        <ol className="brand-services">
-          {copy.services.map((service, i) => (
-            <li key={service.title} className="brand-services__item" data-reveal>
-              <span className="brand-services__index">{pad(i + 1)}</span>
-              <h3 className="brand-services__name">{service.title}</h3>
-              <p className="brand-services__text">{service.text}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      {copy.services?.length > 0 && (
+        <section className="brand-section" data-bar="light">
+          <h2 className="brand-label" data-reveal>{t('brand.services')}</h2>
+          <ol className="brand-services">
+            {copy.services.map((service, i) => (
+              <li key={service.title} className="brand-services__item" data-reveal>
+                <span className="brand-services__index">{pad(i + 1)}</span>
+                <h3 className="brand-services__name">{service.title}</h3>
+                <p className="brand-services__text">{service.text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
+      {(brand.gallery || brand.projects) && (
       <section className="brand-band" data-bar="light">
         <div className="brand-section">
           <h2 className="brand-label" data-reveal>{t('brand.projects')}</h2>
@@ -167,6 +172,7 @@ function BrandPage({ brandId }) {
           )}
         </div>
       </section>
+      )}
 
       {brand.collaborations && (
         <section className="brand-section" data-bar="light">

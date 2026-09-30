@@ -8,7 +8,7 @@ const setAttr = (selector, attr, value) => {
   if (el) el.setAttribute(attr, value)
 }
 
-// Unknown URLs render the 404 page; this keeps them out of the index.
+// Unknown URLs (the 404 page) and draft brand pages stay out of the index.
 const setNoindex = (on) => {
   let tag = document.head.querySelector('meta[name="robots"]')
   if (on && !tag) {
@@ -33,7 +33,7 @@ export function usePageMeta() {
       document.title = translations[langFromPath(pathname)].notFound.metaTitle
       return
     }
-    setNoindex(false)
+    setNoindex(meta.noindex)
 
     document.documentElement.lang = meta.htmlLang
     document.title = meta.title

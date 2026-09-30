@@ -7,8 +7,9 @@ import LocaleLink from './components/LocaleLink'
 import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
 import BrandsMarquee from './components/BrandsMarquee'
-import heroBannerVideo from './assets/mp4/videoprincipal.MOV'
+import heroBannerVideo from './assets/video/hero-banner.mp4'
 import { usePageMeta } from './hooks/usePageMeta'
+import { useAnalytics } from './hooks/useAnalytics'
 import { LANGS, PAGES } from './data/seo'
 import './App.css'
 
@@ -27,7 +28,7 @@ const NotFound = lazy(() => import('./components/NotFound'))
    run in dev doesn't cancel it. */
 let introShown = false
 
-/* HERO_VIDEO — dedicated hero clip (videoprincipal.MOV).
+/* HERO_VIDEO — dedicated hero clip (assets/video/hero-banner.mp4).
    Set to `null` for the white-background fallback. */
 const HERO_VIDEO = heroBannerVideo
 
@@ -278,6 +279,7 @@ const pageElement = (page) => {
    is mounted at both its Spanish and English path (see data/seo.js). */
 function App() {
   usePageMeta()
+  useAnalytics()
 
   return (
     <LanguageProvider>

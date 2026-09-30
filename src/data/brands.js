@@ -46,8 +46,104 @@ const HOLY_GALLERY = [
    everything visible is bilingual. Routing + <head> live in seo.js
    (BRAND_SEO) — add the id there too when a new brand page is added.
    `wide: true` = landscape photo shown full width instead of beside
-   its text. */
+   its text.
+
+   Every section except the hero, intro and CTA is optional: a page shows
+   services, projects (or a gallery) and collaborations only once they
+   exist here. The brands marked `draft` in seo.js only carry the copy the
+   site already had for them (the accordion one-liner) until their own
+   folders are added. */
 export const BRAND_PAGES = {
+  hero: {
+    name: 'HERO',
+    externalUrl: holdingLinks.hero,
+    copy: {
+      es: {
+        tagline: 'Impacto social',
+        headline: 'Impacto social que conecta empresas con más de 144 fundaciones',
+        intro:
+          'HERO es la fundación de impacto social de H Group: conecta a las empresas con más de 144 fundaciones a través de estrategias creativas.',
+      },
+      en: {
+        tagline: 'Social impact',
+        headline: 'Social impact connecting companies with 144+ foundations',
+        intro:
+          "HERO is H Group's social impact foundation, connecting companies with 144+ foundations through creative strategies.",
+      },
+    },
+  },
+  hack: {
+    name: 'HACK',
+    externalUrl: holdingLinks.hack,
+    copy: {
+      es: {
+        tagline: 'Estrategia digital',
+        headline: 'Estrategias digitales enfocadas en conversión y brand awareness',
+        intro:
+          'HACK es la marca de estrategia digital de H Group: diseña estrategias enfocadas en conversión y brand awareness.',
+      },
+      en: {
+        tagline: 'Digital strategy',
+        headline: 'Digital strategies focused on conversion and brand awareness',
+        intro:
+          "HACK is H Group's digital strategy brand, designing strategies focused on conversion and brand awareness.",
+      },
+    },
+  },
+  halo: {
+    name: 'HALO',
+    externalUrl: holdingLinks.halo,
+    copy: {
+      es: {
+        tagline: 'Contenido y producción',
+        headline: 'Contenido creativo y producción de video de alta calidad',
+        intro:
+          'HALO es la marca de contenido de H Group: crea contenido creativo y producción de video de alta calidad para marcas.',
+      },
+      en: {
+        tagline: 'Content & production',
+        headline: 'Creative content and high-quality video production',
+        intro:
+          "HALO is H Group's content brand, creating creative content and high-quality video production for brands.",
+      },
+    },
+  },
+  here: {
+    name: 'HERE',
+    externalUrl: holdingLinks.here,
+    copy: {
+      es: {
+        tagline: 'Influencer marketing',
+        headline: 'Marketing de influencia con una comunidad de más de 730 creadores',
+        intro:
+          'HERE es la marca de marketing de influencia de H Group: gestiona una comunidad vibrante de más de 730 creadores digitales.',
+      },
+      en: {
+        tagline: 'Influencer marketing',
+        headline: 'Influencer marketing with a community of 730+ creators',
+        intro:
+          "HERE is H Group's influencer marketing brand, managing a vibrant community of 730+ digital creators.",
+      },
+    },
+  },
+  hits: {
+    name: 'HITS',
+    externalUrl: holdingLinks.hits,
+    copy: {
+      es: {
+        tagline: 'Estudio creativo',
+        headline: 'Propuestas creativas a la medida para marcas líderes',
+        intro:
+          'HITS es el estudio creativo de H Group: desarrolla propuestas a la medida para marcas líderes.',
+      },
+      en: {
+        tagline: 'Creative studio',
+        headline: 'Tailor-made creative proposals for leading brands',
+        intro:
+          "HITS is H Group's creative studio, developing tailor-made proposals for leading brands.",
+      },
+    },
+  },
   home: {
     name: 'HOME',
     externalUrl: holdingLinks.home,
@@ -106,6 +202,78 @@ export const BRAND_PAGES = {
         },
         collaborationsAlt:
           'Brands HOME has worked with: Volvo, BOSS, Nissan, Nespresso, Volkswagen, OPPO, Casa Don Ramón, Lancôme, Formula 1, NYX Professional Makeup, Chanel, Mugler, Porsche, GAC Motor, Kylie Cosmetics, Victorinox, Kia, Zeekr, Jaecoo, Maserati and Chirey.',
+      },
+    },
+  },
+  hope: {
+    name: 'HOPE',
+    externalUrl: holdingLinks.hope,
+    copy: {
+      es: {
+        tagline: 'Innovación educativa',
+        headline: 'Innovación educativa que conecta marcas con más de 200 universidades',
+        intro:
+          'HOPE es la marca de innovación educativa de H Group: conecta a las marcas con más de 200 universidades.',
+      },
+      en: {
+        tagline: 'Educational innovation',
+        headline: 'Educational innovation connecting brands with 200+ universities',
+        intro:
+          "HOPE is H Group's educational innovation brand, connecting brands with 200+ universities.",
+      },
+    },
+  },
+  hunt: {
+    name: 'HUNT',
+    externalUrl: holdingLinks.hunt,
+    copy: {
+      es: {
+        tagline: 'Estrategia de medios',
+        headline: 'Estrategia de medios con más de 100,000 oportunidades de visibilidad',
+        intro:
+          'HUNT es la marca de estrategia de medios de H Group: ofrece más de 100,000 oportunidades de visibilidad de marca.',
+      },
+      en: {
+        tagline: 'Media strategy',
+        headline: 'Media strategy with 100,000+ brand visibility opportunities',
+        intro:
+          "HUNT is H Group's media strategy brand, offering 100,000+ brand visibility opportunities.",
+      },
+    },
+  },
+  hype: {
+    name: 'HYPE',
+    externalUrl: holdingLinks.hype,
+    copy: {
+      es: {
+        tagline: 'Relaciones públicas',
+        headline: 'Relaciones públicas que amplifican tu marca en más de 150 medios',
+        intro:
+          'HYPE es la marca de relaciones públicas de H Group: amplifica la voz de las marcas a través de más de 150 medios de comunicación.',
+      },
+      en: {
+        tagline: 'Public relations',
+        headline: 'Public relations that amplify your brand across 150+ media outlets',
+        intro:
+          "HYPE is H Group's public relations brand, amplifying brand voices through 150+ media outlets.",
+      },
+    },
+  },
+  hook: {
+    name: 'HOOK',
+    externalUrl: holdingLinks.hook,
+    copy: {
+      es: {
+        tagline: 'Eventos y activaciones',
+        headline: 'Gestión de eventos y activaciones de marca',
+        intro:
+          'HOOK es la marca de eventos de H Group: gestiona eventos y activaciones de marca.',
+      },
+      en: {
+        tagline: 'Events & activations',
+        headline: 'Event management and brand activations',
+        intro:
+          "HOOK is H Group's events brand, managing events and brand activations.",
       },
     },
   },

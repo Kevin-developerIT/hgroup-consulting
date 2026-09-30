@@ -4,6 +4,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { runSeoChecks } from './seo-checks.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = path.join(root, 'dist')
@@ -86,6 +87,8 @@ const alternateLinks = (meta) =>
     .join('\n    ')
 
 const sitemapUrls = []
+const builtPages = []
+let notFoundHtml = ''
 
 for (const page of PAGES) {
   for (const lang of LANGS) {
@@ -104,6 +107,7 @@ for (const page of PAGES) {
 
     let html = setHead(template, meta)
     const headExtras = [
+      meta.noindex && '<meta name="robots" content="noindex">',
       hints.replace(/\/></g, '/>\n    <'),
       routeAssets(page.module),
       alternateLinks(meta),
@@ -129,12 +133,22 @@ for (const page of PAGES) {
     }
     console.log(`prerendered ${route.padEnd(22)} → ${outFiles.map((f) => path.relative(distDir, f)).join(', ')} (${(html.length / 1024).toFixed(1)} kB)`)
 
-    // Pages that canonicalize elsewhere (e.g. /en/privacy-policy) stay out.
-    if (meta.canonical === SITE_ORIGIN + (route === '/' ? '/' : route)) {
-      sitemapUrls.push(meta)
-    }
+    // Pages that canonicalize elsewhere (e.g. /en/privacy-policy) and
+    // draft brand pages stay out.
+    const indexable = !meta.noindex && meta.canonical === SITE_ORIGIN + (route === '/' ? '/' : route)
+    if (indexable) sitemapUrls.push(meta)
+    builtPages.push({
+      route,
+      lang,
+      html,
+      indexable,
+      expected: { canonical: meta.canonical, htmlLang: meta.htmlLang, alternates: meta.alternates, noindex: meta.noindex },
+    })
   }
 }
+
+const drafts = PAGES.filter((p) => p.draft).map((p) => p.paths.es)
+if (drafts.length) console.log(`borradores (noindex, fuera del sitemap): ${drafts.join(', ')}`)
 
 // 404.html — hosts serve it for URLs that don't exist. Rendered in
 // Spanish (the app re-renders in English for /en/... URLs); noindex and
@@ -158,6 +172,7 @@ for (const page of PAGES) {
   html = replaceOnce(html, /\n\s*<\/head>/, () => `\n    ${headExtras}\n  </head>`, '</head>')
   html = replaceOnce(html, /<div id="root"><\/div>/, () => `<div id="root" data-prerendered="/404">${appHtml}</div>`, '#root')
   await fs.writeFile(path.join(distDir, '404.html'), html)
+  notFoundHtml = html
   console.log(`prerendered ${'(404)'.padEnd(22)} → 404.html (${(html.length / 1024).toFixed(1)} kB)`)
 }
 
@@ -178,6 +193,15 @@ const sitemap = [
 ].join('\n')
 await fs.writeFile(path.join(distDir, 'sitemap.xml'), sitemap)
 console.log(`sitemap.xml: ${sitemapUrls.length} URLs`)
+
+// SEO checklist on the final HTML of every page (report point 12).
+const seo = runSeoChecks(builtPages, { notFoundHtml, sitemapXml: sitemap, distDir, siteOrigin: SITE_ORIGIN })
+for (const w of seo.warnings) console.warn(`  ⚠ ${w}`)
+if (seo.errors.length) {
+  for (const e of seo.errors) console.error(`  ✗ ${e}`)
+  throw new Error(`SEO checklist: ${seo.errors.length} error(es) en ${seo.checked} páginas`)
+}
+console.log(`SEO checklist: ${seo.checked} páginas + 404 + sitemap OK${seo.warnings.length ? ` (${seo.warnings.length} avisos)` : ''}`)
 
 // The manifest and SSR bundle are build intermediates — don't deploy them.
 await fs.rm(path.join(distDir, '.vite'), { recursive: true, force: true })

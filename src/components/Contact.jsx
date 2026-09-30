@@ -4,6 +4,7 @@ import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
+import { track } from '../lib/analytics'
 import './Pages.css'
 import './Contact.css'
 
@@ -24,7 +25,7 @@ const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/kevin.martinez@hgroup.consu
 function Contact() {
   const navigate = useNavigate()
   const localize = useLocalePath()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
 
   const handleClose = () => {
@@ -62,6 +63,7 @@ function Contact() {
       const data = await response.json().catch(() => null)
       if (response.ok && data?.success === 'true') {
         setStatus('success')
+        track('generate_lead', { form: 'contact', language, page_path: window.location.pathname })
         formEl.reset()
       } else {
         setStatus('error')

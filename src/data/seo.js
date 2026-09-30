@@ -33,7 +33,7 @@ const PAGES_BASE = [
       es: {
         title: 'Trabaja con nosotros | H Group',
         description:
-          'Conoce H Group: una holding con 11 marcas especializadas en PR, influencer marketing, eventos, producción, contenido y estrategia digital, con presencia en los 32 estados de México.',
+          'H Group es una holding de 11 marcas especializadas en PR, influencer marketing, eventos, producción y estrategia digital, con presencia en los 32 estados de México.',
       },
       en: {
         title: 'Work with us | H Group',
@@ -117,25 +117,145 @@ const PAGES_BASE = [
 ]
 
 /* One entry per H that has its own page on hgroup.consulting. The page
-   content lives in src/data/brands.js; this is only routing + <head>. */
+   content lives in src/data/brands.js; this is only routing + <head>.
+   `draft: true` = content still pending: the page works and is linked,
+   but ships with noindex and stays out of the sitemap. Remove the flag
+   once its services, projects and texts are in. */
 const BRAND_SEO = {
+  hero: {
+    draft: true,
+    es: {
+      title: 'HERO | Fundación de impacto social — H Group',
+      description:
+        'HERO, fundación de impacto social de H Group, conecta a empresas con más de 144 fundaciones a través de estrategias creativas.',
+    },
+    en: {
+      title: 'HERO | Social impact foundation — H Group',
+      description:
+        "HERO, H Group's social impact foundation, connects companies with 144+ foundations through creative strategies.",
+    },
+  },
+  hack: {
+    draft: true,
+    es: {
+      title: 'HACK | Estrategia digital y conversión — H Group',
+      description:
+        'HACK, marca de H Group, crea estrategias digitales enfocadas en conversión y brand awareness para marcas en México.',
+    },
+    en: {
+      title: 'HACK | Digital strategy & conversion — H Group',
+      description:
+        'HACK, an H Group brand, builds digital strategies focused on conversion and brand awareness for brands in Mexico.',
+    },
+  },
+  halo: {
+    draft: true,
+    es: {
+      title: 'HALO | Contenido creativo y producción de video — H Group',
+      description:
+        'HALO, marca de H Group, crea contenido creativo y producción de video de alta calidad para marcas en México.',
+    },
+    en: {
+      title: 'HALO | Creative content & video production — H Group',
+      description:
+        'HALO, an H Group brand, creates creative content and high-quality video production for brands in Mexico.',
+    },
+  },
+  here: {
+    draft: true,
+    es: {
+      title: 'HERE | Influencer marketing con 730+ creadores — H Group',
+      description:
+        'HERE, marca de H Group, hace marketing de influencia con una comunidad de más de 730 creadores digitales en México.',
+    },
+    en: {
+      title: 'HERE | Influencer marketing with 730+ creators — H Group',
+      description:
+        'HERE, an H Group brand, runs influencer marketing with a community of 730+ digital creators in Mexico.',
+    },
+  },
+  hits: {
+    draft: true,
+    es: {
+      title: 'HITS | Estudio creativo para marcas — H Group',
+      description:
+        'HITS, estudio creativo de H Group, desarrolla propuestas creativas a la medida para marcas líderes.',
+    },
+    en: {
+      title: 'HITS | Creative studio for brands — H Group',
+      description:
+        "HITS, H Group's creative studio, develops tailor-made creative proposals for leading brands.",
+    },
+  },
   home: {
     es: {
       title: 'HOME | Pop-ups, stands y test drives — H Group',
       description:
-        'HOME, marca de H Group, idea y ejecuta experiencias BTL en centros comerciales y eventos: pop-ups, stands y test drives para marcas como Formula 1, Kylie Cosmetics, Nissan y Volvo.',
+        'HOME, marca de H Group, crea experiencias BTL en centros comerciales y eventos: pop-ups, stands y test drives para Formula 1, Kylie Cosmetics, Nissan y Volvo.',
     },
     en: {
       title: 'HOME | Pop-ups, stands & test drives — H Group',
       description:
-        'HOME, an H Group brand, designs and produces BTL experiences in shopping centers and events: pop-ups, stands and test drives for brands like Formula 1, Kylie Cosmetics, Nissan and Volvo.',
+        'HOME, an H Group brand, creates BTL experiences in shopping centers and events: pop-ups, stands and test drives for Formula 1, Kylie Cosmetics, Nissan and Volvo.',
+    },
+  },
+  hope: {
+    draft: true,
+    es: {
+      title: 'HOPE | Innovación educativa con 200+ universidades — H Group',
+      description:
+        'HOPE, marca de H Group, impulsa la innovación educativa conectando marcas con más de 200 universidades en México.',
+    },
+    en: {
+      title: 'HOPE | Educational innovation with 200+ universities — H Group',
+      description:
+        'HOPE, an H Group brand, drives educational innovation by connecting brands with 200+ universities in Mexico.',
+    },
+  },
+  hunt: {
+    draft: true,
+    es: {
+      title: 'HUNT | Estrategia de medios — H Group',
+      description:
+        'HUNT, marca de H Group, diseña estrategias de medios con más de 100,000 oportunidades de visibilidad de marca.',
+    },
+    en: {
+      title: 'HUNT | Media strategy — H Group',
+      description:
+        'HUNT, an H Group brand, designs media strategies with 100,000+ brand visibility opportunities.',
+    },
+  },
+  hype: {
+    draft: true,
+    es: {
+      title: 'HYPE | Relaciones públicas en 150+ medios — H Group',
+      description:
+        'HYPE, marca de relaciones públicas de H Group, amplifica la voz de las marcas a través de más de 150 medios de comunicación.',
+    },
+    en: {
+      title: 'HYPE | Public relations across 150+ media — H Group',
+      description:
+        "HYPE, H Group's public relations brand, amplifies brand voices through 150+ media outlets.",
+    },
+  },
+  hook: {
+    draft: true,
+    es: {
+      title: 'HOOK | Eventos y activaciones de marca — H Group',
+      description:
+        'HOOK, marca de H Group, gestiona eventos y activaciones de marca en México.',
+    },
+    en: {
+      title: 'HOOK | Events & brand activations — H Group',
+      description:
+        'HOOK, an H Group brand, manages events and brand activations in Mexico.',
     },
   },
   holy: {
     es: {
       title: 'HOLY | Representación de talento, UGC y convocatorias — H Group',
       description:
-        'HOLY, vertical de H Group, conecta marcas con creadores a través de representación de talento, contenido UGC y convocatorias que generan contenido auténtico y resultados de negocio.',
+        'HOLY, vertical de H Group, conecta marcas con creadores mediante representación de talento, UGC y convocatorias que generan contenido auténtico y resultados.',
     },
     en: {
       title: 'HOLY | Talent representation, UGC & casting calls — H Group',
@@ -155,6 +275,7 @@ export const PAGES = [
     paths: { es: `/marcas/${id}`, en: `/en/brands/${id}` },
     module: 'src/components/BrandPage.jsx',
     og: id,
+    draft: Boolean(BRAND_SEO[id].draft),
     seo: BRAND_SEO[id],
   })),
 ]
@@ -199,7 +320,8 @@ export function alternatePath(pathname) {
 export const canonicalFor = (path) => SITE_ORIGIN + normalizePath(path)
 
 /* Everything the <head> needs for a URL: title, description, canonical,
-   language and hreflang alternates. Null for unknown paths. */
+   language, hreflang alternates and whether it's kept out of the index
+   (draft brand pages). Null for unknown paths. */
 export function seoFor(pathname) {
   const match = findPage(pathname)
   if (!match) return null
@@ -207,6 +329,7 @@ export function seoFor(pathname) {
   const hasAlternates = !page.canonicalLang
   return {
     lang,
+    noindex: Boolean(page.draft),
     htmlLang: HREFLANG[lang],
     ogLocale: lang === 'es' ? 'es_MX' : 'en_US',
     ogLocaleAlternate: lang === 'es' ? 'en_US' : 'es_MX',
