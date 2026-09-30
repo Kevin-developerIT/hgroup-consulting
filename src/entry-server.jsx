@@ -3,7 +3,7 @@ import { prerenderToNodeStream } from 'react-dom/static'
 import { StaticRouter } from 'react-router-dom'
 import App from './App.jsx'
 
-export { ROUTES_SEO, canonicalFor } from './data/seo'
+export { PAGES, LANGS, SITE_ORIGIN, seoFor } from './data/seo'
 export { buildSchema } from './data/schema'
 
 /* prerenderToNodeStream waits for every lazy route chunk to resolve,

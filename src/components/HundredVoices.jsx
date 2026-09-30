@@ -1,17 +1,19 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/useLanguage'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import { images } from '../assets'
 import './Pages.css'
 
 function HundredVoices() {
   const navigate = useNavigate()
+  const localize = useLocalePath()
   const { t } = useLanguage()
 
   const handleClose = () => {
-    navigate('/')
+    navigate(localize('/'))
   }
 
   // Número de WhatsApp - cambia esto por el número real
@@ -36,17 +38,17 @@ function HundredVoices() {
         
         <div className="sidebar-content">
           <div className="page-nav">
-            <Link to="/work-with-us" className="nav-item">{t('nav.workWithUs')}</Link>
+            <LocaleLink to="/work-with-us" className="nav-item">{t('nav.workWithUs')}</LocaleLink>
           </div>
           <div className="page-nav">
-            <Link to="/join-us" className="nav-item">{t('nav.joinUs')}</Link>
+            <LocaleLink to="/join-us" className="nav-item">{t('nav.joinUs')}</LocaleLink>
           </div>
           <div className="page-nav">
             <span className="nav-dot active"></span>
             <span className="nav-item">CIEN VOCES</span>
           </div>
           <div className="page-nav">
-            <Link to="/contact" className="nav-item">{t('nav.contact')}</Link>
+            <LocaleLink to="/contact" className="nav-item">{t('nav.contact')}</LocaleLink>
           </div>
           <div className="page-nav">
             <a href="https://www.instagram.com/hgroupp_/" target="_blank" rel="noopener noreferrer" className="nav-item">
@@ -76,7 +78,7 @@ function HundredVoices() {
           </div>
 
           <div className="sidebar-legal">
-            <Link to="/privacy-policy">Política de Privacidad</Link>
+            <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/useLanguage'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 import './Contact.css'
@@ -22,11 +23,12 @@ const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/kevin.martinez@hgroup.consu
 
 function Contact() {
   const navigate = useNavigate()
+  const localize = useLocalePath()
   const { t } = useLanguage()
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
 
   const handleClose = () => {
-    navigate('/')
+    navigate(localize('/'))
   }
 
   const handleSubmit = async (e) => {
@@ -87,19 +89,19 @@ function Contact() {
 
           <div className="sidebar-content">
             <div className="page-nav">
-              <Link to="/work-with-us" className="nav-item">
+              <LocaleLink to="/work-with-us" className="nav-item">
                 {t('nav.workWithUs')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/join-us" className="nav-item">
+              <LocaleLink to="/join-us" className="nav-item">
                 {t('nav.joinUs')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/100-voices" className="nav-item">
+              <LocaleLink to="/100-voices" className="nav-item">
                 {t('nav.hundredVoices')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
               <span className="nav-dot active"></span>
@@ -139,7 +141,7 @@ function Contact() {
             </div>
 
             <div className="sidebar-legal">
-              <Link to="/privacy-policy">Política de Privacidad</Link>
+              <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
             </div>
           </div>
         </div>

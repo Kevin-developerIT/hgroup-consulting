@@ -1,0 +1,688 @@
+/* ==============================================================
+   Brand page — shared template for every H.
+   Same vocabulary as the home accordion: Visby Thin at display
+   sizes, tiny uppercase tracked labels, pill buttons, H footage.
+   ============================================================== */
+
+.brand-page {
+  --bp-ink: #0d0d0d;
+  --bp-paper: #ffffff;
+  --bp-soft: #f4f3f0;
+  --bp-muted: #6b6b6b;
+  --bp-body: #3d3d3d;
+  --bp-line: rgba(13, 13, 13, 0.12);
+  --bp-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --bp-gutter: clamp(20px, 6vw, 96px);
+  --bp-max: 1600px;
+  background: var(--bp-paper);
+  color: var(--bp-ink);
+  font-family: 'Visby CF', sans-serif;
+}
+
+/* -------------------- Top bar --------------------
+   White over dark sections (.is-dark), ink over light ones (.is-light);
+   BrandPage.jsx picks the tone from the section under the bar. */
+.brand-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px var(--bp-gutter);
+  color: #ffffff;
+  pointer-events: none;
+  transition: color 0.4s ease;
+}
+
+.brand-topbar.is-light {
+  color: var(--bp-ink);
+}
+
+.brand-topbar > * {
+  pointer-events: auto;
+}
+
+.brand-topbar__logo img {
+  display: block;
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: filter 0.4s ease;
+}
+
+.brand-topbar.is-light .brand-topbar__logo img {
+  filter: brightness(0);
+}
+
+.brand-topbar__nav {
+  display: flex;
+  gap: clamp(20px, 3vw, 44px);
+}
+
+.brand-topbar__nav a {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.brand-topbar__nav a:hover {
+  opacity: 0.55;
+}
+
+/* -------------------- Hero -------------------- */
+.brand-hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+.brand-hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.brand-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Top band keeps the white top bar legible over bright footage;
+     bottom band carries the title. */
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 26%),
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 42%,
+      rgba(0, 0, 0, 0.18) 100%
+    );
+}
+
+.brand-hero__content {
+  position: absolute;
+  left: var(--bp-gutter);
+  right: var(--bp-gutter);
+  bottom: clamp(56px, 10vh, 120px);
+  z-index: 2;
+}
+
+.brand-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 clamp(18px, 2.4vw, 30px);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.brand-hero__index {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.brand-hero__index::after {
+  content: '';
+  width: 44px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.brand-hero__title {
+  margin: 0;
+  font-weight: inherit;
+}
+
+.brand-hero__name {
+  display: block;
+  margin-left: -0.05em;
+  font-size: clamp(4.5rem, 17vw, 15rem);
+  font-weight: 100;
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+}
+
+.brand-hero__headline {
+  display: block;
+  margin-top: clamp(20px, 2.6vw, 34px);
+  max-width: 32ch;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  opacity: 0.9;
+}
+
+.brand-hero__scroll {
+  position: absolute;
+  right: var(--bp-gutter);
+  bottom: clamp(56px, 10vh, 120px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  writing-mode: vertical-rl;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.brand-hero__scroll::after {
+  content: '';
+  width: 1px;
+  height: 64px;
+  background: currentColor;
+  transform-origin: top;
+  animation: brand-scroll-line 2.4s var(--bp-ease) infinite;
+}
+
+@keyframes brand-scroll-line {
+  0% { transform: scaleY(0); opacity: 1; }
+  60% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+/* CSS-only entrance: runs on first paint, so the prerendered HTML
+   and the hydrated page look identical (no JS flash). */
+.brand-rise {
+  animation: brand-rise 1.5s var(--bp-ease) both;
+}
+.brand-hero__eyebrow.brand-rise { animation-delay: 0.15s; }
+.brand-hero__name.brand-rise { animation-delay: 0.3s; }
+.brand-hero__headline.brand-rise { animation-delay: 0.55s; }
+
+@keyframes brand-rise {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* -------------------- Shared section pieces -------------------- */
+.brand-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 clamp(32px, 5vw, 64px);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--bp-muted);
+}
+
+.brand-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+}
+
+.brand-section {
+  max-width: var(--bp-max);
+  margin: 0 auto;
+  padding: clamp(64px, 9vw, 140px) var(--bp-gutter);
+}
+
+.brand-band {
+  background: var(--bp-soft);
+}
+
+/* -------------------- Intro -------------------- */
+.brand-intro {
+  display: grid;
+  grid-template-columns: minmax(160px, 22%) minmax(0, 1fr);
+  column-gap: clamp(24px, 5vw, 80px);
+  max-width: var(--bp-max);
+  margin: 0 auto;
+  padding: clamp(96px, 14vw, 200px) var(--bp-gutter) clamp(40px, 6vw, 80px);
+}
+
+.brand-intro .brand-label {
+  margin: 0.9em 0 0;
+  align-self: start;
+}
+
+.brand-intro__text {
+  margin: 0;
+  max-width: 22em;
+  font-size: clamp(1.55rem, 3vw, 3rem);
+  font-weight: 300;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+}
+
+/* -------------------- Services -------------------- */
+.brand-services {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--bp-line);
+}
+
+.brand-services__item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.1fr);
+  column-gap: clamp(16px, 3vw, 48px);
+  align-items: baseline;
+  padding: clamp(28px, 3.6vw, 52px) 0;
+  border-bottom: 1px solid var(--bp-line);
+}
+
+.brand-services__index {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--bp-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.brand-services__name {
+  margin: 0;
+  font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: transform 0.7s var(--bp-ease);
+}
+
+.brand-services__item:hover .brand-services__name {
+  transform: translateX(12px);
+}
+
+.brand-services__text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--bp-body);
+}
+
+/* -------------------- Projects -------------------- */
+.brand-projects {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(80px, 11vw, 170px);
+}
+
+.brand-project {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(28px, 6vw, 110px);
+  align-items: center;
+}
+
+.brand-project__media {
+  justify-self: center;
+  width: min(100%, 480px);
+  margin: 0;
+  overflow: hidden;
+  background: #e4e2dd;
+  aspect-ratio: 4 / 5;
+}
+
+.brand-project__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s var(--bp-ease);
+}
+
+.brand-project:hover .brand-project__media img {
+  transform: scale(1.035);
+}
+
+.brand-project--flip .brand-project__media {
+  order: 2;
+}
+
+.brand-project__body {
+  justify-self: center;
+  width: min(100%, 460px);
+}
+
+.brand-project__index {
+  display: block;
+  margin-bottom: 28px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--bp-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.brand-project__logo {
+  display: block;
+  height: 30px;
+  width: auto;
+  max-width: 170px;
+  margin-bottom: 26px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.brand-project__name {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.brand-project__text {
+  margin: 0;
+  font-size: clamp(0.98rem, 1.12vw, 1.1rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--bp-body);
+}
+
+/* Landscape photo: full width, text underneath in two columns. */
+.brand-project--wide {
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: clamp(32px, 4vw, 56px);
+}
+
+.brand-project--wide .brand-project__media {
+  width: 100%;
+  aspect-ratio: auto;
+}
+
+.brand-project--wide .brand-project__media img {
+  height: auto;
+}
+
+.brand-project--wide .brand-project__body {
+  justify-self: stretch;
+  width: auto;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.1fr);
+  column-gap: clamp(16px, 3vw, 48px);
+  align-items: baseline;
+}
+
+.brand-project--wide .brand-project__logo {
+  display: none;
+}
+
+/* -------------------- Collaborations -------------------- */
+.brand-collabs {
+  display: block;
+  width: 100%;
+  max-width: 1180px;
+  height: auto;
+  margin: 0 auto;
+  /* The source image has an off-white background; multiply blends it
+     into the page so only the logos show. */
+  mix-blend-mode: multiply;
+}
+
+/* -------------------- CTA -------------------- */
+.brand-cta {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+.brand-cta__inner {
+  max-width: var(--bp-max);
+  margin: 0 auto;
+  padding: clamp(96px, 14vw, 200px) var(--bp-gutter) clamp(80px, 10vw, 140px);
+}
+
+.brand-cta__title {
+  margin: 0 0 clamp(36px, 5vw, 56px);
+  max-width: 13ch;
+  font-size: clamp(2.6rem, 6.8vw, 6.4rem);
+  font-weight: 100;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.brand-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.brand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.4s var(--bp-ease),
+    color 0.4s var(--bp-ease),
+    border-color 0.4s var(--bp-ease),
+    transform 0.4s var(--bp-ease);
+}
+
+.brand-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateX(4px);
+}
+
+.brand-btn--solid {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.brand-btn--solid:hover {
+  background: transparent;
+  color: #ffffff;
+}
+
+/* -------------------- Next brand -------------------- */
+.brand-next {
+  background: #0a0a0a;
+  color: #ffffff;
+  /* Leaves room so the fixed EN/ES toggle never covers the footer. */
+  padding: 0 var(--bp-gutter) 96px;
+}
+
+.brand-next__link {
+  display: block;
+  max-width: var(--bp-max);
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 120px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.brand-next__eyebrow {
+  display: block;
+  margin-bottom: 22px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.brand-next__name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  font-size: clamp(3.2rem, 11vw, 9.5rem);
+  font-weight: 100;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  transition: letter-spacing 0.9s var(--bp-ease);
+}
+
+.brand-next__name--long {
+  font-size: clamp(2.2rem, 5.6vw, 5rem);
+  letter-spacing: -0.025em;
+}
+
+.brand-next__link:hover .brand-next__name {
+  letter-spacing: -0.015em;
+}
+
+.brand-next__arrow {
+  font-size: 0.5em;
+  transition: transform 0.7s var(--bp-ease);
+}
+
+.brand-next__link:hover .brand-next__arrow {
+  transform: translateX(16px);
+}
+
+.brand-next__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: var(--bp-max);
+  margin: 0 auto;
+  padding: 24px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.brand-next__footer a:hover {
+  opacity: 0.7;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 900px) {
+  .brand-intro {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+  }
+
+  .brand-intro .brand-label {
+    margin: 0;
+  }
+
+  .brand-services__item,
+  .brand-project--wide .brand-project__body {
+    grid-template-columns: 40px minmax(0, 1fr);
+    row-gap: 14px;
+  }
+
+  .brand-services__text,
+  .brand-project--wide .brand-project__text {
+    grid-column: 2;
+  }
+
+  .brand-project {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 36px;
+  }
+
+  .brand-project--flip .brand-project__media {
+    order: 0;
+  }
+
+  .brand-project__body {
+    justify-self: stretch;
+    width: auto;
+  }
+
+  /* Portrait photos are only ~500px wide: cap them instead of
+     stretching across tablets. */
+  .brand-project__media {
+    justify-self: start;
+    width: min(100%, 520px);
+  }
+
+  .brand-project--wide .brand-project__media {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-topbar {
+    padding: 18px var(--bp-gutter);
+  }
+
+  .brand-topbar__logo img {
+    height: 30px;
+  }
+
+  .brand-topbar__nav {
+    gap: 18px;
+  }
+
+  .brand-topbar__nav a {
+    font-size: 0.6rem;
+    letter-spacing: 1.8px;
+  }
+
+  .brand-hero__scroll {
+    display: none;
+  }
+
+  .brand-btn {
+    padding: 14px 24px;
+    font-size: 0.66rem;
+  }
+
+  .brand-next {
+    padding-bottom: 72px;
+  }
+
+  .brand-next__footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (hover: none) {
+  .brand-services__item:hover .brand-services__name,
+  .brand-btn:hover,
+  .brand-next__link:hover .brand-next__arrow {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-rise,
+  .brand-hero__scroll::after {
+    animation: none;
+  }
+
+  .brand-services__name,
+  .brand-project__media img,
+  .brand-next__name,
+  .brand-next__arrow,
+  .brand-btn {
+    transition: none;
+  }
+}

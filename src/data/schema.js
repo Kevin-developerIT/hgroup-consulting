@@ -1,7 +1,7 @@
 import { holdingsLogos } from '../assets/logos'
 import { translations } from '../contexts/translations'
 import { holdingLinks } from './holdings'
-import { ROUTES_SEO, SITE_ORIGIN } from './seo'
+import { SITE_ORIGIN, seoFor } from './seo'
 
 const ORG_ID = `${SITE_ORIGIN}/#organization`
 const CONTACT_EMAIL = 'kevin.martinez@hgroup.consulting'
@@ -35,7 +35,7 @@ export function buildSchema() {
           '@type': 'ImageObject',
           url: `${SITE_ORIGIN}/Hlogo_negro.png`,
         },
-        description: ROUTES_SEO['/'].description,
+        description: seoFor('/').description,
         email: CONTACT_EMAIL,
         contactPoint: {
           '@type': 'ContactPoint',
@@ -70,7 +70,7 @@ export function buildSchema() {
         '@id': `${SITE_ORIGIN}/#website`,
         url: `${SITE_ORIGIN}/`,
         name: 'H Group',
-        inLanguage: 'es-MX',
+        inLanguage: ['es-MX', 'en'],
         publisher: { '@id': ORG_ID },
       },
     ],

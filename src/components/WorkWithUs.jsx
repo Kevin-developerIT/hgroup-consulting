@@ -1,19 +1,22 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
 import { holdingLinks } from '../data/holdings'
-import { useLanguage } from '../contexts/useLanguage'
+import { BRAND_PAGE_IDS } from '../data/seo'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 
 function WorkWithUs() {
   const navigate = useNavigate()
+  const localize = useLocalePath()
   const { t } = useLanguage()
 
   const expertise = t('expertise')
 
   const handleClose = () => {
-    navigate('/')
+    navigate(localize('/'))
   }
 
   const handleHoldingClick = (e, holdingName) => {
@@ -46,13 +49,13 @@ function WorkWithUs() {
             <span className="nav-item">{t('nav.workWithUs')}</span>
           </div>
           <div className="page-nav">
-            <Link to="/join-us" className="nav-item">{t('nav.joinUs')}</Link>
+            <LocaleLink to="/join-us" className="nav-item">{t('nav.joinUs')}</LocaleLink>
           </div>
           <div className="page-nav">
-            <Link to="/100-voices" className="nav-item">{t('nav.hundredVoices')}</Link>
+            <LocaleLink to="/100-voices" className="nav-item">{t('nav.hundredVoices')}</LocaleLink>
           </div>
           <div className="page-nav">
-            <Link to="/contact" className="nav-item">{t('nav.contact')}</Link>
+            <LocaleLink to="/contact" className="nav-item">{t('nav.contact')}</LocaleLink>
           </div>
           <div className="page-nav">
             <a href="https://www.instagram.com/hgroupp_/" target="_blank" rel="noopener noreferrer" className="nav-item">
@@ -81,7 +84,7 @@ function WorkWithUs() {
           </div>
 
           <div className="sidebar-legal">
-            <Link to="/privacy-policy">Política de Privacidad</Link>
+            <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
           </div>
         </div>
       </div>
@@ -120,6 +123,11 @@ function WorkWithUs() {
                 <div key={index} className="h-item">
                   <div className="h-header">
                     <h3 className="h-name">{item.name}</h3>
+                    {BRAND_PAGE_IDS.includes(item.name.toLowerCase()) ? (
+                      <LocaleLink to={`/marcas/${item.name.toLowerCase()}`} className="h-link">
+                        {t('workWithUs.viewMore')} <span className="h-arrow">→</span>
+                      </LocaleLink>
+                    ) : (
                     <a
                       href={holdingLinks[item.name.toLowerCase()] || `#${item.name.toLowerCase()}`}
                       className="h-link"
@@ -129,6 +137,7 @@ function WorkWithUs() {
                     >
                       {t('workWithUs.viewMore')} <span className="h-arrow">↗</span>
                     </a>
+                    )}
                   </div>
                   <p className="h-description">{item.description}</p>
                 </div>

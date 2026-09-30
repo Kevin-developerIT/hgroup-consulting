@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/useLanguage'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 import './Privacy.css'
@@ -22,9 +23,10 @@ function Section({ number, title, children }) {
 
 function Privacy() {
   const navigate = useNavigate()
-  const { t } = useLanguage()
+  const localize = useLocalePath()
+  const { t, language } = useLanguage()
 
-  const handleClose = () => navigate('/')
+  const handleClose = () => navigate(localize('/'))
 
   return (
     <>
@@ -44,24 +46,24 @@ function Privacy() {
 
           <div className="sidebar-content">
             <div className="page-nav">
-              <Link to="/work-with-us" className="nav-item">
+              <LocaleLink to="/work-with-us" className="nav-item">
                 {t('nav.workWithUs')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/join-us" className="nav-item">
+              <LocaleLink to="/join-us" className="nav-item">
                 {t('nav.joinUs')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/100-voices" className="nav-item">
+              <LocaleLink to="/100-voices" className="nav-item">
                 {t('nav.hundredVoices')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/contact" className="nav-item">
+              <LocaleLink to="/contact" className="nav-item">
                 {t('nav.contact')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
               <a
@@ -104,6 +106,11 @@ function Privacy() {
             <p className="privacy-updated">
               Última actualización: 17 de julio de 2026
             </p>
+            {language === 'en' && (
+              <p className="privacy-lang-notice" lang="en">
+                {t('privacy.onlySpanish')}
+              </p>
+            )}
 
             <p className="privacy-lead">
               En MYT Marketing Comunicación (&quot;HGROUP&quot;, &quot;nosotros&quot; o &quot;la empresa&quot;), respetamos la privacidad de nuestros usuarios y nos comprometemos a proteger la información personal que recopilamos.

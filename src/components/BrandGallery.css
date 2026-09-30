@@ -1,0 +1,283 @@
+.brand-gallery-group + .brand-gallery-group {
+  margin-top: clamp(72px, 9vw, 140px);
+}
+
+.brand-gallery__title {
+  margin: 0 0 clamp(24px, 3vw, 40px);
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-weight: 100;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* Masonry grid: CSS columns keep every photo at its natural ratio. */
+.brand-gallery {
+  columns: 3;
+  column-gap: clamp(12px, 1.6vw, 22px);
+}
+
+/* Story screenshots side by side, like a row of phones. On narrow
+   screens it becomes a swipeable strip. */
+.brand-stories {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 22px);
+}
+
+/* Stories: the phone frame is the button; the brand name sits under it
+   instead of over the screenshot's own Instagram UI. */
+.brand-stories .brand-gallery__item {
+  margin: 0;
+  overflow: visible;
+  background: none;
+}
+
+.brand-stories .brand-gallery__button {
+  overflow: hidden;
+  border-radius: 18px;
+  background: #e4e2dd;
+}
+
+.brand-stories .brand-gallery__caption {
+  position: static;
+  padding: 14px 2px 0;
+  background: none;
+  color: var(--bp-muted, #6b6b6b);
+  opacity: 1;
+  transform: none;
+}
+
+.brand-gallery__item {
+  position: relative;
+  break-inside: avoid;
+  margin: 0 0 clamp(12px, 1.6vw, 22px);
+  overflow: hidden;
+  background: #e4e2dd;
+}
+
+.brand-gallery__button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.brand-gallery__button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 1.2s var(--bp-ease, ease), filter 0.6s ease;
+}
+
+.brand-gallery__item:hover .brand-gallery__button img {
+  transform: scale(1.04);
+  filter: brightness(0.82);
+}
+
+.brand-gallery__button:focus-visible {
+  outline: 2px solid var(--bp-ink, #0d0d0d);
+  outline-offset: 3px;
+}
+
+/* Brand name slides up over the photo on hover (always shown on touch). */
+.brand-gallery__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 40px 18px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s var(--bp-ease, ease), transform 0.5s var(--bp-ease, ease);
+}
+
+.brand-gallery__item:hover .brand-gallery__caption {
+  opacity: 1;
+  transform: none;
+}
+
+/* -------------------- Lightbox -------------------- */
+.brand-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200000; /* above the fixed EN/ES toggle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 8, 8, 0.96);
+  color: #ffffff;
+  animation: brand-lightbox-in 0.4s ease both;
+}
+
+@keyframes brand-lightbox-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.brand-lightbox__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin: 0;
+  max-width: calc(100vw - 180px);
+}
+
+.brand-lightbox__stage img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 140px);
+  max-height: calc(100svh - 140px);
+  object-fit: contain;
+  animation: brand-lightbox-img 0.5s var(--bp-ease, ease) both;
+}
+
+@keyframes brand-lightbox-img {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.brand-lightbox__meta {
+  display: flex;
+  gap: 24px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+}
+
+.brand-lightbox__close,
+.brand-lightbox__nav {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.brand-lightbox__close:hover,
+.brand-lightbox__nav:hover,
+.brand-lightbox__close:focus-visible,
+.brand-lightbox__nav:focus-visible {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  outline: none;
+}
+
+.brand-lightbox__close {
+  top: 24px;
+  right: 24px;
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+.brand-lightbox__nav--prev {
+  left: 32px;
+}
+
+.brand-lightbox__nav--next {
+  right: 32px;
+}
+
+@media (max-width: 900px) {
+  .brand-gallery {
+    columns: 2;
+  }
+
+  .brand-stories {
+    display: flex;
+    gap: 12px;
+    margin: 0 calc(-1 * var(--bp-gutter, 20px));
+    padding: 0 var(--bp-gutter, 20px) 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--bp-gutter, 20px);
+    scrollbar-width: none;
+  }
+
+  .brand-stories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .brand-stories .brand-gallery__item {
+    flex: 0 0 min(58vw, 260px);
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-lightbox__stage {
+    max-width: calc(100vw - 32px);
+  }
+
+  .brand-lightbox__stage img {
+    max-height: calc(100svh - 200px);
+  }
+
+  .brand-lightbox__nav {
+    top: auto;
+    bottom: 24px;
+  }
+
+  .brand-lightbox__nav--prev {
+    left: calc(50% - 64px);
+  }
+
+  .brand-lightbox__nav--next {
+    right: calc(50% - 64px);
+  }
+
+  .brand-lightbox__close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+@media (hover: none) {
+  .brand-gallery__caption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .brand-gallery__item:hover .brand-gallery__button img {
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-lightbox,
+  .brand-lightbox__stage img {
+    animation: none;
+  }
+
+  .brand-gallery__button img,
+  .brand-gallery__caption {
+    transition: none;
+  }
+}

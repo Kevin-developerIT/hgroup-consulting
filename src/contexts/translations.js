@@ -14,7 +14,29 @@ export const translations = {
       byCompany: 'By Company',
       noResults: 'No projects found',
       tryAdjusting: 'Try adjusting your filters or',
-      clearFilters: 'clear all filters'
+      clearFilters: 'clear all filters',
+      privacy: 'Privacy Policy'
+    },
+    privacy: {
+      onlySpanish: 'This Privacy Policy is available in Spanish only.'
+    },
+    brand: {
+      eyebrow: 'An H Group brand',
+      services: 'Services',
+      projects: 'Projects',
+      collaborations: 'Collaborations',
+      ctaTitle: 'Have a project in mind?',
+      ctaContact: "Let's talk",
+      ctaExternal: 'Learn more about',
+      next: 'Next brand',
+      allBrands: 'All H Group brands',
+      scroll: 'Scroll',
+      viewPhoto: 'View photo',
+      close: 'Close',
+      previous: 'Previous photo',
+      nextPhoto: 'Next photo',
+      galleryEvents: 'Activations & events',
+      galleryStories: 'Creator content (UGC)'
     },
     contact: {
       headline: "Let's talk.",
@@ -36,7 +58,9 @@ export const translations = {
     },
     home: {
       h1: 'H Group: creative agency, PR & influencer marketing in Mexico',
-      hsHeading: 'H Group brands'
+      hsHeading: 'H Group brands',
+      ctaInternal: 'See more',
+      ctaExternal: 'View site'
     },
     workWithUs: {
       title: 'Work with H Group',
@@ -122,7 +146,29 @@ export const translations = {
       byCompany: 'Por Empresa',
       noResults: 'No se encontraron proyectos',
       tryAdjusting: 'Intenta ajustar tus filtros o',
-      clearFilters: 'limpiar todos los filtros'
+      clearFilters: 'limpiar todos los filtros',
+      privacy: 'Política de Privacidad'
+    },
+    privacy: {
+      onlySpanish: ''
+    },
+    brand: {
+      eyebrow: 'Una marca de H Group',
+      services: 'Servicios',
+      projects: 'Proyectos',
+      collaborations: 'Colaboraciones',
+      ctaTitle: '¿Tienes un proyecto en mente?',
+      ctaContact: 'Hablemos',
+      ctaExternal: 'Conoce más de',
+      next: 'Siguiente marca',
+      allBrands: 'Todas las marcas de H Group',
+      scroll: 'Scroll',
+      viewPhoto: 'Ver foto',
+      close: 'Cerrar',
+      previous: 'Foto anterior',
+      nextPhoto: 'Foto siguiente',
+      galleryEvents: 'Activaciones y eventos',
+      galleryStories: 'Contenido de creadores (UGC)'
     },
     contact: {
       headline: 'Hablemos.',
@@ -144,7 +190,9 @@ export const translations = {
     },
     home: {
       h1: 'H Group: agencia creativa, PR e influencer marketing en México',
-      hsHeading: 'Las marcas de H Group'
+      hsHeading: 'Las marcas de H Group',
+      ctaInternal: 'Ver más',
+      ctaExternal: 'Ver sitio'
     },
     workWithUs: {
       title: 'Trabaja con H Group',

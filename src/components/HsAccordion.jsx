@@ -3,128 +3,17 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { holdingsLogos } from '../assets/logos'
 import { holdingLinks } from '../data/holdings'
+import { BRAND_PAGE_IDS } from '../data/seo'
 import { useLanguage } from '../contexts/useLanguage'
+import LocaleLink from './LocaleLink'
 
-/* Reuse the same H videos already imported by HSections — Vite
-   deduplicates the chunks so this doesn't add bundle weight. */
-import heroVideo from '../assets/mp4/herovideo.mp4'
-import hackVideo from '../assets/mp4/videohalo.mp4'
-import haloVideo from '../assets/mp4/halovideo1.webm'
-import hereVideo from '../assets/mp4/herevideo.mp4'
-import hitsVideo from '../assets/mp4/hitsvideo.mp4'
-import homeVideo from '../assets/mp4/homevideo.mp4'
-import hopeVideo from '../assets/mp4/hopevideo.mp4'
-import huntVideo from '../assets/mp4/huntvideo.mp4'
-import hypeVideo from '../assets/mp4/HypeVideo.mp4'
-import hookVideo from '../assets/mp4/videoshook.mp4'
-
-import holy1 from '../assets/holy/holy1.jpeg'
-import holy2 from '../assets/holy/holy2.jpeg'
-import holy3 from '../assets/holy/holy3.jpeg'
-import holy4 from '../assets/holy/holy4.jpeg'
-import holy5 from '../assets/holy/holy5.jpeg'
-import holy6 from '../assets/holy/holy6.jpeg'
-import holy7 from '../assets/holy/holy7.jpeg'
-
-import home1 from '../assets/home/home1.mp4'
-import home2 from '../assets/home/home2.mp4'
-import home3 from '../assets/home/home3.mp4'
-import home4 from '../assets/home/home4.mp4'
-import home5 from '../assets/home/home5.mp4'
-import home6 from '../assets/home/home6.mp4'
-import home7 from '../assets/home/home7.mp4'
-import home8 from '../assets/home/home8.mp4'
+import HomeSlideshow from './media/HomeSlideshow'
+import HolyCarousel from './media/HolyCarousel'
+import { H_VIDEOS } from './media/sources'
 
 import './HsAccordion.css'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const HOLY_IMAGES = [holy1, holy2, holy3, holy4, holy5, holy6, holy7]
-const HOME_VIDEOS = [home1, home2, home3, home4, home5, home6, home7, home8]
-
-/* Auto-advancing video slideshow for the HOME H — stacks the 8
-   short clips, plays one at a time, crossfades on 'ended'. Same
-   mounting rules as the other layers (rendered only when active
-   or adjacent). */
-function HomeSlideshow({ active }) {
-  const [idx, setIdx] = useState(0)
-  const videoRefs = useRef([])
-
-  const advance = () => setIdx((i) => (i + 1) % HOME_VIDEOS.length)
-
-  useEffect(() => {
-    if (!active) {
-      videoRefs.current.forEach((v) => v && v.pause())
-      return
-    }
-    const current = videoRefs.current[idx]
-    if (current) {
-      try { current.currentTime = 0 } catch { /* seek can throw */ }
-      const p = current.play()
-      if (p) p.catch(() => {})
-    }
-    videoRefs.current.forEach((v, i) => {
-      if (v && i !== idx) v.pause()
-    })
-    // Fallback timer in case 'ended' never fires (network hiccup,
-    // Safari edge cases). 12s is longer than any of these clips.
-    const timer = setTimeout(advance, 12000)
-    return () => clearTimeout(timer)
-  }, [active, idx])
-
-  const nextIdx = (idx + 1) % HOME_VIDEOS.length
-
-  return (
-    <div className="home-slideshow">
-      {HOME_VIDEOS.map((src, i) => {
-        const preload = i === idx ? 'auto' : i === nextIdx ? 'metadata' : 'none'
-        return (
-          <video
-            key={src}
-            ref={(el) => (videoRefs.current[i] = el)}
-            src={src}
-            muted
-            playsInline
-            preload={preload}
-            onEnded={i === idx ? advance : undefined}
-            className={`home-slide ${i === idx ? 'is-active' : ''}`}
-          />
-        )
-      })}
-    </div>
-  )
-}
-
-/* Auto-advancing crossfade for the HOLY H. Mounts only when
-   `active` is true (parent stops rendering when this layer is
-   more than one slot away from the active H). */
-function HolyCarousel({ active }) {
-  const [idx, setIdx] = useState(0)
-
-  useEffect(() => {
-    if (!active) return
-    const timer = setInterval(() => {
-      setIdx((i) => (i + 1) % HOLY_IMAGES.length)
-    }, 3500)
-    return () => clearInterval(timer)
-  }, [active])
-
-  return (
-    <div className="holy-carousel">
-      {HOLY_IMAGES.map((src, i) => (
-        <img
-          key={src}
-          src={src}
-          alt=""
-          className={`holy-slide ${i === idx ? 'is-active' : ''}`}
-          loading={i === 0 ? 'eager' : 'lazy'}
-          decoding="async"
-          draggable={false}
-        />
-      ))}
-    </div>
-  )
-}
 
 /* ==============================================================
    HsAccordion — unified menu + H showcase
@@ -144,19 +33,6 @@ function HolyCarousel({ active }) {
      video slides UP from below; moving UP the list, the video
      slides DOWN from above. Direction follows the user's gesture.
    ============================================================== */
-
-const H_VIDEOS = {
-  hero: heroVideo,
-  hack: hackVideo,
-  halo: haloVideo,
-  here: hereVideo,
-  hits: hitsVideo,
-  home: homeVideo,
-  hope: hopeVideo,
-  hunt: huntVideo,
-  hype: hypeVideo,
-  hook: hookVideo,
-}
 
 /* H's that render a custom media component (not a single <video>).
    Their child owns play/pause via the `active` prop, so the parent
@@ -312,7 +188,7 @@ function HsAccordion() {
   }
 
   return (
-    <div ref={containerRef} className="hs-menu-container">
+    <div ref={containerRef} className="hs-menu-container" id="marcas">
       <div className="hs-menu-sticky">
     <section
       ref={sectionRef}
@@ -390,14 +266,18 @@ function HsAccordion() {
                 {description && (
                   <p className="hs-menu-desc">{description}</p>
                 )}
-                {link && (
+                {BRAND_PAGE_IDS.includes(h.id) ? (
+                  <LocaleLink to={`/marcas/${h.id}`} className="hs-menu-cta">
+                    {t('home.ctaInternal')} <span className="hs-menu-cta-arrow">→</span>
+                  </LocaleLink>
+                ) : link && (
                   <a
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hs-menu-cta"
                   >
-                    View Site <span className="hs-menu-cta-arrow">↗</span>
+                    {t('home.ctaExternal')} <span className="hs-menu-cta-arrow">↗</span>
                   </a>
                 )}
               </div>
