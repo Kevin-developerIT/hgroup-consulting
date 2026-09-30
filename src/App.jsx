@@ -19,6 +19,7 @@ const HundredVoices = lazy(() => import('./components/HundredVoices'))
 const Contact = lazy(() => import('./components/Contact'))
 const Privacy = lazy(() => import('./components/Privacy'))
 const BrandPage = lazy(() => import('./components/BrandPage'))
+const NotFound = lazy(() => import('./components/NotFound'))
 
 /* The intro overlay plays once per page load. Later visits to the home
    within the same session (back button, language switch, "all brands")
@@ -287,6 +288,7 @@ function App() {
               <Route key={page.paths[lang]} path={page.paths[lang]} element={pageElement(page)} />
             ))
           )}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </LanguageProvider>

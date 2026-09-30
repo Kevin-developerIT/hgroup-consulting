@@ -154,9 +154,14 @@ export const PAGES = [
     brandId: id,
     paths: { es: `/marcas/${id}`, en: `/en/brands/${id}` },
     module: 'src/components/BrandPage.jsx',
+    og: id,
     seo: BRAND_SEO[id],
   })),
 ]
+
+/* Social preview images live in public/og/<name>-<lang>.jpg (1200×630).
+   Pages without their own `og` use default-<lang>.jpg. */
+const ogImageFor = (page, lang) => `${SITE_ORIGIN}/og/${page.og ?? 'default'}-${lang}.jpg`
 
 export const normalizePath = (p) => (p === '/' ? '/' : p.replace(/\/+$/, '') || '/')
 
@@ -206,6 +211,7 @@ export function seoFor(pathname) {
     ogLocale: lang === 'es' ? 'es_MX' : 'en_US',
     ogLocaleAlternate: lang === 'es' ? 'en_US' : 'es_MX',
     ...page.seo[lang],
+    ogImage: ogImageFor(page, lang),
     canonical: canonicalFor(page.paths[page.canonicalLang ?? lang]),
     alternates: hasAlternates
       ? [

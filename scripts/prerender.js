@@ -11,7 +11,7 @@ const ssrDir = path.join(root, 'dist-ssr')
 
 // Every page and its URLs come from src/data/seo.js (PAGES), the same
 // table the router uses, so a page can't be routed but not prerendered.
-const { render, PAGES, LANGS, SITE_ORIGIN, seoFor, buildSchema } = await import(
+const { render, PAGES, LANGS, SITE_ORIGIN, seoFor, buildSchema, translations } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 )
 
@@ -43,6 +43,8 @@ function setHead(html, meta) {
     [/(<meta property="og:description" content=")[^"]*(")/, 'og:description', d],
     [/(<meta name="twitter:title" content=")[^"]*(")/, 'twitter:title', t],
     [/(<meta name="twitter:description" content=")[^"]*(")/, 'twitter:description', d],
+    [/(<meta property="og:image" content=")[^"]*(")/, 'og:image', meta.ogImage],
+    [/(<meta name="twitter:image" content=")[^"]*(")/, 'twitter:image', meta.ogImage],
   ]
   html = replaceOnce(html, /<title>[^<]*<\/title>/, () => `<title>${t}</title>`, 'title')
   for (const [pattern, label, value] of attrs) {
@@ -75,7 +77,8 @@ function routeAssets(key) {
   ].join('\n    ')
 }
 
-const jsonLd = `<script type="application/ld+json">${JSON.stringify(buildSchema()).replace(/</g, '\\u003c')}</script>`
+const jsonLdFor = (route, brandId) =>
+  `<script type="application/ld+json">${JSON.stringify(buildSchema(route, brandId)).replace(/</g, '\\u003c')}</script>`
 
 const alternateLinks = (meta) =>
   meta.alternates
@@ -104,7 +107,7 @@ for (const page of PAGES) {
       hints.replace(/\/></g, '/>\n    <'),
       routeAssets(page.module),
       alternateLinks(meta),
-      jsonLd,
+      jsonLdFor(route, page.brandId),
     ].filter(Boolean).join('\n    ')
     html = replaceOnce(html, /\n\s*<\/head>/, () => `\n    ${headExtras}\n  </head>`, '</head>')
     html = replaceOnce(
@@ -131,6 +134,31 @@ for (const page of PAGES) {
       sitemapUrls.push(meta)
     }
   }
+}
+
+// 404.html — hosts serve it for URLs that don't exist. Rendered in
+// Spanish (the app re-renders in English for /en/... URLs); noindex and
+// no canonical so a broken URL never enters the index.
+{
+  const rendered = await render('/__not-found__')
+  const hints = rendered.match(/^(?:<link [^>]*\/>)+/)?.[0] ?? ''
+  const appHtml = rendered.slice(hints.length)
+  if ((appHtml.match(/<h1[\s>]/g) || []).length !== 1) throw new Error('prerender: 404 needs exactly 1 <h1>')
+
+  const nf = translations.es.notFound
+  let html = replaceOnce(template, /<title>[^<]*<\/title>/, () => `<title>${escapeHtml(nf.metaTitle)}</title>`, 'title')
+  html = replaceOnce(html, /(<meta name="description" content=")[^"]*(")/, (_, a, b) => a + escapeHtml(nf.text) + b, 'meta description')
+  html = replaceOnce(html, /\n\s*<link rel="canonical"[^>]*>/, () => '', 'canonical')
+  html = replaceOnce(html, /\n\s*<meta property="og:url"[^>]*>/, () => '', 'og:url')
+  const headExtras = [
+    '<meta name="robots" content="noindex">',
+    hints.replace(/\/></g, '/>\n    <'),
+    routeAssets('src/components/NotFound.jsx'),
+  ].filter(Boolean).join('\n    ')
+  html = replaceOnce(html, /\n\s*<\/head>/, () => `\n    ${headExtras}\n  </head>`, '</head>')
+  html = replaceOnce(html, /<div id="root"><\/div>/, () => `<div id="root" data-prerendered="/404">${appHtml}</div>`, '#root')
+  await fs.writeFile(path.join(distDir, '404.html'), html)
+  console.log(`prerendered ${'(404)'.padEnd(22)} → 404.html (${(html.length / 1024).toFixed(1)} kB)`)
 }
 
 // sitemap.xml generated from the same table, with hreflang alternates.

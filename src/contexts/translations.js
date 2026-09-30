@@ -20,6 +20,15 @@ export const translations = {
     privacy: {
       onlySpanish: 'This Privacy Policy is available in Spanish only.'
     },
+    notFound: {
+      metaTitle: 'Page not found | H Group',
+      eyebrow: 'Error 404',
+      title: "This page doesn't exist.",
+      text: 'The link may be broken or the page may have moved. Here are a few ways back.',
+      home: 'Go to home',
+      brands: 'See our brands',
+      contact: 'Contact'
+    },
     brand: {
       eyebrow: 'An H Group brand',
       services: 'Services',
@@ -60,7 +69,8 @@ export const translations = {
       h1: 'H Group: creative agency, PR & influencer marketing in Mexico',
       hsHeading: 'H Group brands',
       ctaInternal: 'See more',
-      ctaExternal: 'View site'
+      ctaExternal: 'View site',
+      clientsHeading: "Brands we've worked with"
     },
     workWithUs: {
       title: 'Work with H Group',
@@ -152,6 +162,15 @@ export const translations = {
     privacy: {
       onlySpanish: ''
     },
+    notFound: {
+      metaTitle: 'Página no encontrada | H Group',
+      eyebrow: 'Error 404',
+      title: 'Esta página no existe.',
+      text: 'Puede que el enlace esté roto o que la página se haya movido. Te dejamos algunos caminos de regreso.',
+      home: 'Ir al inicio',
+      brands: 'Ver las marcas',
+      contact: 'Contacto'
+    },
     brand: {
       eyebrow: 'Una marca de H Group',
       services: 'Servicios',
@@ -192,7 +211,8 @@ export const translations = {
       h1: 'H Group: agencia creativa, PR e influencer marketing en México',
       hsHeading: 'Las marcas de H Group',
       ctaInternal: 'Ver más',
-      ctaExternal: 'Ver sitio'
+      ctaExternal: 'Ver sitio',
+      clientsHeading: 'Marcas con las que hemos trabajado'
     },
     workWithUs: {
       title: 'Trabaja con H Group',

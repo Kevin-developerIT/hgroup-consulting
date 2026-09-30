@@ -5,6 +5,7 @@ import App from './App.jsx'
 
 export { PAGES, LANGS, SITE_ORIGIN, seoFor } from './data/seo'
 export { buildSchema } from './data/schema'
+export { translations } from './contexts/translations'
 
 /* prerenderToNodeStream waits for every lazy route chunk to resolve,
    so the output contains the full page, not the Suspense fallback. */
