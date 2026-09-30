@@ -1,6 +1,7 @@
-/* Web versions of the originals in assets/mp4: H.264 (plays in every
-   browser — the HALO original was AV1), no audio track, max 1920px,
-   faststart so playback begins before the file finishes downloading. */
+/* Web encodes of each H's footage: H.264 (plays in every browser — the
+   HALO original was AV1), no audio track, max 1920px, faststart so
+   playback begins before the file finishes downloading. The originals
+   were removed from the repo; they're still in its git history. */
 import heroVideo from '../../assets/video/hero.mp4'
 import hackVideo from '../../assets/video/hack.mp4'
 import haloVideo from '../../assets/video/halo.mp4'
