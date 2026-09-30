@@ -56,6 +56,20 @@ a {
   min-height: 100vh;
 }
 
+/* Visually hidden, still read by screen readers and crawlers.
+   Used for semantic headings where the design shows a logo or none. */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Blank fallback while a lazy route chunk streams in */
 .route-fallback {
   min-height: 100vh;

@@ -2454,6 +2454,13 @@ html {
   justify-content: center;
 }
 
+/* H1 wrapper around the hero wordmark. flex so the <img> sits in it
+   with no inline line-box gap — identical box to the bare image. */
+.hero-title {
+  display: flex;
+  margin: 0;
+}
+
 .hero-logo {
   width: min(40vw, 360px);
   height: auto;
@@ -2491,5 +2498,4 @@ html {
   .hero-nav {
     display: none;
   }
-}
 }

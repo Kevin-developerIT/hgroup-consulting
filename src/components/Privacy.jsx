@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 import './Privacy.css'
@@ -24,7 +23,6 @@ function Section({ number, title, children }) {
 function Privacy() {
   const navigate = useNavigate()
   const { t } = useLanguage()
-  useCanonical('Política de Privacidad — HGROUP')
 
   const handleClose = () => navigate('/')
 

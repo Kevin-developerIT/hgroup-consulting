@@ -2,15 +2,13 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 
 function JoinUs() {
   const navigate = useNavigate()
   const { t, language } = useLanguage()
-  useCanonical('Únete — HGROUP')
-  
+
   // Direct navigation without loading
   const handleClose = () => {
     navigate('/')
@@ -83,6 +81,7 @@ function JoinUs() {
       </div>
 
       <div className="page-content">
+        <h1 className="sr-only">{t('joinUs.title')}</h1>
         <div className="content-text">
           <p>{t('joinUs.text1')}</p>
           <p dangerouslySetInnerHTML={{ 
@@ -98,7 +97,7 @@ function JoinUs() {
         <div className="job-listings">
           {openings.map((job, index) => (
             <div key={index} className="job-item">
-              <h3 className="job-title">{job.title}</h3>
+              <h2 className="job-title">{job.title}</h2>
               <p className="job-location">{job.location}</p>
               <p className="job-description">{job.description}</p>
               <a href={job.applyLink} target="_blank" rel="noopener noreferrer" className="apply-link">

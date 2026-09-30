@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import { images } from '../assets'
 import './Pages.css'
@@ -10,8 +9,7 @@ import './Pages.css'
 function HundredVoices() {
   const navigate = useNavigate()
   const { t } = useLanguage()
-  useCanonical('Cien Voces — HGROUP')
-  
+
   const handleClose = () => {
     navigate('/')
   }
@@ -86,14 +84,16 @@ function HundredVoices() {
       <div className="page-content">
         <div className="content-text">
           {/* Hero Section con número grande */}
-          <div style={{
+          {/* Single H1 — the {' '} gives the heading text "CIEN VOCES"
+              while whitespace between flex items isn't rendered. */}
+          <h1 style={{
             display: 'flex',
             alignItems: 'baseline',
             marginBottom: '50px',
             position: 'relative',
             paddingRight: '20px' // Añadido para evitar corte
           }}>
-         <h1 style={{
+         <span style={{
     fontSize: 'clamp(4rem, 10vw, 7rem)', // Ajustado para mejor proporción
     fontWeight: '900',
     lineHeight: '0.9',
@@ -103,8 +103,8 @@ function HundredVoices() {
     flexShrink: 0 // Evita que se comprima
   }}>
     CIEN
-  </h1>
-  <h2 style={{
+  </span>{' '}
+  <span style={{
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', // Más pequeño que CIEN
     fontWeight: '700',
     margin: 0,
@@ -116,8 +116,8 @@ function HundredVoices() {
     flexShrink: 0 // Evita que se comprima
   }}>
     VOCES
-  </h2>
-</div>
+  </span>
+</h1>
 
 {/* Subtítulo destacado */}
 <p style={{ 
@@ -208,7 +208,7 @@ function HundredVoices() {
           textAlign: 'center',
           padding: '50px 0'
         }}>
-          <h3 style={{
+          <h2 style={{
             fontSize: '1rem',
             fontWeight: '700',
             textTransform: 'uppercase',
@@ -217,7 +217,7 @@ function HundredVoices() {
             color: '#666'
           }}>
             {t('hundredVoices.inquiries')}
-          </h3>
+          </h2>
 
           <div>
             <button style={{

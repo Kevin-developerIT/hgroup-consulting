@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import { logohgroup, logohgroupWord } from './assets/logos'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { useLanguage } from './contexts/useLanguage'
@@ -7,7 +7,7 @@ import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
 import BrandsMarquee from './components/BrandsMarquee'
 import heroBannerVideo from './assets/mp4/videoprincipal.MOV'
-import { useCanonical } from './hooks/useCanonical'
+import { usePageMeta } from './hooks/usePageMeta'
 import './App.css'
 
 /* Subpages are code-split — the home bundle stays lean. */
@@ -26,14 +26,11 @@ function HomePage() {
   const [showPresentation, setShowPresentation] = useState(true)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activePage, setActivePage] = useState('home')
   const [isMobile, setIsMobile] = useState(false)
   const containerRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation()
   const { t } = useLanguage()
-
-  useCanonical('HGROUP — Holding creativa de 11 marcas')
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -71,10 +68,7 @@ function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleNavigation = (page, path) => {
-    setActivePage(page)
-    navigate(path)
-  }
+  const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
     <div className="App" ref={containerRef}>
@@ -113,36 +107,24 @@ function HomePage() {
         <nav className="hero-nav">
           <ul className="hero-nav-list">
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('work', '/work-with-us') }}
-                className="hero-nav-link"
-              >
+              <Link to="/work-with-us" className="hero-nav-link">
                 {t('nav.workWithUs')}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('join', '/join-us') }}
-                className="hero-nav-link"
-              >
+              <Link to="/join-us" className="hero-nav-link">
                 {t('nav.joinUs')}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('hundred', '/100-voices') }}
-                className="hero-nav-link"
-              >
+              <Link to="/100-voices" className="hero-nav-link">
                 {t('nav.hundredVoices')}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('contact', '/contact') }}
-                className="hero-nav-link"
-              >
+              <Link to="/contact" className="hero-nav-link">
                 {t('nav.contact')}
-              </a>
+              </Link>
             </li>
             <li>
               <a
@@ -158,7 +140,10 @@ function HomePage() {
         </nav>
 
         <div className="hero-content">
-          <img src={logohgroupWord} alt="HGROUP" className="hero-logo" />
+          <h1 className="hero-title">
+            <img src={logohgroupWord} alt="" className="hero-logo" />
+            <span className="sr-only">{t('home.h1')}</span>
+          </h1>
         </div>
         </div>
 
@@ -182,10 +167,7 @@ function HomePage() {
             src={logohgroup}
             alt="HGROUP"
             className="logo-small"
-            onClick={() => {
-              setActivePage('home')
-              navigate('/', { state: { fromSubpage: false } })
-            }}
+            onClick={() => navigate('/', { state: { fromSubpage: false } })}
             style={{ cursor: 'pointer' }}
           />
 
@@ -208,56 +190,24 @@ function HomePage() {
             } : {}}
           >
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('work', '/work-with-us')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'work' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <Link to="/work-with-us" onClick={closeMobileMenu}>
                 {t('nav.workWithUs')}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('join', '/join-us')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'join' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <Link to="/join-us" onClick={closeMobileMenu}>
                 {t('nav.joinUs')}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('hundred', '/100-voices')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'hundred' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <Link to="/100-voices" onClick={closeMobileMenu}>
                 {t('nav.hundredVoices')}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('contact', '/contact')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'contact' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <Link to="/contact" onClick={closeMobileMenu}>
                 {t('nav.contact')}
-              </a>
+              </Link>
             </li>
             <li>
               <a
@@ -288,21 +238,23 @@ function HomePage() {
   )
 }
 
+/* The router lives outside App: BrowserRouter in main.jsx (browser),
+   StaticRouter in entry-server.jsx (build-time prerender). */
 function App() {
+  usePageMeta()
+
   return (
     <LanguageProvider>
-      <Router basename={import.meta.env.BASE_URL}>
-        <Suspense fallback={<div className="route-fallback" aria-hidden="true" />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/work-with-us" element={<WorkWithUs />} />
-            <Route path="/join-us" element={<JoinUs />} />
-            <Route path="/100-voices" element={<HundredVoices />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy-policy" element={<Privacy />} />
-          </Routes>
-        </Suspense>
-      </Router>
+      <Suspense fallback={<div className="route-fallback" aria-hidden="true" />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/work-with-us" element={<WorkWithUs />} />
+          <Route path="/join-us" element={<JoinUs />} />
+          <Route path="/100-voices" element={<HundredVoices />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
+        </Routes>
+      </Suspense>
     </LanguageProvider>
   )
 }

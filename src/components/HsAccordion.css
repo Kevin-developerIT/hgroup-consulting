@@ -123,6 +123,14 @@
   padding: 2px 0;
 }
 
+/* Semantic <h3> around each button. display:grid keeps the button
+   stretched across the column exactly as when it was the grid item. */
+.hs-menu-heading {
+  display: grid;
+  margin: 0;
+  font: inherit;
+}
+
 /* -------------------- Button (name + index) -------------------- */
 .hs-menu-link {
   appearance: none;

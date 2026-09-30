@@ -3,14 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logohgroup } from '../assets/logos'
 import { holdingLinks } from '../data/holdings'
 import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
 import LanguageToggle from './LanguageToggle'
 import './Pages.css'
 
 function WorkWithUs() {
   const navigate = useNavigate()
   const { t } = useLanguage()
-  useCanonical('Trabaja con nosotros — HGROUP')
 
   const expertise = t('expertise')
 
@@ -89,6 +87,7 @@ function WorkWithUs() {
       </div>
 
       <div className="page-content">
+        <h1 className="sr-only">{t('workWithUs.title')}</h1>
         <div className="content-text">
           <p>{t('workWithUs.text1')}</p>
           <p>{t('workWithUs.text2')}</p>
@@ -97,7 +96,7 @@ function WorkWithUs() {
         </div>
 
         <div className="contact-section">
-  <h3>{t('workWithUs.contact')}</h3>
+  <h2>{t('workWithUs.contact')}</h2>
   <a 
     href="https://wa.me/5215535358818?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
     target="_blank"
@@ -110,7 +109,7 @@ function WorkWithUs() {
 </div>
 
         <div className="expertise-section">
-          <h3>{t('workWithUs.ourHs')}</h3>
+          <h2>{t('workWithUs.ourHs')}</h2>
           <div className="h-list">
             {expertise
               /* HUGE is hidden from the public list per business
@@ -120,7 +119,7 @@ function WorkWithUs() {
               .map((item, index) => (
                 <div key={index} className="h-item">
                   <div className="h-header">
-                    <h4 className="h-name">{item.name}</h4>
+                    <h3 className="h-name">{item.name}</h3>
                     <a
                       href={holdingLinks[item.name.toLowerCase()] || `#${item.name.toLowerCase()}`}
                       className="h-link"

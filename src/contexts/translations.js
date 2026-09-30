@@ -34,7 +34,12 @@ export const translations = {
       title: '',
       tagline: ''
     },
+    home: {
+      h1: 'H Group: creative agency, PR & influencer marketing in Mexico',
+      hsHeading: 'H Group brands'
+    },
     workWithUs: {
+      title: 'Work with H Group',
       text1: 'We are HGROUP, a holding company with 11 specialized brands in different market niches. With a young and passionate vision, we connect the impossible through innovative strategies and measurable results.',
       text2: 'We bring together years of strategic experience with next-generation talent to deliver creative solutions that transform brands. From social impact with HERO to digital strategies with HACK, each of our divisions works in synergy to maximize your brand\'s impact.',
       text3: 'Our portfolio spans collaborations with Sony Music, Xiaomi, Estée Lauder, ALSEA, Zurich, Volkswagen, Maserati, Rolls-Royce, and many more. We operate in 32 states across Mexico and have presence in major cities in the USA, Canada, and Latin America.',
@@ -45,6 +50,7 @@ export const translations = {
       whatsapp: 'CHAT ON WHATSAPP'
     },
     joinUs: {
+      title: 'Join H Group',
       text1: 'We are a team of young dreamers with the passion to make the impossible a reality. At HGROUP, we believe there\'s more than one way to achieve success, and we cultivate diverse perspectives that drive innovation.',
       text2: 'Join our team and be part of the transformation. Click here to see our current opportunities, or send your CV to carla.rosales@hgroup.consulting',
       allLocations: 'ALL LOCATIONS',
@@ -136,7 +142,12 @@ export const translations = {
       title: '',
       tagline: ''
     },
+    home: {
+      h1: 'H Group: agencia creativa, PR e influencer marketing en México',
+      hsHeading: 'Las marcas de H Group'
+    },
     workWithUs: {
+      title: 'Trabaja con H Group',
       text1: 'Somos HGROUP, una holding con 11 marcas especializadas en distintos nichos de mercado. Con una visión joven y apasionada, conectamos lo imposible a través de estrategias innovadoras y resultados medibles.',
       text2: 'Reunimos años de experiencia estratégica con talento de próxima generación para entregar soluciones creativas que transforman marcas. Desde el impacto social con HERO hasta las estrategias digitales con HACK, cada una de nuestras divisiones trabaja en sinergia para maximizar el impacto de tu marca.',
       text3: 'Nuestro portafolio incluye colaboraciones con Sony Music, Xiaomi, Estée Lauder, ALSEA, Zurich, Volkswagen, Maserati, Rolls-Royce, y muchos más. Operamos en 32 estados de la República Mexicana y tenemos presencia en las principales ciudades de Estados Unidos, Canadá y Latinoamérica.',
@@ -147,6 +158,7 @@ export const translations = {
       whatsapp: 'CHAT EN WHATSAPP'
     },
     joinUs: {
+      title: 'Únete a H Group',
       text1: 'Somos un equipo de jóvenes soñadores con la pasión de hacer realidad lo imposible. En HGROUP creemos que hay más de una forma de lograr el éxito, y cultivamos perspectivas diversas que impulsan la innovación.',
       text2: 'Únete a nuestro equipo y sé parte de la transformación. Haz clic aquí para ver nuestras oportunidades actuales, o envía tu CV a carla.rosales@hgroup.consulting',
       allLocations: 'TODAS LAS UBICACIONES',

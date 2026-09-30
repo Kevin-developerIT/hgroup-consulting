@@ -355,8 +355,11 @@ function HsAccordion() {
         <div ref={overlayRef} className="hs-menu-bg-overlay" />
       </div>
 
-      {/* Menu — always visible, every H is a button */}
-      <ul className="hs-menu-list" role="menu">
+      <h2 className="sr-only">{t('home.hsHeading')}</h2>
+
+      {/* Menu — always visible; each H name is an <h3> wrapping its
+          button (WAI-ARIA accordion pattern). */}
+      <ul className="hs-menu-list">
         {holdingsLogos.map((h, i) => {
           const isActive = i === activeIndex
           const isSelected = i === selectedIndex
@@ -366,20 +369,21 @@ function HsAccordion() {
             <li
               key={h.id}
               className={`hs-menu-item ${isActive ? 'is-active' : ''} ${isSelected ? 'is-selected' : ''}`}
-              role="menuitem"
             >
-              <button
-                type="button"
-                className="hs-menu-link"
-                onMouseEnter={() => setHoveredIndex(i)}
-                onFocus={() => setHoveredIndex(i)}
-                onClick={() => handleClick(i)}
-              >
-                <span className="hs-menu-index">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="hs-menu-name">{h.name}</span>
-              </button>
+              <h3 className="hs-menu-heading">
+                <button
+                  type="button"
+                  className="hs-menu-link"
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onFocus={() => setHoveredIndex(i)}
+                  onClick={() => handleClick(i)}
+                >
+                  <span className="hs-menu-index">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="hs-menu-name">{h.name}</span>
+                </button>
+              </h3>
 
               {/* Description + CTA — inline next to the active H */}
               <div className="hs-menu-detail">
