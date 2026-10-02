@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
+import { track } from '../lib/analytics'
+import { ADDRESS_LINE, COMPANY, whatsappUrl } from '../data/company'
 import './Pages.css'
 import './Contact.css'
 
 /* ==============================================================
-   Contact — submits to kevin.martinez@hgroup.consulting via FormSubmit
+   Contact — submits to info@hgroup.consulting via FormSubmit
    --------------------------------------------------------------
    FormSubmit (formsubmit.co) is a free no-account email-forwarding
    service. The very first submission triggers a verification email
@@ -19,16 +21,16 @@ import './Contact.css'
    in-page success state instead of a redirect.
    ============================================================== */
 
-const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/kevin.martinez@hgroup.consulting'
+const CONTACT_ENDPOINT = `https://formsubmit.co/ajax/${COMPANY.email}`
 
 function Contact() {
   const navigate = useNavigate()
-  const { t } = useLanguage()
-  useCanonical('Contacto — HGROUP')
+  const localize = useLocalePath()
+  const { t, language } = useLanguage()
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
 
   const handleClose = () => {
-    navigate('/')
+    navigate(localize('/'))
   }
 
   const handleSubmit = async (e) => {
@@ -62,6 +64,7 @@ function Contact() {
       const data = await response.json().catch(() => null)
       if (response.ok && data?.success === 'true') {
         setStatus('success')
+        track('generate_lead', { form: 'contact', language, page_path: window.location.pathname })
         formEl.reset()
       } else {
         setStatus('error')
@@ -89,19 +92,19 @@ function Contact() {
 
           <div className="sidebar-content">
             <div className="page-nav">
-              <Link to="/work-with-us" className="nav-item">
+              <LocaleLink to="/work-with-us" className="nav-item">
                 {t('nav.workWithUs')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/join-us" className="nav-item">
+              <LocaleLink to="/join-us" className="nav-item">
                 {t('nav.joinUs')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
-              <Link to="/100-voices" className="nav-item">
+              <LocaleLink to="/100-voices" className="nav-item">
                 {t('nav.hundredVoices')}
-              </Link>
+              </LocaleLink>
             </div>
             <div className="page-nav">
               <span className="nav-dot active"></span>
@@ -141,18 +144,24 @@ function Contact() {
             </div>
 
             <div className="sidebar-legal">
-              <Link to="/privacy-policy">Política de Privacidad</Link>
+              <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
             </div>
           </div>
         </div>
 
         <div className="page-content">
-          <h2 className="contact-headline">{t('contact.headline')}</h2>
+          <h1 className="contact-headline">{t('contact.headline')}</h1>
           <p className="contact-intro">{t('contact.intro')}</p>
+          <address className="contact-details">
+            <a href={COMPANY.mapUrl} target="_blank" rel="noopener noreferrer">{ADDRESS_LINE}</a>
+            <a href={`tel:${COMPANY.phone.e164}`}>{COMPANY.phone.display}</a>
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+          </address>
 
           {status === 'success' ? (
             <div className="contact-success">
-              <h3 className="contact-success-title">{t('contact.successTitle')}</h3>
+              <h2 className="contact-success-title">{t('contact.successTitle')}</h2>
               <p className="contact-success-message">{t('contact.successMessage')}</p>
               <button
                 type="button"

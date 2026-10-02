@@ -1,24 +1,26 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
-import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
-import { images } from '../assets'
+import { whatsappUrl } from '../data/company'
+// Direct imports: the '../assets' barrel pulls every file in assets/media
+// into the build (~370 MB) even though this page only shows these two.
+import cienvoces from '../assets/media/100vocesHERO.png'
+import cienvoces2 from '../assets/media/100voces2HERO.jpg'
 import './Pages.css'
 
 function HundredVoices() {
   const navigate = useNavigate()
+  const localize = useLocalePath()
   const { t } = useLanguage()
-  useCanonical('Cien Voces — HGROUP')
-  
+
   const handleClose = () => {
-    navigate('/')
+    navigate(localize('/'))
   }
 
-  // Número de WhatsApp - cambia esto por el número real
-  const whatsappNumber = '525644162396' // Reemplaza con el número real
-  const whatsappMessage = encodeURIComponent('Hola, me gustaría obtener más información sobre 100 Voces')
+  const whatsappMessage = 'Hola, me gustaría obtener más información sobre 100 Voces'
 
   return (
     <>
@@ -38,17 +40,17 @@ function HundredVoices() {
         
         <div className="sidebar-content">
           <div className="page-nav">
-            <Link to="/work-with-us" className="nav-item">{t('nav.workWithUs')}</Link>
+            <LocaleLink to="/work-with-us" className="nav-item">{t('nav.workWithUs')}</LocaleLink>
           </div>
           <div className="page-nav">
-            <Link to="/join-us" className="nav-item">{t('nav.joinUs')}</Link>
+            <LocaleLink to="/join-us" className="nav-item">{t('nav.joinUs')}</LocaleLink>
           </div>
           <div className="page-nav">
             <span className="nav-dot active"></span>
             <span className="nav-item">CIEN VOCES</span>
           </div>
           <div className="page-nav">
-            <Link to="/contact" className="nav-item">{t('nav.contact')}</Link>
+            <LocaleLink to="/contact" className="nav-item">{t('nav.contact')}</LocaleLink>
           </div>
           <div className="page-nav">
             <a href="https://www.instagram.com/hgroupp_/" target="_blank" rel="noopener noreferrer" className="nav-item">
@@ -78,7 +80,7 @@ function HundredVoices() {
           </div>
 
           <div className="sidebar-legal">
-            <Link to="/privacy-policy">Política de Privacidad</Link>
+            <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
           </div>
         </div>
       </div>
@@ -86,14 +88,16 @@ function HundredVoices() {
       <div className="page-content">
         <div className="content-text">
           {/* Hero Section con número grande */}
-          <div style={{
+          {/* Single H1 — the {' '} gives the heading text "CIEN VOCES"
+              while whitespace between flex items isn't rendered. */}
+          <h1 style={{
             display: 'flex',
             alignItems: 'baseline',
             marginBottom: '50px',
             position: 'relative',
             paddingRight: '20px' // Añadido para evitar corte
           }}>
-         <h1 style={{
+         <span style={{
     fontSize: 'clamp(4rem, 10vw, 7rem)', // Ajustado para mejor proporción
     fontWeight: '900',
     lineHeight: '0.9',
@@ -103,8 +107,8 @@ function HundredVoices() {
     flexShrink: 0 // Evita que se comprima
   }}>
     CIEN
-  </h1>
-  <h2 style={{
+  </span>{' '}
+  <span style={{
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', // Más pequeño que CIEN
     fontWeight: '700',
     margin: 0,
@@ -116,8 +120,8 @@ function HundredVoices() {
     flexShrink: 0 // Evita que se comprima
   }}>
     VOCES
-  </h2>
-</div>
+  </span>
+</h1>
 
 {/* Subtítulo destacado */}
 <p style={{ 
@@ -147,7 +151,7 @@ function HundredVoices() {
           </blockquote>
 
           {/* Imagen principal de 100 voces */}
-          {images.cienvoces && (
+          {cienvoces && (
             <div style={{
               marginBottom: '60px',
               borderRadius: '12px',
@@ -155,7 +159,7 @@ function HundredVoices() {
               boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
             }}>
               <img 
-                src={images.cienvoces} 
+                src={cienvoces} 
                 alt="100 Voces" 
                 style={{
                   width: '100%',
@@ -182,7 +186,7 @@ function HundredVoices() {
           </div>
 
           {/* Segunda imagen opcional */}
-          {images.cienvoces2 && (
+          {cienvoces2 && (
             <div style={{
               marginBottom: '80px',
               borderRadius: '12px',
@@ -190,7 +194,7 @@ function HundredVoices() {
               boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
             }}>
               <img 
-                src={images.cienvoces2} 
+                src={cienvoces2} 
                 alt="100 Voces Evento" 
                 style={{
                   width: '100%',
@@ -208,7 +212,7 @@ function HundredVoices() {
           textAlign: 'center',
           padding: '50px 0'
         }}>
-          <h3 style={{
+          <h2 style={{
             fontSize: '1rem',
             fontWeight: '700',
             textTransform: 'uppercase',
@@ -217,7 +221,7 @@ function HundredVoices() {
             color: '#666'
           }}>
             {t('hundredVoices.inquiries')}
-          </h3>
+          </h2>
 
           <div>
             <button style={{
@@ -249,7 +253,9 @@ function HundredVoices() {
               e.currentTarget.style.color = '#fff';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
-            onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank')}
+            data-track="whatsapp_click"
+            data-track-url={whatsappUrl()}
+            onClick={() => window.open(whatsappUrl(whatsappMessage), '_blank')}
             >
               <svg 
                 width="20" 

@@ -1,21 +1,23 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
 import { holdingLinks } from '../data/holdings'
-import { useLanguage } from '../contexts/useLanguage'
-import { useCanonical } from '../hooks/useCanonical'
+import { BRAND_PAGE_IDS } from '../data/seo'
+import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
+import { whatsappUrl } from '../data/company'
 import './Pages.css'
 
 function WorkWithUs() {
   const navigate = useNavigate()
+  const localize = useLocalePath()
   const { t } = useLanguage()
-  useCanonical('Trabaja con nosotros — HGROUP')
 
   const expertise = t('expertise')
 
   const handleClose = () => {
-    navigate('/')
+    navigate(localize('/'))
   }
 
   const handleHoldingClick = (e, holdingName) => {
@@ -48,13 +50,13 @@ function WorkWithUs() {
             <span className="nav-item">{t('nav.workWithUs')}</span>
           </div>
           <div className="page-nav">
-            <Link to="/join-us" className="nav-item">{t('nav.joinUs')}</Link>
+            <LocaleLink to="/join-us" className="nav-item">{t('nav.joinUs')}</LocaleLink>
           </div>
           <div className="page-nav">
-            <Link to="/100-voices" className="nav-item">{t('nav.hundredVoices')}</Link>
+            <LocaleLink to="/100-voices" className="nav-item">{t('nav.hundredVoices')}</LocaleLink>
           </div>
           <div className="page-nav">
-            <Link to="/contact" className="nav-item">{t('nav.contact')}</Link>
+            <LocaleLink to="/contact" className="nav-item">{t('nav.contact')}</LocaleLink>
           </div>
           <div className="page-nav">
             <a href="https://www.instagram.com/hgroupp_/" target="_blank" rel="noopener noreferrer" className="nav-item">
@@ -83,12 +85,13 @@ function WorkWithUs() {
           </div>
 
           <div className="sidebar-legal">
-            <Link to="/privacy-policy">Política de Privacidad</Link>
+            <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
           </div>
         </div>
       </div>
 
       <div className="page-content">
+        <h1 className="sr-only">{t('workWithUs.title')}</h1>
         <div className="content-text">
           <p>{t('workWithUs.text1')}</p>
           <p>{t('workWithUs.text2')}</p>
@@ -97,9 +100,9 @@ function WorkWithUs() {
         </div>
 
         <div className="contact-section">
-  <h3>{t('workWithUs.contact')}</h3>
+  <h2>{t('workWithUs.contact')}</h2>
   <a 
-    href="https://wa.me/5215535358818?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
+    href={whatsappUrl('Hola HGROUP, me gustaría trabajar con ustedes')}
     target="_blank"
     rel="noopener noreferrer"
     className="contact-email whatsapp-link"
@@ -110,7 +113,7 @@ function WorkWithUs() {
 </div>
 
         <div className="expertise-section">
-          <h3>{t('workWithUs.ourHs')}</h3>
+          <h2>{t('workWithUs.ourHs')}</h2>
           <div className="h-list">
             {expertise
               /* HUGE is hidden from the public list per business
@@ -120,7 +123,14 @@ function WorkWithUs() {
               .map((item, index) => (
                 <div key={index} className="h-item">
                   <div className="h-header">
-                    <h4 className="h-name">{item.name}</h4>
+                    <h3 className="h-name">{item.name}</h3>
+                    {BRAND_PAGE_IDS.includes(item.name.toLowerCase()) ? (
+                      <LocaleLink to={`/marcas/${item.name.toLowerCase()}`} className="h-link">
+                        {t('workWithUs.viewMore')}
+                        <span className="sr-only"> {t('home.ctaAbout')} {item.name}</span>{' '}
+                        <span className="h-arrow">→</span>
+                      </LocaleLink>
+                    ) : (
                     <a
                       href={holdingLinks[item.name.toLowerCase()] || `#${item.name.toLowerCase()}`}
                       className="h-link"
@@ -130,6 +140,7 @@ function WorkWithUs() {
                     >
                       {t('workWithUs.viewMore')} <span className="h-arrow">↗</span>
                     </a>
+                    )}
                   </div>
                   <p className="h-description">{item.description}</p>
                 </div>

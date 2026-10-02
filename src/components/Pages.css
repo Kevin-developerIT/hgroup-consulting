@@ -224,8 +224,8 @@
   margin-bottom: 60px;
 }
 
-.contact-section h3,
-.expertise-section h3 {
+.contact-section h2,
+.expertise-section h2 {
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;

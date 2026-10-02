@@ -10,6 +10,10 @@
   font-family: 'Visby CF', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
+  /* Now an <a>: match the metrics it had as a <button>. */
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
   z-index: 100001; /* Cambiado de 100 a 10001 para estar por encima de todo */
   transition: all 0.3s ease;

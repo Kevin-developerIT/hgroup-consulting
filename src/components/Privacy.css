@@ -21,6 +21,14 @@
   margin-bottom: 48px;
 }
 
+.privacy-lang-notice {
+  font-size: 0.85rem;
+  color: #57534e;
+  border-left: 2px solid #d6d3d1;
+  padding-left: 14px;
+  margin: -24px 0 40px;
+}
+
 .privacy-lead {
   font-size: 1.05rem;
   color: #262626;

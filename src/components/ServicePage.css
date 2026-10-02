@@ -1,0 +1,150 @@
+/* ==============================================================
+   Service page — extends the brand page template (BrandPage.css).
+   Overrides of BrandPage classes use two classes so they win no matter
+   which stylesheet loads first.
+   ============================================================== */
+
+/* Service names are longer than an H's four letters. */
+.brand-hero__name.service-hero__name {
+  /* Scales with the viewport down to small phones: "experiencial" must
+     fit in 320px (the hero clips overflow). */
+  font-size: clamp(2.2rem, 13vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+/* -------------------- Brands behind the service -------------------- */
+.service-brands {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(20px, 2.4vw, 32px);
+  margin: 0;
+  padding: 0;
+}
+
+.service-brand {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(28px, 3vw, 44px);
+  border: 1px solid var(--bp-line);
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+}
+
+.service-brand:hover {
+  border-color: var(--bp-ink);
+  background: var(--bp-soft);
+}
+
+.service-brand__name {
+  margin: 0 0 18px;
+  font-size: clamp(3rem, 6vw, 5.2rem);
+  font-weight: 100;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+
+.service-brand__role {
+  flex: 1;
+  margin: 0 0 32px;
+  max-width: 36ch;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--bp-body);
+}
+
+.service-brand__cta {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.service-brand__cta span {
+  display: inline-block;
+  transition: transform 0.6s var(--bp-ease);
+}
+
+.service-brand:hover .service-brand__cta span {
+  transform: translateX(6px);
+}
+
+/* -------------------- Featured projects -------------------- */
+.service-cases {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 56px);
+  margin: 0;
+  padding: 0;
+}
+
+.service-case {
+  display: block;
+}
+
+.service-case__media {
+  margin: 0 0 22px;
+  overflow: hidden;
+  background: #e4e2dd;
+  aspect-ratio: 4 / 5;
+}
+
+.service-case__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s var(--bp-ease);
+}
+
+.service-case:hover .service-case__media img {
+  transform: scale(1.035);
+}
+
+.service-case__brand {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--bp-muted);
+}
+
+.service-case__name {
+  margin: 0 0 12px;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-weight: 100;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.service-case__text {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--bp-body);
+}
+
+@media (max-width: 900px) {
+  .service-cases {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .service-cases {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-case__media img,
+  .service-brand__cta span {
+    transition: none;
+  }
+}

@@ -1,0 +1,81 @@
+/* Corporate footer row — white on the dark closing sections. */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 48px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 28px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-family: 'Visby CF', sans-serif;
+}
+
+.site-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-style: normal;
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.site-footer__name {
+  margin-bottom: 4px;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.site-footer__contact a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.site-footer__links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}
+
+.site-footer__copy {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Home: closes the page below the services index. Bottom padding keeps
+   the fixed EN/ES toggle off the footer. */
+.home-footer {
+  position: relative;
+  z-index: 1;
+  background: #0a0a0a;
+  padding: 0 clamp(20px, 6vw, 96px) 96px;
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

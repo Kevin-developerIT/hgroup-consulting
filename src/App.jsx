@@ -1,13 +1,18 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { logohgroup, logohgroupWord } from './assets/logos'
 import { LanguageProvider } from './contexts/LanguageContext'
-import { useLanguage } from './contexts/useLanguage'
+import { useLanguage, useLocalePath } from './contexts/useLanguage'
+import LocaleLink from './components/LocaleLink'
 import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
 import BrandsMarquee from './components/BrandsMarquee'
-import heroBannerVideo from './assets/mp4/videoprincipal.MOV'
-import { useCanonical } from './hooks/useCanonical'
+import ServicesIndex from './components/ServicesIndex'
+import SiteFooter from './components/SiteFooter'
+import heroBannerVideo from './assets/video/hero-banner.mp4'
+import { usePageMeta } from './hooks/usePageMeta'
+import { useAnalytics } from './hooks/useAnalytics'
+import { LANGS, PAGES } from './data/seo'
 import './App.css'
 
 /* Subpages are code-split — the home bundle stays lean. */
@@ -16,24 +21,32 @@ const JoinUs = lazy(() => import('./components/JoinUs'))
 const HundredVoices = lazy(() => import('./components/HundredVoices'))
 const Contact = lazy(() => import('./components/Contact'))
 const Privacy = lazy(() => import('./components/Privacy'))
+const BrandPage = lazy(() => import('./components/BrandPage'))
+const ServicePage = lazy(() => import('./components/ServicePage'))
+const CasePage = lazy(() => import('./components/CasePage'))
+const NotFound = lazy(() => import('./components/NotFound'))
 
-/* HERO_VIDEO — dedicated hero clip (videoprincipal.MOV).
+/* The intro overlay plays once per page load. Later visits to the home
+   within the same session (back button, language switch, "all brands")
+   skip it. Set only after it finishes, so StrictMode's double effect
+   run in dev doesn't cancel it. */
+let introShown = false
+
+/* HERO_VIDEO — dedicated hero clip (assets/video/hero-banner.mp4).
    Set to `null` for the white-background fallback. */
 const HERO_VIDEO = heroBannerVideo
 
 function HomePage() {
   const [showMainHeader, setShowMainHeader] = useState(true)
-  const [showPresentation, setShowPresentation] = useState(true)
-  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [showPresentation, setShowPresentation] = useState(() => !introShown)
+  const [isInitialLoad, setIsInitialLoad] = useState(() => !introShown)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activePage, setActivePage] = useState('home')
   const [isMobile, setIsMobile] = useState(false)
   const containerRef = useRef(null)
   const navigate = useNavigate()
+  const localize = useLocalePath()
   const location = useLocation()
   const { t } = useLanguage()
-
-  useCanonical('HGROUP — Holding creativa de 11 marcas')
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -43,22 +56,28 @@ function HomePage() {
   }, [])
 
   useEffect(() => {
-    /* Show the loading overlay every time the user lands on `/`
-       directly (refresh, new tab, deep link). Subpage → home
-       navigation still skips it so the back-button feels instant. */
-    const isFromSubpage = location.state?.fromSubpage
-    if (isFromSubpage) {
+    /* Loading overlay: only on the first landing of this page load
+       (refresh, new tab, deep link). In-site navigation back to the
+       home skips it so it feels instant. */
+    if (introShown || location.state?.fromSubpage) {
+      introShown = true
       setIsInitialLoad(false)
       setShowPresentation(false)
       return
     }
-    setIsInitialLoad(true)
-    setShowPresentation(true)
     const timer = setTimeout(() => {
+      introShown = true
       setShowPresentation(false)
       setIsInitialLoad(false)
     }, 4000)
     return () => clearTimeout(timer)
+  }, [location])
+
+  // "All brands" links land on the accordion (/#marcas).
+  useEffect(() => {
+    if (location.hash === '#marcas') {
+      document.getElementById('marcas')?.scrollIntoView()
+    }
   }, [location])
 
   useEffect(() => {
@@ -71,10 +90,7 @@ function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleNavigation = (page, path) => {
-    setActivePage(page)
-    navigate(path)
-  }
+  const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
     <div className="App" ref={containerRef}>
@@ -113,36 +129,24 @@ function HomePage() {
         <nav className="hero-nav">
           <ul className="hero-nav-list">
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('work', '/work-with-us') }}
-                className="hero-nav-link"
-              >
+              <LocaleLink to="/work-with-us" className="hero-nav-link">
                 {t('nav.workWithUs')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('join', '/join-us') }}
-                className="hero-nav-link"
-              >
+              <LocaleLink to="/join-us" className="hero-nav-link">
                 {t('nav.joinUs')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('hundred', '/100-voices') }}
-                className="hero-nav-link"
-              >
+              <LocaleLink to="/100-voices" className="hero-nav-link">
                 {t('nav.hundredVoices')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
-              <a
-                onClick={(e) => { e.preventDefault(); handleNavigation('contact', '/contact') }}
-                className="hero-nav-link"
-              >
+              <LocaleLink to="/contact" className="hero-nav-link">
                 {t('nav.contact')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
               <a
@@ -158,7 +162,10 @@ function HomePage() {
         </nav>
 
         <div className="hero-content">
-          <img src={logohgroupWord} alt="HGROUP" className="hero-logo" />
+          <h1 className="hero-title">
+            <img src={logohgroupWord} alt="" className="hero-logo" />
+            <span className="sr-only">{t('home.h1')}</span>
+          </h1>
         </div>
         </div>
 
@@ -176,6 +183,12 @@ function HomePage() {
           inline description + CTA on the active H. */}
       <HsAccordion />
 
+      {/* Service lines → their own pages (SEO report point 1). */}
+      <ServicesIndex />
+      <footer className="home-footer">
+        <SiteFooter />
+      </footer>
+
       <nav className={`horizontal-nav ${!showMainHeader ? 'visible' : ''}`}>
         <div className="nav-content">
           <img
@@ -183,8 +196,8 @@ function HomePage() {
             alt="HGROUP"
             className="logo-small"
             onClick={() => {
-              setActivePage('home')
-              navigate('/', { state: { fromSubpage: false } })
+              navigate(localize('/'))
+              window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
             style={{ cursor: 'pointer' }}
           />
@@ -208,56 +221,24 @@ function HomePage() {
             } : {}}
           >
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('work', '/work-with-us')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'work' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <LocaleLink to="/work-with-us" onClick={closeMobileMenu}>
                 {t('nav.workWithUs')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('join', '/join-us')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'join' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <LocaleLink to="/join-us" onClick={closeMobileMenu}>
                 {t('nav.joinUs')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('hundred', '/100-voices')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'hundred' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <LocaleLink to="/100-voices" onClick={closeMobileMenu}>
                 {t('nav.hundredVoices')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
-              <a
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavigation('contact', '/contact')
-                  setMobileMenuOpen(false)
-                }}
-                className={activePage === 'contact' ? 'active' : ''}
-                style={{ cursor: 'pointer' }}
-              >
+              <LocaleLink to="/contact" onClick={closeMobileMenu}>
                 {t('nav.contact')}
-              </a>
+              </LocaleLink>
             </li>
             <li>
               <a
@@ -288,21 +269,42 @@ function HomePage() {
   )
 }
 
+const PAGE_COMPONENTS = {
+  home: HomePage,
+  work: WorkWithUs,
+  join: JoinUs,
+  hundred: HundredVoices,
+  contact: Contact,
+  privacy: Privacy,
+}
+
+const pageElement = (page) => {
+  if (page.brandId) return <BrandPage brandId={page.brandId} />
+  if (page.serviceId) return <ServicePage serviceId={page.serviceId} />
+  if (page.caseId) return <CasePage caseId={page.caseId} />
+  const Page = PAGE_COMPONENTS[page.id]
+  return <Page />
+}
+
+/* The router lives outside App: BrowserRouter in main.jsx (browser),
+   StaticRouter in entry-server.jsx (build-time prerender). Every page
+   is mounted at both its Spanish and English path (see data/seo.js). */
 function App() {
+  usePageMeta()
+  useAnalytics()
+
   return (
     <LanguageProvider>
-      <Router basename={import.meta.env.BASE_URL}>
-        <Suspense fallback={<div className="route-fallback" aria-hidden="true" />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/work-with-us" element={<WorkWithUs />} />
-            <Route path="/join-us" element={<JoinUs />} />
-            <Route path="/100-voices" element={<HundredVoices />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy-policy" element={<Privacy />} />
-          </Routes>
-        </Suspense>
-      </Router>
+      <Suspense fallback={<div className="route-fallback" aria-hidden="true" />}>
+        <Routes>
+          {PAGES.flatMap((page) =>
+            LANGS.map((lang) => (
+              <Route key={page.paths[lang]} path={page.paths[lang]} element={pageElement(page)} />
+            ))
+          )}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </LanguageProvider>
   )
 }

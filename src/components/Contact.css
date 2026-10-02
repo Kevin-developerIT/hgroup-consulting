@@ -25,6 +25,29 @@
   color: rgba(13, 13, 13, 0.75);
 }
 
+/* Office address + phone (same data as the site footer and the schema). */
+.contact-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: -20px 0 48px;
+  font-style: normal;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.contact-details a {
+  color: #0d0d0d;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.2);
+  transition: border-color 0.3s ease;
+}
+
+.contact-details a:hover {
+  border-color: #0d0d0d;
+}
+
 /* -------------------- Form -------------------- */
 .contact-form {
   position: relative;

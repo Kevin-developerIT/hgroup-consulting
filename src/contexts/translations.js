@@ -14,7 +14,44 @@ export const translations = {
       byCompany: 'By Company',
       noResults: 'No projects found',
       tryAdjusting: 'Try adjusting your filters or',
-      clearFilters: 'clear all filters'
+      clearFilters: 'clear all filters',
+      privacy: 'Privacy Policy'
+    },
+    privacy: {
+      onlySpanish: 'This Privacy Policy is available in Spanish only.'
+    },
+    notFound: {
+      metaTitle: 'Page not found | H Group',
+      eyebrow: 'Error 404',
+      title: "This page doesn't exist.",
+      text: 'The link may be broken or the page may have moved. Here are a few ways back.',
+      home: 'Go to home',
+      brands: 'See our brands',
+      contact: 'Contact'
+    },
+    brand: {
+      eyebrow: 'An H Group brand',
+      services: 'Services',
+      method: 'Methodology',
+      formats: 'Formats',
+      creatorCategories: 'Creator categories',
+      projects: 'Projects',
+      collaborations: 'Collaborations',
+      platforms: 'Platforms',
+      universities: 'Universities',
+      relatedServices: 'Related services',
+      ctaTitle: 'Have a project in mind?',
+      ctaContact: "Let's talk",
+      ctaExternal: 'Learn more about',
+      next: 'Next brand',
+      allBrands: 'All H Group brands',
+      scroll: 'Scroll',
+      viewPhoto: 'View photo',
+      close: 'Close',
+      previous: 'Previous photo',
+      nextPhoto: 'Next photo',
+      galleryEvents: 'Activations & events',
+      galleryStories: 'Creator content (UGC)'
     },
     contact: {
       headline: "Let's talk.",
@@ -28,13 +65,52 @@ export const translations = {
       successTitle: 'Message received.',
       successMessage: 'Thanks for reaching out — we will get back to you shortly.',
       sendAnother: 'Send another',
-      errorMessage: 'Something went wrong. Please try again or write us directly at kevin.martinez@hgroup.consulting',
+      errorMessage: 'Something went wrong. Please try again or write us directly at info@hgroup.consulting',
     },
     presentation: {
       title: '',
       tagline: ''
     },
+    home: {
+      h1: 'H Group: creative agency, PR & influencer marketing in Mexico',
+      hsHeading: 'H Group brands',
+      ctaInternal: 'See more',
+      ctaAbout: 'about',
+      ctaExternal: 'View site',
+      clientsHeading: "Brands we've worked with",
+      servicesHeading: 'Services'
+    },
+    service: {
+      eyebrow: 'An H Group service',
+      includes: "What's included",
+      brands: 'The brands behind it',
+      visitBrand: 'Discover',
+      featured: 'Featured projects',
+      others: 'Other services',
+      next: 'Next service'
+    },
+    case: {
+      eyebrow: 'Case study',
+      client: 'Client',
+      brand: 'H Group brand',
+      services: 'Services',
+      year: 'Year',
+      challenge: 'The challenge',
+      solution: 'The solution',
+      results: 'Results',
+      gallery: 'Gallery',
+      next: 'Next case',
+      moreFrom: 'More from',
+      viewCase: 'View case',
+      draft: 'Draft — this case is waiting for content and is not published.',
+      pending: {
+        challenge: 'Pending: what did the client need to solve? Goal, context and audience.',
+        solution: 'Pending: what did we do? Idea, execution and the H Group services involved.',
+        results: 'Pending: measurable results (reach, attendance, sales, press mentions, engagement…).'
+      }
+    },
     workWithUs: {
+      title: 'Work with H Group',
       text1: 'We are HGROUP, a holding company with 11 specialized brands in different market niches. With a young and passionate vision, we connect the impossible through innovative strategies and measurable results.',
       text2: 'We bring together years of strategic experience with next-generation talent to deliver creative solutions that transform brands. From social impact with HERO to digital strategies with HACK, each of our divisions works in synergy to maximize your brand\'s impact.',
       text3: 'Our portfolio spans collaborations with Sony Music, Xiaomi, Estée Lauder, ALSEA, Zurich, Volkswagen, Maserati, Rolls-Royce, and many more. We operate in 32 states across Mexico and have presence in major cities in the USA, Canada, and Latin America.',
@@ -45,6 +121,7 @@ export const translations = {
       whatsapp: 'CHAT ON WHATSAPP'
     },
     joinUs: {
+      title: 'Join H Group',
       text1: 'We are a team of young dreamers with the passion to make the impossible a reality. At HGROUP, we believe there\'s more than one way to achieve success, and we cultivate diverse perspectives that drive innovation.',
       text2: 'Join our team and be part of the transformation. Click here to see our current opportunities, or send your CV to carla.rosales@hgroup.consulting',
       allLocations: 'ALL LOCATIONS',
@@ -116,7 +193,44 @@ export const translations = {
       byCompany: 'Por Empresa',
       noResults: 'No se encontraron proyectos',
       tryAdjusting: 'Intenta ajustar tus filtros o',
-      clearFilters: 'limpiar todos los filtros'
+      clearFilters: 'limpiar todos los filtros',
+      privacy: 'Política de Privacidad'
+    },
+    privacy: {
+      onlySpanish: ''
+    },
+    notFound: {
+      metaTitle: 'Página no encontrada | H Group',
+      eyebrow: 'Error 404',
+      title: 'Esta página no existe.',
+      text: 'Puede que el enlace esté roto o que la página se haya movido. Te dejamos algunos caminos de regreso.',
+      home: 'Ir al inicio',
+      brands: 'Ver las marcas',
+      contact: 'Contacto'
+    },
+    brand: {
+      eyebrow: 'Una marca de H Group',
+      services: 'Servicios',
+      method: 'Metodología',
+      formats: 'Formatos',
+      creatorCategories: 'Categorías de creadores',
+      projects: 'Proyectos',
+      collaborations: 'Colaboraciones',
+      platforms: 'Plataformas',
+      universities: 'Universidades',
+      relatedServices: 'Servicios relacionados',
+      ctaTitle: '¿Tienes un proyecto en mente?',
+      ctaContact: 'Hablemos',
+      ctaExternal: 'Conoce más de',
+      next: 'Siguiente marca',
+      allBrands: 'Todas las marcas de H Group',
+      scroll: 'Scroll',
+      viewPhoto: 'Ver foto',
+      close: 'Cerrar',
+      previous: 'Foto anterior',
+      nextPhoto: 'Foto siguiente',
+      galleryEvents: 'Activaciones y eventos',
+      galleryStories: 'Contenido de creadores (UGC)'
     },
     contact: {
       headline: 'Hablemos.',
@@ -130,13 +244,52 @@ export const translations = {
       successTitle: 'Mensaje recibido.',
       successMessage: 'Gracias por escribirnos — te respondemos pronto.',
       sendAnother: 'Enviar otro',
-      errorMessage: 'Algo salió mal. Inténtalo de nuevo o escríbenos directamente a kevin.martinez@hgroup.consulting',
+      errorMessage: 'Algo salió mal. Inténtalo de nuevo o escríbenos directamente a info@hgroup.consulting',
     },
     presentation: {
       title: '',
       tagline: ''
     },
+    home: {
+      h1: 'H Group: agencia creativa, PR e influencer marketing en México',
+      hsHeading: 'Las marcas de H Group',
+      ctaInternal: 'Ver más',
+      ctaAbout: 'sobre',
+      ctaExternal: 'Ver sitio',
+      clientsHeading: 'Marcas con las que hemos trabajado',
+      servicesHeading: 'Servicios'
+    },
+    service: {
+      eyebrow: 'Un servicio de H Group',
+      includes: 'Qué incluye',
+      brands: 'Las marcas que lo hacen posible',
+      visitBrand: 'Conoce',
+      featured: 'Proyectos destacados',
+      others: 'Otros servicios',
+      next: 'Siguiente servicio'
+    },
+    case: {
+      eyebrow: 'Caso de éxito',
+      client: 'Cliente',
+      brand: 'Marca de H Group',
+      services: 'Servicios',
+      year: 'Año',
+      challenge: 'El reto',
+      solution: 'La solución',
+      results: 'Resultados',
+      gallery: 'Galería',
+      next: 'Siguiente caso',
+      moreFrom: 'Más de',
+      viewCase: 'Ver caso',
+      draft: 'Borrador — este caso espera contenido y no está publicado.',
+      pending: {
+        challenge: 'Pendiente: ¿qué necesitaba resolver el cliente? Objetivo, contexto y audiencia.',
+        solution: 'Pendiente: ¿qué hicimos? Idea, ejecución y servicios de H Group involucrados.',
+        results: 'Pendiente: resultados medibles (alcance, asistentes, ventas, menciones en medios, engagement…).'
+      }
+    },
     workWithUs: {
+      title: 'Trabaja con H Group',
       text1: 'Somos HGROUP, una holding con 11 marcas especializadas en distintos nichos de mercado. Con una visión joven y apasionada, conectamos lo imposible a través de estrategias innovadoras y resultados medibles.',
       text2: 'Reunimos años de experiencia estratégica con talento de próxima generación para entregar soluciones creativas que transforman marcas. Desde el impacto social con HERO hasta las estrategias digitales con HACK, cada una de nuestras divisiones trabaja en sinergia para maximizar el impacto de tu marca.',
       text3: 'Nuestro portafolio incluye colaboraciones con Sony Music, Xiaomi, Estée Lauder, ALSEA, Zurich, Volkswagen, Maserati, Rolls-Royce, y muchos más. Operamos en 32 estados de la República Mexicana y tenemos presencia en las principales ciudades de Estados Unidos, Canadá y Latinoamérica.',
@@ -147,6 +300,7 @@ export const translations = {
       whatsapp: 'CHAT EN WHATSAPP'
     },
     joinUs: {
+      title: 'Únete a H Group',
       text1: 'Somos un equipo de jóvenes soñadores con la pasión de hacer realidad lo imposible. En HGROUP creemos que hay más de una forma de lograr el éxito, y cultivamos perspectivas diversas que impulsan la innovación.',
       text2: 'Únete a nuestro equipo y sé parte de la transformación. Haz clic aquí para ver nuestras oportunidades actuales, o envía tu CV a carla.rosales@hgroup.consulting',
       allLocations: 'TODAS LAS UBICACIONES',
