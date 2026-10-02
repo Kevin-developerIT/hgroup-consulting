@@ -293,7 +293,11 @@ function HsAccordion() {
                 )}
                 {BRAND_PAGE_IDS.includes(h.id) ? (
                   <LocaleLink to={`/marcas/${h.id}`} className="hs-menu-cta">
-                    {t('home.ctaInternal')} <span className="hs-menu-cta-arrow">→</span>
+                    {/* Visible "Ver más"; the anchor text Google and screen
+                        readers get is "Ver más sobre HERO". */}
+                    {t('home.ctaInternal')}
+                    <span className="sr-only"> {t('home.ctaAbout')} {h.name}</span>{' '}
+                    <span className="hs-menu-cta-arrow">→</span>
                   </LocaleLink>
                 ) : link && (
                   <a

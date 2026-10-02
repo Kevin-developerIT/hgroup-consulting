@@ -125,7 +125,9 @@ function WorkWithUs() {
                     <h3 className="h-name">{item.name}</h3>
                     {BRAND_PAGE_IDS.includes(item.name.toLowerCase()) ? (
                       <LocaleLink to={`/marcas/${item.name.toLowerCase()}`} className="h-link">
-                        {t('workWithUs.viewMore')} <span className="h-arrow">→</span>
+                        {t('workWithUs.viewMore')}
+                        <span className="sr-only"> {t('home.ctaAbout')} {item.name}</span>{' '}
+                        <span className="h-arrow">→</span>
                       </LocaleLink>
                     ) : (
                     <a

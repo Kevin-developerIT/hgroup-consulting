@@ -7,6 +7,7 @@ import LocaleLink from './components/LocaleLink'
 import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
 import BrandsMarquee from './components/BrandsMarquee'
+import ServicesIndex from './components/ServicesIndex'
 import heroBannerVideo from './assets/video/hero-banner.mp4'
 import { usePageMeta } from './hooks/usePageMeta'
 import { useAnalytics } from './hooks/useAnalytics'
@@ -20,6 +21,7 @@ const HundredVoices = lazy(() => import('./components/HundredVoices'))
 const Contact = lazy(() => import('./components/Contact'))
 const Privacy = lazy(() => import('./components/Privacy'))
 const BrandPage = lazy(() => import('./components/BrandPage'))
+const ServicePage = lazy(() => import('./components/ServicePage'))
 const NotFound = lazy(() => import('./components/NotFound'))
 
 /* The intro overlay plays once per page load. Later visits to the home
@@ -179,6 +181,9 @@ function HomePage() {
           inline description + CTA on the active H. */}
       <HsAccordion />
 
+      {/* Service lines → their own pages (SEO report point 1). */}
+      <ServicesIndex />
+
       <nav className={`horizontal-nav ${!showMainHeader ? 'visible' : ''}`}>
         <div className="nav-content">
           <img
@@ -270,6 +275,7 @@ const PAGE_COMPONENTS = {
 
 const pageElement = (page) => {
   if (page.brandId) return <BrandPage brandId={page.brandId} />
+  if (page.serviceId) return <ServicePage serviceId={page.serviceId} />
   const Page = PAGE_COMPONENTS[page.id]
   return <Page />
 }

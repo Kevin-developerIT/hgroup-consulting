@@ -1,6 +1,7 @@
 import { holdingsLogos } from '../assets/logos'
 import { translations } from '../contexts/translations'
 import { BRAND_PAGES } from './brands'
+import { SERVICE_PAGES } from './services'
 import { holdingLinks } from './holdings'
 import { BRAND_PAGE_IDS, SITE_ORIGIN, canonicalFor, localizePath, seoFor } from './seo'
 
@@ -115,12 +116,66 @@ function brandNodes(id, meta) {
   }
 }
 
+/* Extra nodes for a service page: the Service itself (provided by H Group
+   and the Hs behind it, with what it includes as an offer catalog) and a
+   two-step breadcrumb (H Group home → service). */
+function serviceNodes(id, meta) {
+  const service = SERVICE_PAGES[id]
+  const copy = service.copy[meta.lang]
+  const home = meta.lang === 'es' ? 'Inicio' : 'Home'
+  const serviceNodeId = `${meta.canonical}#service`
+
+  return {
+    about: { '@id': serviceNodeId },
+    breadcrumbId: `${meta.canonical}#breadcrumb`,
+    nodes: [
+      {
+        '@type': 'Service',
+        '@id': serviceNodeId,
+        name: copy.name,
+        serviceType: copy.name,
+        description: copy.intro,
+        provider: [{ '@id': ORG_ID }, ...service.brands.map((b) => ({ '@id': brandId(b) }))],
+        areaServed: { '@type': 'Country', name: 'México' },
+        url: meta.canonical,
+        ...(copy.includes.length > 0 && {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: copy.name,
+            itemListElement: copy.includes.map((item) => ({
+              '@type': 'Offer',
+              itemOffered: { '@type': 'Service', name: item.title, description: item.text },
+            })),
+          },
+        }),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${meta.canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: home,
+            item: canonicalFor(localizePath('/', meta.lang)),
+          },
+          { '@type': 'ListItem', position: 2, name: copy.name, item: meta.canonical },
+        ],
+      },
+    ],
+  }
+}
+
 /* schema.org graph for one prerendered URL: Organization + WebSite on
-   every page, a WebPage for the URL, and brand/service/breadcrumb nodes
-   on H pages. `brandPageId` is the H id when the URL is a brand page. */
-export function buildSchema(route, brandPageId) {
+   every page, a WebPage for the URL, and brand or service nodes (with a
+   breadcrumb) on H and service pages. `page` is the PAGES entry. */
+export function buildSchema(route, page = {}) {
   const meta = seoFor(route)
-  const brand = brandPageId ? brandNodes(brandPageId, meta) : null
+  const brand = page.brandId
+    ? brandNodes(page.brandId, meta)
+    : page.serviceId
+      ? serviceNodes(page.serviceId, meta)
+      : null
 
   const webPage = {
     '@type': 'WebPage',

@@ -78,8 +78,8 @@ function routeAssets(key) {
   ].join('\n    ')
 }
 
-const jsonLdFor = (route, brandId) =>
-  `<script type="application/ld+json">${JSON.stringify(buildSchema(route, brandId)).replace(/</g, '\\u003c')}</script>`
+const jsonLdFor = (route, page) =>
+  `<script type="application/ld+json">${JSON.stringify(buildSchema(route, page)).replace(/</g, '\\u003c')}</script>`
 
 const alternateLinks = (meta) =>
   meta.alternates
@@ -111,7 +111,7 @@ for (const page of PAGES) {
       hints.replace(/\/></g, '/>\n    <'),
       routeAssets(page.module),
       alternateLinks(meta),
-      jsonLdFor(route, page.brandId),
+      jsonLdFor(route, page),
     ].filter(Boolean).join('\n    ')
     html = replaceOnce(html, /\n\s*<\/head>/, () => `\n    ${headExtras}\n  </head>`, '</head>')
     html = replaceOnce(

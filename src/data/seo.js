@@ -260,8 +260,105 @@ const BRAND_SEO = {
 
 export const BRAND_PAGE_IDS = Object.keys(BRAND_SEO)
 
+/* One page per service line (report point 1), each linking to the Hs
+   that deliver it. Content lives in src/data/services.js. Spanish slugs
+   at the root match how people search in Mexico; English under /en. */
+const SERVICE_SEO = {
+  influencer: {
+    paths: { es: '/influencer-marketing', en: '/en/influencer-marketing' },
+    es: {
+      title: 'Agencia de Influencer Marketing en México | H Group',
+      description:
+        'Influencer marketing en México: estrategias con creadores, convocatorias para lanzamientos y eventos, representación de talento y contenido UGC con HERE y HOLY.',
+    },
+    en: {
+      title: 'Influencer Marketing Agency in Mexico | H Group',
+      description:
+        'Influencer marketing in Mexico: creator strategies, influencer outreach for launches and events, talent representation and UGC with HERE and HOLY.',
+    },
+  },
+  pr: {
+    // Until HYPE's material arrives (same as its brand page).
+    draft: true,
+    paths: { es: '/relaciones-publicas', en: '/en/public-relations' },
+    es: {
+      title: 'Agencia de Relaciones Públicas en México | H Group',
+      description:
+        'Relaciones públicas en México con HYPE, la marca de PR de H Group, que amplifica la voz de las marcas a través de más de 150 medios de comunicación.',
+    },
+    en: {
+      title: 'Public Relations Agency in Mexico | H Group',
+      description:
+        "Public relations in Mexico with HYPE, H Group's PR brand, amplifying brand voices through 150+ media outlets.",
+    },
+  },
+  experiential: {
+    paths: { es: '/marketing-experiencial', en: '/en/experiential-marketing' },
+    es: {
+      title: 'Marketing Experiencial y Eventos en México | H Group',
+      description:
+        'Marketing experiencial en México: eventos y lanzamientos con HOOK, pop-ups, stands y test drives con HOME, y activaciones en universidades con HOPE.',
+    },
+    en: {
+      title: 'Experiential Marketing & Events in Mexico | H Group',
+      description:
+        'Experiential marketing in Mexico: events and launches with HOOK, pop-ups, stands and test drives with HOME, and campus activations with HOPE.',
+    },
+  },
+  production: {
+    paths: { es: '/produccion', en: '/en/production' },
+    es: {
+      title: 'Producción Audiovisual y de Eventos en México | H Group',
+      description:
+        'Producción audiovisual con HALO —branded content, video para redes, aftermovies, animación y CGI— y producción de eventos con HOOK, de H Group.',
+    },
+    en: {
+      title: 'Video & Event Production in Mexico | H Group',
+      description:
+        'Video production with HALO — branded content, social video, aftermovies, animation and CGI — and event production with HOOK, from H Group.',
+    },
+  },
+  content: {
+    paths: { es: '/contenido', en: '/en/content' },
+    es: {
+      title: 'Contenido para Redes Sociales, UGC y Branded Content | H Group',
+      description:
+        'Contenido para marcas: gestión de redes sociales con HACK, contenido UGC con creadores reales con HOLY, y branded content y video con HALO.',
+    },
+    en: {
+      title: 'Social Media Content, UGC & Branded Content | H Group',
+      description:
+        'Content for brands: social media management with HACK, UGC with real creators with HOLY, and branded content and video with HALO.',
+    },
+  },
+  creative: {
+    paths: { es: '/estrategia-creativa', en: '/en/creative-strategy' },
+    es: {
+      title: 'Estrategia Creativa, Branding y Diseño | H Group',
+      description:
+        'Estrategia creativa para marcas: branding, diseño y propuestas a la medida con HITS, y estrategia y publicidad digital enfocadas en conversión con HACK.',
+    },
+    en: {
+      title: 'Creative Strategy, Branding & Design | H Group',
+      description:
+        'Creative strategy for brands: branding, design and tailor-made proposals with HITS, plus digital strategy and advertising focused on conversion with HACK.',
+    },
+  },
+}
+
+export const SERVICE_PAGE_IDS = Object.keys(SERVICE_SEO)
+
 export const PAGES = [
   ...PAGES_BASE,
+  ...SERVICE_PAGE_IDS.map((id) => ({
+    id: `service:${id}`,
+    serviceId: id,
+    paths: SERVICE_SEO[id].paths,
+    module: 'src/components/ServicePage.jsx',
+    og: `service-${id}`,
+    draft: Boolean(SERVICE_SEO[id].draft),
+    seo: SERVICE_SEO[id],
+  })),
   ...BRAND_PAGE_IDS.map((id) => ({
     id: `brand:${id}`,
     brandId: id,
@@ -272,6 +369,9 @@ export const PAGES = [
     seo: BRAND_SEO[id],
   })),
 ]
+
+/* Spanish path of a service page — what LocaleLink expects. */
+export const servicePath = (id) => SERVICE_SEO[id].paths.es
 
 /* Social preview images live in public/og/<name>-<lang>.jpg (1200×630).
    Pages without their own `og` use default-<lang>.jpg. */

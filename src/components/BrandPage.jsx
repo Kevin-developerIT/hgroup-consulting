@@ -1,42 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { holdingsLogos, logohgroup } from '../assets/logos'
+import { useEffect, useRef } from 'react'
+import { holdingsLogos } from '../assets/logos'
 import { BRAND_PAGES } from '../data/brands'
-import { BRAND_PAGE_IDS } from '../data/seo'
+import { SERVICE_PAGES, servicesForBrand } from '../data/services'
+import { BRAND_PAGE_IDS, servicePath } from '../data/seo'
 import { useLanguage } from '../contexts/useLanguage'
+import { keepTogether, pad, useBarTone, useScrollReveal } from '../hooks/useBrandPage'
 import LocaleLink from './LocaleLink'
 import LanguageToggle from './LanguageToggle'
 import HMedia from './media/HMedia'
 import BrandGallery from './BrandGallery'
+import { BrandTopbar, LinkList, ServiceList } from './BrandParts'
 import './BrandPage.css'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const pad = (n) => String(n).padStart(2, '0')
-// Never break "H Group" across two lines.
-const keepTogether = (s) => s.replace(/H Group/g, 'H Group')
 const brandIndex = (id) => holdingsLogos.findIndex((h) => h.id === id)
-
-/* Numbered list shared by services and methodology steps. Items with
-   only a title (no text) switch to a compact multi-column layout. */
-function ServiceList({ title, items }) {
-  const compact = items.every((item) => !item.text)
-  return (
-    <section className="brand-section" data-bar="light">
-      <h2 className="brand-label" data-reveal>{title}</h2>
-      <ol className={`brand-services${compact ? ' brand-services--compact' : ''}`}>
-        {items.map((item, i) => (
-          <li key={item.title} className="brand-services__item" data-reveal>
-            <span className="brand-services__index">{pad(i + 1)}</span>
-            <h3 className="brand-services__name">{item.title}</h3>
-            {item.text && <p className="brand-services__text">{item.text}</p>}
-          </li>
-        ))}
-      </ol>
-    </section>
-  )
-}
 
 /* Client logos at a similar visual weight: every logo gets roughly the
    same area, so wide wordmarks and square crests read as equals. */
@@ -70,66 +46,22 @@ function BrandPage({ brandId }) {
   const brand = BRAND_PAGES[brandId]
   const copy = brand.copy[language]
   const nextId = nextBrandWithPage(brandId)
+  const relatedServices = servicesForBrand(brandId).map((id) => ({
+    to: servicePath(id),
+    label: SERVICE_PAGES[id].copy[language].name,
+  }))
 
   // Arriving from the accordion leaves the window scrolled far down.
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [brandId])
 
-  // Top bar turns ink over light sections and white over dark ones
-  // (each section declares its tone in data-bar).
-  const [barTone, setBarTone] = useState('dark')
-  useEffect(() => {
-    const probeY = 44
-    const update = () => {
-      const sections = rootRef.current?.querySelectorAll('[data-bar]') ?? []
-      for (const el of sections) {
-        const { top, bottom } = el.getBoundingClientRect()
-        if (top <= probeY && bottom > probeY) {
-          setBarTone(el.dataset.bar)
-          return
-        }
-      }
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('resize', update)
-    return () => {
-      window.removeEventListener('scroll', update)
-      window.removeEventListener('resize', update)
-    }
-  }, [brandId])
-
-  // Below-the-fold reveals. The hero entrance is pure CSS so the
-  // prerendered HTML never flashes before hydration.
-  useEffect(() => {
-    const mm = gsap.matchMedia(rootRef)
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.utils.toArray('[data-reveal]').forEach((el) => {
-        gsap.from(el, {
-          y: 48,
-          opacity: 0,
-          duration: 1.2,
-          ease: 'expo.out',
-          scrollTrigger: { trigger: el, start: 'top 90%' },
-        })
-      })
-    })
-    return () => mm.revert()
-  }, [brandId, language])
+  const barTone = useBarTone(rootRef, brandId)
+  useScrollReveal(rootRef, [brandId, language])
 
   return (
     <div className="brand-page" ref={rootRef}>
-      <header className={`brand-topbar is-${barTone}`}>
-        <LocaleLink to="/" className="brand-topbar__logo">
-          <img src={logohgroup} alt="H Group" />
-        </LocaleLink>
-        <nav className="brand-topbar__nav" aria-label="H Group">
-          <LocaleLink to="/work-with-us">{t('nav.workWithUs')}</LocaleLink>
-          <LocaleLink to="/contact">{t('nav.contact')}</LocaleLink>
-        </nav>
-      </header>
-
+      <BrandTopbar tone={barTone} />
       <section className="brand-hero" data-bar="dark">
         <div className="brand-hero__media" aria-hidden="true">
           <HMedia id={brandId} className="brand-hero__video" />
@@ -241,6 +173,8 @@ function BrandPage({ brandId }) {
           )}
         </section>
       )}
+
+      {relatedServices.length > 0 && <LinkList title={t('brand.relatedServices')} links={relatedServices} />}
 
       <section className="brand-cta" data-bar="dark">
         <div className="brand-cta__inner">

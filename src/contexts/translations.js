@@ -39,6 +39,7 @@ export const translations = {
       collaborations: 'Collaborations',
       platforms: 'Platforms',
       universities: 'Universities',
+      relatedServices: 'Related services',
       ctaTitle: 'Have a project in mind?',
       ctaContact: "Let's talk",
       ctaExternal: 'Learn more about',
@@ -74,8 +75,19 @@ export const translations = {
       h1: 'H Group: creative agency, PR & influencer marketing in Mexico',
       hsHeading: 'H Group brands',
       ctaInternal: 'See more',
+      ctaAbout: 'about',
       ctaExternal: 'View site',
-      clientsHeading: "Brands we've worked with"
+      clientsHeading: "Brands we've worked with",
+      servicesHeading: 'Services'
+    },
+    service: {
+      eyebrow: 'An H Group service',
+      includes: "What's included",
+      brands: 'The brands behind it',
+      visitBrand: 'Discover',
+      featured: 'Featured projects',
+      others: 'Other services',
+      next: 'Next service'
     },
     workWithUs: {
       title: 'Work with H Group',
@@ -186,6 +198,7 @@ export const translations = {
       collaborations: 'Colaboraciones',
       platforms: 'Plataformas',
       universities: 'Universidades',
+      relatedServices: 'Servicios relacionados',
       ctaTitle: '¿Tienes un proyecto en mente?',
       ctaContact: 'Hablemos',
       ctaExternal: 'Conoce más de',
@@ -221,8 +234,19 @@ export const translations = {
       h1: 'H Group: agencia creativa, PR e influencer marketing en México',
       hsHeading: 'Las marcas de H Group',
       ctaInternal: 'Ver más',
+      ctaAbout: 'sobre',
       ctaExternal: 'Ver sitio',
-      clientsHeading: 'Marcas con las que hemos trabajado'
+      clientsHeading: 'Marcas con las que hemos trabajado',
+      servicesHeading: 'Servicios'
+    },
+    service: {
+      eyebrow: 'Un servicio de H Group',
+      includes: 'Qué incluye',
+      brands: 'Las marcas que lo hacen posible',
+      visitBrand: 'Conoce',
+      featured: 'Proyectos destacados',
+      others: 'Otros servicios',
+      next: 'Siguiente servicio'
     },
     workWithUs: {
       title: 'Trabaja con H Group',
