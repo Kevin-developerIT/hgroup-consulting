@@ -6,6 +6,7 @@ import { holdingLinks } from '../data/holdings'
 import { BRAND_PAGE_IDS } from '../data/seo'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
+import { whatsappUrl } from '../data/company'
 import './Pages.css'
 
 function WorkWithUs() {
@@ -101,7 +102,7 @@ function WorkWithUs() {
         <div className="contact-section">
   <h2>{t('workWithUs.contact')}</h2>
   <a 
-    href="https://wa.me/5215535358818?text=Hola%20HGROUP,%20me%20gustaría%20trabajar%20con%20ustedes"
+    href={whatsappUrl('Hola HGROUP, me gustaría trabajar con ustedes')}
     target="_blank"
     rel="noopener noreferrer"
     className="contact-email whatsapp-link"

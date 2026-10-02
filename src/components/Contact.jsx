@@ -5,12 +5,12 @@ import { logohgroup } from '../assets/logos'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import { track } from '../lib/analytics'
-import { ADDRESS_LINE, COMPANY } from '../data/company'
+import { ADDRESS_LINE, COMPANY, whatsappUrl } from '../data/company'
 import './Pages.css'
 import './Contact.css'
 
 /* ==============================================================
-   Contact — submits to kevin.martinez@hgroup.consulting via FormSubmit
+   Contact — submits to info@hgroup.consulting via FormSubmit
    --------------------------------------------------------------
    FormSubmit (formsubmit.co) is a free no-account email-forwarding
    service. The very first submission triggers a verification email
@@ -21,7 +21,7 @@ import './Contact.css'
    in-page success state instead of a redirect.
    ============================================================== */
 
-const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/kevin.martinez@hgroup.consulting'
+const CONTACT_ENDPOINT = `https://formsubmit.co/ajax/${COMPANY.email}`
 
 function Contact() {
   const navigate = useNavigate()
@@ -155,6 +155,8 @@ function Contact() {
           <address className="contact-details">
             <a href={COMPANY.mapUrl} target="_blank" rel="noopener noreferrer">{ADDRESS_LINE}</a>
             <a href={`tel:${COMPANY.phone.e164}`}>{COMPANY.phone.display}</a>
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
           </address>
 
           {status === 'success' ? (

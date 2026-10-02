@@ -8,7 +8,7 @@ import { BRAND_PAGE_IDS, SITE_ORIGIN, canonicalFor, localizePath, seoFor } from 
 
 const ORG_ID = `${SITE_ORIGIN}/#organization`
 const WEBSITE_ID = `${SITE_ORIGIN}/#website`
-const CONTACT_EMAIL = 'kevin.martinez@hgroup.consulting'
+const CONTACT_EMAIL = COMPANY.email
 
 // Language-neutral id for an H that has its own page, shared by the
 // ES and EN versions so both describe the same entity.

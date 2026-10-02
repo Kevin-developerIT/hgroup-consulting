@@ -3,10 +3,11 @@ import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
+import { COMPANY } from '../data/company'
 import './Pages.css'
 import './Privacy.css'
 
-const CONTACT_EMAIL = 'kevin.martinez@hgroup.consulting'
+const CONTACT_EMAIL = COMPANY.email
 const SITE_URL = 'https://hgroup.consulting/'
 
 function Section({ number, title, children }) {

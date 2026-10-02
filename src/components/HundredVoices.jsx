@@ -4,6 +4,7 @@ import LocaleLink from './LocaleLink'
 import { logohgroup } from '../assets/logos'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
+import { whatsappUrl } from '../data/company'
 // Direct imports: the '../assets' barrel pulls every file in assets/media
 // into the build (~370 MB) even though this page only shows these two.
 import cienvoces from '../assets/media/100vocesHERO.png'
@@ -19,9 +20,7 @@ function HundredVoices() {
     navigate(localize('/'))
   }
 
-  // Número de WhatsApp - cambia esto por el número real
-  const whatsappNumber = '525644162396' // Reemplaza con el número real
-  const whatsappMessage = encodeURIComponent('Hola, me gustaría obtener más información sobre 100 Voces')
+  const whatsappMessage = 'Hola, me gustaría obtener más información sobre 100 Voces'
 
   return (
     <>
@@ -255,8 +254,8 @@ function HundredVoices() {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
             data-track="whatsapp_click"
-            data-track-url={`https://wa.me/${whatsappNumber}`}
-            onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank')}
+            data-track-url={whatsappUrl()}
+            onClick={() => window.open(whatsappUrl(whatsappMessage), '_blank')}
             >
               <svg 
                 width="20" 

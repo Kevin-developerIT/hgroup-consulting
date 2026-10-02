@@ -65,7 +65,7 @@ export const translations = {
       successTitle: 'Message received.',
       successMessage: 'Thanks for reaching out — we will get back to you shortly.',
       sendAnother: 'Send another',
-      errorMessage: 'Something went wrong. Please try again or write us directly at kevin.martinez@hgroup.consulting',
+      errorMessage: 'Something went wrong. Please try again or write us directly at info@hgroup.consulting',
     },
     presentation: {
       title: '',
@@ -224,7 +224,7 @@ export const translations = {
       successTitle: 'Mensaje recibido.',
       successMessage: 'Gracias por escribirnos — te respondemos pronto.',
       sendAnother: 'Enviar otro',
-      errorMessage: 'Algo salió mal. Inténtalo de nuevo o escríbenos directamente a kevin.martinez@hgroup.consulting',
+      errorMessage: 'Algo salió mal. Inténtalo de nuevo o escríbenos directamente a info@hgroup.consulting',
     },
     presentation: {
       title: '',

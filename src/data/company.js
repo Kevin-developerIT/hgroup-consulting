@@ -19,6 +19,9 @@ export const COMPANY = {
   // Mexico dropped the mobile "1" (+52 1 …) in 2019; +52 55 … dials the
   // same line from anywhere.
   phone: { display: '+52 55 2523 5285', e164: '+525525235285' },
+  // Same line, also on WhatsApp (wa.me takes the number without "+").
+  whatsapp: '525525235285',
+  email: 'info@hgroup.consulting',
   social: {
     instagram: 'https://www.instagram.com/hgroupp_/',
     // Same page as linkedin.com/company/65892926; the slug URL opens
@@ -29,3 +32,7 @@ export const COMPANY = {
 
 const { street, neighborhood, postalCode, city, regionShort } = COMPANY.address
 export const ADDRESS_LINE = `${street}, ${neighborhood}, ${postalCode} ${city}, ${regionShort}`
+
+/* wa.me link, optionally with a pre-filled message. */
+export const whatsappUrl = (text) =>
+  `https://wa.me/${COMPANY.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ''}`
