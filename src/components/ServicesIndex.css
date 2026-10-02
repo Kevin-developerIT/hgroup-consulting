@@ -11,8 +11,7 @@
 .services-index__inner {
   max-width: 1600px;
   margin: 0 auto;
-  /* Bottom padding keeps the fixed EN/ES toggle off the last row. */
-  padding: clamp(96px, 12vw, 180px) clamp(20px, 6vw, 96px) clamp(110px, 12vw, 180px);
+  padding: clamp(96px, 12vw, 180px) clamp(20px, 6vw, 96px) clamp(72px, 9vw, 140px);
 }
 
 .services-index__label {

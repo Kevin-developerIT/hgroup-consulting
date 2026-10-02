@@ -7,6 +7,7 @@ import { useLanguage } from '../contexts/useLanguage'
 import { keepTogether, pad, useBarTone, useScrollReveal } from '../hooks/useBrandPage'
 import LocaleLink from './LocaleLink'
 import LanguageToggle from './LanguageToggle'
+import SiteFooter from './SiteFooter'
 import HMedia from './media/HMedia'
 import BrandGallery from './BrandGallery'
 import { BrandTopbar, LinkList, ServiceList } from './BrandParts'
@@ -215,10 +216,7 @@ function BrandPage({ brandId }) {
             </span>
           </LocaleLink>
         )}
-        <div className="brand-next__footer">
-          <span>© H Group</span>
-          <LocaleLink to="/privacy-policy">{t('nav.privacy')}</LocaleLink>
-        </div>
+        <SiteFooter />
       </footer>
 
       <LanguageToggle />

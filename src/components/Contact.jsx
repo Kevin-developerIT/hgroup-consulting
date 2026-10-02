@@ -5,6 +5,7 @@ import { logohgroup } from '../assets/logos'
 import { useLanguage, useLocalePath } from '../contexts/useLanguage'
 import LanguageToggle from './LanguageToggle'
 import { track } from '../lib/analytics'
+import { ADDRESS_LINE, COMPANY } from '../data/company'
 import './Pages.css'
 import './Contact.css'
 
@@ -151,6 +152,10 @@ function Contact() {
         <div className="page-content">
           <h1 className="contact-headline">{t('contact.headline')}</h1>
           <p className="contact-intro">{t('contact.intro')}</p>
+          <address className="contact-details">
+            <a href={COMPANY.mapUrl} target="_blank" rel="noopener noreferrer">{ADDRESS_LINE}</a>
+            <a href={`tel:${COMPANY.phone.e164}`}>{COMPANY.phone.display}</a>
+          </address>
 
           {status === 'success' ? (
             <div className="contact-success">

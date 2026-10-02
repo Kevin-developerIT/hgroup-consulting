@@ -8,6 +8,7 @@ import LanguageToggle from './components/LanguageToggle'
 import HsAccordion from './components/HsAccordion'
 import BrandsMarquee from './components/BrandsMarquee'
 import ServicesIndex from './components/ServicesIndex'
+import SiteFooter from './components/SiteFooter'
 import heroBannerVideo from './assets/video/hero-banner.mp4'
 import { usePageMeta } from './hooks/usePageMeta'
 import { useAnalytics } from './hooks/useAnalytics'
@@ -183,6 +184,9 @@ function HomePage() {
 
       {/* Service lines → their own pages (SEO report point 1). */}
       <ServicesIndex />
+      <footer className="home-footer">
+        <SiteFooter />
+      </footer>
 
       <nav className={`horizontal-nav ${!showMainHeader ? 'visible' : ''}`}>
         <div className="nav-content">

@@ -121,8 +121,10 @@ export function runSeoChecks(pages, { notFoundHtml, sitemapXml, distDir, siteOri
     if (!info.jsonLd) err(route, 'falta JSON-LD')
     else if (info.jsonLd === 'invalid') err(route, 'JSON-LD inválido')
     else {
-      const types = (info.jsonLd['@graph'] || []).map((n) => n['@type'])
+      const types = (info.jsonLd['@graph'] || []).flatMap((n) => n['@type'])
       if (!types.includes('Organization')) err(route, 'JSON-LD sin Organization')
+      const org = (info.jsonLd['@graph'] || []).find((n) => [].concat(n['@type']).includes('Organization') && n.address)
+      if (!org?.address?.streetAddress || !org.telephone) err(route, 'JSON-LD sin dirección o teléfono de la organización')
       const webPage = (info.jsonLd['@graph'] || []).find((n) => n['@type'] === 'WebPage')
       if (!webPage) err(route, 'JSON-LD sin WebPage')
       else if (webPage.url !== expected.canonical) err(route, `WebPage.url ${webPage.url} no coincide con el canonical`)

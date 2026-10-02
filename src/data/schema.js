@@ -1,6 +1,7 @@
 import { holdingsLogos } from '../assets/logos'
 import { translations } from '../contexts/translations'
 import { BRAND_PAGES } from './brands'
+import { COMPANY } from './company'
 import { SERVICE_PAGES } from './services'
 import { holdingLinks } from './holdings'
 import { BRAND_PAGE_IDS, SITE_ORIGIN, canonicalFor, localizePath, seoFor } from './seo'
@@ -26,24 +27,42 @@ function organization() {
     ...(descriptions[h.name] && { description: descriptions[h.name] }),
   }))
 
+  const { address, geo, phone, social } = COMPANY
+
+  // Organization + ProfessionalService (a LocalBusiness type): one entity
+  // for the holding and its office, as report point 6 asks.
   return {
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': ORG_ID,
-    name: 'H Group',
+    name: COMPANY.name,
     alternateName: 'HGROUP',
-    legalName: 'MYT Marketing Comunicación',
+    legalName: COMPANY.legalName,
     url: `${SITE_ORIGIN}/`,
     logo: {
       '@type': 'ImageObject',
       url: `${SITE_ORIGIN}/Hlogo_negro.png`,
     },
+    image: `${SITE_ORIGIN}/og/default-es.jpg`,
     description: seoFor('/').description,
     email: CONTACT_EMAIL,
+    telephone: phone.e164,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${address.street}, ${address.neighborhood}`,
+      addressLocality: address.city,
+      addressRegion: address.region,
+      postalCode: address.postalCode,
+      addressCountry: address.country,
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: geo.latitude, longitude: geo.longitude },
+    hasMap: COMPANY.mapUrl,
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'sales',
+      telephone: phone.e164,
       email: CONTACT_EMAIL,
       url: `${SITE_ORIGIN}/contact`,
+      areaServed: 'MX',
       availableLanguage: ['es', 'en'],
     },
     areaServed: [
@@ -61,10 +80,7 @@ function organization() {
       'Marketing digital',
       'Representación de talento',
     ],
-    sameAs: [
-      'https://www.instagram.com/hgroupp_/',
-      'https://www.linkedin.com/company/herohgroup/',
-    ],
+    sameAs: [social.instagram, social.linkedin],
     subOrganization: brands,
   }
 }
