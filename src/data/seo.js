@@ -136,29 +136,27 @@ const BRAND_SEO = {
     },
   },
   hack: {
-    draft: true,
     es: {
-      title: 'HACK | Estrategia digital y conversión — H Group',
+      title: 'HACK | Social media, publicidad digital y desarrollo — H Group',
       description:
-        'HACK, marca de H Group, crea estrategias digitales enfocadas en conversión y brand awareness para marcas en México.',
+        'HACK, marca de H Group, gestiona redes sociales, publicidad digital y desarrollo con foco en conversión, para marcas como DKNY y Oscar de la Renta.',
     },
     en: {
-      title: 'HACK | Digital strategy & conversion — H Group',
+      title: 'HACK | Social media, digital ads & development — H Group',
       description:
-        'HACK, an H Group brand, builds digital strategies focused on conversion and brand awareness for brands in Mexico.',
+        'HACK, an H Group brand, runs social media, digital advertising and development focused on conversion, for brands like DKNY and Oscar de la Renta.',
     },
   },
   halo: {
-    draft: true,
     es: {
-      title: 'HALO | Contenido creativo y producción de video — H Group',
+      title: 'HALO | Producción audiovisual y branded content — H Group',
       description:
-        'HALO, marca de H Group, crea contenido creativo y producción de video de alta calidad para marcas en México.',
+        'HALO, marca de H Group, produce branded content, video para redes, aftermovies, animación y CGI para marcas como Aston Martin, Lamborghini y Yves Rocher.',
     },
     en: {
-      title: 'HALO | Creative content & video production — H Group',
+      title: 'HALO | Video production & branded content — H Group',
       description:
-        'HALO, an H Group brand, creates creative content and high-quality video production for brands in Mexico.',
+        'HALO, an H Group brand, produces branded content, social video, aftermovies, animation and CGI for brands like Aston Martin, Lamborghini and Yves Rocher.',
     },
   },
   here: {
@@ -175,16 +173,15 @@ const BRAND_SEO = {
     },
   },
   hits: {
-    draft: true,
     es: {
-      title: 'HITS | Estudio creativo para marcas — H Group',
+      title: 'HITS | Estudio creativo: branding, diseño y estrategia — H Group',
       description:
-        'HITS, estudio creativo de H Group, desarrolla propuestas creativas a la medida para marcas líderes.',
+        'HITS, estudio creativo de H Group, transforma ideas en branding, diseño y estrategia a la medida para marcas como Zote y Mora Mora.',
     },
     en: {
-      title: 'HITS | Creative studio for brands — H Group',
+      title: 'HITS | Creative studio: branding, design & strategy — H Group',
       description:
-        "HITS, H Group's creative studio, develops tailor-made creative proposals for leading brands.",
+        "HITS, H Group's creative studio, turns ideas into tailor-made branding, design and strategy for brands like Zote and Mora Mora.",
     },
   },
   home: {
@@ -200,29 +197,27 @@ const BRAND_SEO = {
     },
   },
   hope: {
-    draft: true,
     es: {
-      title: 'HOPE | Innovación educativa con 200+ universidades — H Group',
+      title: 'HOPE | Medios y activaciones en universidades — H Group',
       description:
-        'HOPE, marca de H Group, impulsa la innovación educativa conectando marcas con más de 200 universidades en México.',
+        'HOPE, marca de H Group, conecta marcas con estudiantes mediante medios, activaciones, conferencias y patrocinios en universidades de todo México.',
     },
     en: {
-      title: 'HOPE | Educational innovation with 200+ universities — H Group',
+      title: 'HOPE | University media & activations — H Group',
       description:
-        'HOPE, an H Group brand, drives educational innovation by connecting brands with 200+ universities in Mexico.',
+        'HOPE, an H Group brand, connects brands with students through media, activations, talks and sponsorships at universities across Mexico.',
     },
   },
   hunt: {
-    draft: true,
     es: {
-      title: 'HUNT | Estrategia de medios — H Group',
+      title: 'HUNT | Medios OOH y estrategia de medios — H Group',
       description:
-        'HUNT, marca de H Group, diseña estrategias de medios con más de 100,000 oportunidades de visibilidad de marca.',
+        'HUNT, marca de H Group, planea y optimiza campañas en medios OOH: espectaculares, pantallas, aeropuertos, metro y más de 100,000 oportunidades de visibilidad.',
     },
     en: {
-      title: 'HUNT | Media strategy — H Group',
+      title: 'HUNT | OOH media & media strategy — H Group',
       description:
-        'HUNT, an H Group brand, designs media strategies with 100,000+ brand visibility opportunities.',
+        'HUNT, an H Group brand, plans and optimizes OOH campaigns: billboards, screens, airports, subway and 100,000+ brand visibility opportunities.',
     },
   },
   hype: {
@@ -239,16 +234,15 @@ const BRAND_SEO = {
     },
   },
   hook: {
-    draft: true,
     es: {
-      title: 'HOOK | Eventos y activaciones de marca — H Group',
+      title: 'HOOK | Productora de eventos y lanzamientos — H Group',
       description:
-        'HOOK, marca de H Group, gestiona eventos y activaciones de marca en México.',
+        'HOOK, productora de eventos de H Group, conceptualiza, produce y ejecuta eventos y lanzamientos para marcas como Lamborghini, Honor y Nespresso.',
     },
     en: {
-      title: 'HOOK | Events & brand activations — H Group',
+      title: 'HOOK | Event production & brand launches — H Group',
       description:
-        'HOOK, an H Group brand, manages events and brand activations in Mexico.',
+        "HOOK, H Group's event production company, conceptualizes, produces and runs events and launches for brands like Lamborghini, Honor and Nespresso.",
     },
   },
   holy: {

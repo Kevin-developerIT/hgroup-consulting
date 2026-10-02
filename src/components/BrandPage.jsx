@@ -18,6 +18,40 @@ const pad = (n) => String(n).padStart(2, '0')
 const keepTogether = (s) => s.replace(/H Group/g, 'H Group')
 const brandIndex = (id) => holdingsLogos.findIndex((h) => h.id === id)
 
+/* Numbered list shared by services and methodology steps. Items with
+   only a title (no text) switch to a compact multi-column layout. */
+function ServiceList({ title, items }) {
+  const compact = items.every((item) => !item.text)
+  return (
+    <section className="brand-section" data-bar="light">
+      <h2 className="brand-label" data-reveal>{title}</h2>
+      <ol className={`brand-services${compact ? ' brand-services--compact' : ''}`}>
+        {items.map((item, i) => (
+          <li key={item.title} className="brand-services__item" data-reveal>
+            <span className="brand-services__index">{pad(i + 1)}</span>
+            <h3 className="brand-services__name">{item.title}</h3>
+            {item.text && <p className="brand-services__text">{item.text}</p>}
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
+/* Client logos at a similar visual weight: every logo gets roughly the
+   same area, so wide wordmarks and square crests read as equals. */
+const LOGO_AREA = 3600
+function logoSize({ width, height }) {
+  const ratio = width / height
+  let h = Math.min(56, Math.max(16, Math.sqrt(LOGO_AREA / ratio)))
+  let w = h * ratio
+  if (w > 190) {
+    w = 190
+    h = w / ratio
+  }
+  return { width: Math.round(w), height: Math.round(h) }
+}
+
 /* Next H in accordion order that also has its own page, or null. */
 function nextBrandWithPage(id) {
   const start = brandIndex(id)
@@ -119,18 +153,18 @@ function BrandPage({ brandId }) {
         <p className="brand-intro__text" data-reveal>{keepTogether(copy.intro)}</p>
       </section>
 
-      {copy.services?.length > 0 && (
+      {copy.services?.length > 0 && <ServiceList title={t('brand.services')} items={copy.services} />}
+
+      {copy.method?.length > 0 && <ServiceList title={t('brand.method')} items={copy.method} />}
+
+      {copy.formats?.length > 0 && (
         <section className="brand-section" data-bar="light">
-          <h2 className="brand-label" data-reveal>{t('brand.services')}</h2>
-          <ol className="brand-services">
-            {copy.services.map((service, i) => (
-              <li key={service.title} className="brand-services__item" data-reveal>
-                <span className="brand-services__index">{pad(i + 1)}</span>
-                <h3 className="brand-services__name">{service.title}</h3>
-                <p className="brand-services__text">{service.text}</p>
-              </li>
+          <h2 className="brand-label" data-reveal>{t('brand.formats')}</h2>
+          <ul className="brand-formats" data-reveal>
+            {copy.formats.map((format) => (
+              <li key={format}>{format}</li>
             ))}
-          </ol>
+          </ul>
         </section>
       )}
 
@@ -162,7 +196,9 @@ function BrandPage({ brandId }) {
                 </figure>
                 <div className="brand-project__body" data-reveal>
                   <span className="brand-project__index">{pad(i + 1)}</span>
-                  <img className="brand-project__logo" src={project.logo} alt="" loading="lazy" decoding="async" />
+                  {project.logo && (
+                    <img className="brand-project__logo" src={project.logo} alt="" loading="lazy" decoding="async" />
+                  )}
                   <h3 className="brand-project__name">{project.name}</h3>
                   <p className="brand-project__text">{copy.projects[project.id]}</p>
                 </div>
@@ -174,19 +210,34 @@ function BrandPage({ brandId }) {
       </section>
       )}
 
+      {/* Logo wall: either one ready-made image (alt lists every brand)
+          or individual logos. `label` swaps the heading, e.g. HACK's
+          ad platforms or HOPE's universities. */}
       {brand.collaborations && (
         <section className="brand-section" data-bar="light">
-          <h2 className="brand-label" data-reveal>{t('brand.collaborations')}</h2>
-          <img
-            className="brand-collabs"
-            src={brand.collaborations.image}
-            alt={copy.collaborationsAlt}
-            width={brand.collaborations.width}
-            height={brand.collaborations.height}
-            loading="lazy"
-            decoding="async"
-            data-reveal
-          />
+          <h2 className="brand-label" data-reveal>
+            {t(`brand.${brand.collaborations.label ?? 'collaborations'}`)}
+          </h2>
+          {brand.collaborations.logos ? (
+            <ul className="brand-logos" data-reveal>
+              {brand.collaborations.logos.map((logo) => (
+                <li key={logo.name}>
+                  <img src={logo.src} alt={logo.name} {...logoSize(logo)} loading="lazy" decoding="async" />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <img
+              className="brand-collabs"
+              src={brand.collaborations.image}
+              alt={copy.collaborationsAlt}
+              width={brand.collaborations.width}
+              height={brand.collaborations.height}
+              loading="lazy"
+              decoding="async"
+              data-reveal
+            />
+          )}
         </section>
       )}
 
