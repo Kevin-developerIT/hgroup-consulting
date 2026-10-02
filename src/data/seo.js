@@ -160,16 +160,15 @@ const BRAND_SEO = {
     },
   },
   here: {
-    draft: true,
     es: {
-      title: 'HERE | Influencer marketing con 730+ creadores — H Group',
+      title: 'HERE | Influencer marketing y convocatorias — H Group',
       description:
-        'HERE, marca de H Group, hace marketing de influencia con una comunidad de más de 730 creadores digitales en México.',
+        'HERE, marca de H Group, hace influencer marketing y convoca creadores y líderes de opinión para lanzamientos y eventos de marcas como BVLGARI y JAECOO.',
     },
     en: {
-      title: 'HERE | Influencer marketing with 730+ creators — H Group',
+      title: 'HERE | Influencer marketing & creator outreach — H Group',
       description:
-        'HERE, an H Group brand, runs influencer marketing with a community of 730+ digital creators in Mexico.',
+        'HERE, an H Group brand, runs influencer marketing and brings creators and opinion leaders to launches and events for brands like BVLGARI and JAECOO.',
     },
   },
   hits: {

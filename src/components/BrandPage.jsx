@@ -159,7 +159,7 @@ function BrandPage({ brandId }) {
 
       {copy.formats?.length > 0 && (
         <section className="brand-section" data-bar="light">
-          <h2 className="brand-label" data-reveal>{t('brand.formats')}</h2>
+          <h2 className="brand-label" data-reveal>{t(`brand.${brand.formatsLabel ?? 'formats'}`)}</h2>
           <ul className="brand-formats" data-reveal>
             {copy.formats.map((format) => (
               <li key={format}>{format}</li>
@@ -190,6 +190,7 @@ function BrandPage({ brandId }) {
                     alt={`${brand.name} × ${project.name}`}
                     width={project.width}
                     height={project.height}
+                    style={project.focus ? { objectPosition: project.focus } : undefined}
                     loading="lazy"
                     decoding="async"
                   />

@@ -27,6 +27,9 @@ import hookNespresso from '../assets/marcas/hook/nespresso.jpg'
 import hookHonorLogo from '../assets/marcas/hook/honor-logo.png'
 import hookLamboLogo from '../assets/marcas/hook/lamborghini-logo.png'
 import hookNespressoLogo from '../assets/marcas/hook/nespresso-logo.png'
+import hereBvlgari from '../assets/marcas/here/bvlgari.jpg'
+import hereJaecoo from '../assets/marcas/here/jaecoo.jpg'
+import hereMaja from '../assets/marcas/here/maja.jpg'
 import hopeUniversities from '../assets/marcas/hope/universidades.png'
 import huntVolvo from '../assets/marcas/hunt/volvo.jpg'
 import huntZeekr from '../assets/marcas/hunt/zeekr.jpg'
@@ -94,7 +97,8 @@ const HOPE_GALLERY = [
    everything visible is bilingual. Routing + <head> live in seo.js
    (BRAND_SEO) — add the id there too when a new brand page is added.
    `wide: true` = landscape photo shown full width instead of beside
-   its text.
+   its text. `focus` = CSS object-position for photos whose subject sits
+   outside the centre of the 4:5 crop.
 
    Every section except the hero, intro and CTA is optional: a page shows
    services, projects (or a gallery) and collaborations only once they
@@ -263,18 +267,97 @@ export const BRAND_PAGES = {
   here: {
     name: 'HERE',
     externalUrl: holdingLinks.here,
+    projects: [
+      { id: 'bvlgari', name: 'BVLGARI', image: hereBvlgari, logo: logoFile('here', 'bvlgari'), width: 400, height: 800, focus: 'center 10%' },
+      { id: 'jaecoo', name: 'JAECOO', image: hereJaecoo, logo: logoFile('here', 'jaecoo'), width: 400, height: 600 },
+      { id: 'maja', name: 'Jeep × MAJA', image: hereMaja, logo: logoFile('here', 'maja'), width: 400, height: 700 },
+    ],
+    formatsLabel: 'creatorCategories',
+    collaborations: {
+      logos: logoWall('here', [
+        ['bvlgari', 'BVLGARI', 360, 35],
+        ['chirey', 'Chirey', 330, 120],
+        ['gac', 'GAC Motor', 201, 120],
+        ['hongqi', 'Hongqi', 360, 40],
+        ['jaecoo', 'JAECOO', 360, 42],
+        ['maja', 'MAJA', 360, 93],
+        ['nautica', 'Nautica', 308, 120],
+        ['omoda', 'OMODA', 360, 46],
+        ['oppo', 'OPPO', 360, 86],
+        ['sears', 'Sears', 360, 79],
+        ['steve-madden', 'Steve Madden', 360, 56],
+        ['tim-hortons', 'Tim Hortons', 360, 69],
+        ['yves-rocher', 'Yves Rocher', 360, 70],
+      ]),
+    },
     copy: {
       es: {
-        tagline: 'Influencer marketing',
-        headline: 'Marketing de influencia con una comunidad de más de 730 creadores',
+        tagline: 'Influencer marketing · Convocatorias',
+        headline: 'Influencer marketing y convocatorias de creadores para marcas',
         intro:
-          'HERE es la marca de marketing de influencia de H Group: gestiona una comunidad vibrante de más de 730 creadores digitales.',
+          'HERE es la marca de influencer marketing de H Group: desarrollamos propuestas estratégicas y convocatorias de creadores de contenido y líderes de opinión para lanzamientos, eventos y campañas de marca.',
+        services: [
+          {
+            title: 'Influencer marketing',
+            text: 'Estrategias y campañas con creadores de contenido alineados a los objetivos y la audiencia de cada marca.',
+          },
+          {
+            title: 'Convocatorias',
+            text: 'Convocamos a creadores de contenido y líderes de opinión para lanzamientos, aperturas y eventos de marca.',
+          },
+          {
+            title: 'RSVP',
+            text: 'Gestionamos las invitaciones y la confirmación de asistencia de creadores e invitados.',
+          },
+          {
+            title: 'Brand ambassadors',
+            text: 'Creadores que representan a la marca de forma continua y auténtica.',
+          },
+        ],
+        formats: [
+          'Foodie', 'Lifestyle', 'Belleza', 'Fitness', 'Lujo', 'Tecnología', 'Comedia', 'Gaming',
+          'Emprendedores', 'Street content', 'Podcasters', 'Celebridades', 'Moda', 'Mamás', 'LGBT+', 'Speakers',
+          'Body positive', 'Mindfulness', 'Sustentabilidad', 'Estilistas', 'Arte', 'Íconos', 'Viajes', 'Música',
+        ],
+        projects: {
+          bvlgari: 'Convocatoria de influencers de lujo para la apertura de la boutique BVLGARI en La Isla Cancún, comunicando la elegancia italiana de la marca.',
+          jaecoo: 'Lanzamiento de marca con influencers especializados en lifestyle y movilidad, posicionando a JAECOO en el mercado mexicano.',
+          maja: 'Estrategia de contenido auténtico con micro-influencers para la cápsula Jeep × MAJA, conectando con audiencias locales.',
+        },
       },
       en: {
-        tagline: 'Influencer marketing',
-        headline: 'Influencer marketing with a community of 730+ creators',
+        tagline: 'Influencer marketing · Outreach',
+        headline: 'Influencer marketing and creator outreach for brands',
         intro:
-          "HERE is H Group's influencer marketing brand, managing a vibrant community of 730+ digital creators.",
+          "HERE is H Group's influencer marketing brand: we develop strategic proposals and bring together content creators and opinion leaders for brand launches, events and campaigns.",
+        services: [
+          {
+            title: 'Influencer marketing',
+            text: "Strategies and campaigns with content creators aligned with each brand's goals and audience.",
+          },
+          {
+            title: 'Influencer outreach',
+            text: 'We bring content creators and opinion leaders to brand launches, openings and events.',
+          },
+          {
+            title: 'RSVP',
+            text: 'We manage invitations and attendance confirmations for creators and guests.',
+          },
+          {
+            title: 'Brand ambassadors',
+            text: 'Creators who represent the brand on an ongoing, authentic basis.',
+          },
+        ],
+        formats: [
+          'Food', 'Lifestyle', 'Beauty', 'Fitness', 'Luxury', 'Tech', 'Comedy', 'Gaming',
+          'Entrepreneurs', 'Street content', 'Podcasters', 'Celebrities', 'Fashion', 'Mom bloggers', 'LGBT+', 'Speakers',
+          'Body positive', 'Mindfulness', 'Sustainability', 'Stylists', 'Art', 'Icons', 'Travel', 'Music',
+        ],
+        projects: {
+          bvlgari: "Luxury influencer outreach for the opening of the BVLGARI boutique at La Isla Cancún, conveying the brand's Italian elegance.",
+          jaecoo: 'Brand launch with lifestyle and mobility influencers, positioning JAECOO in the Mexican market.',
+          maja: 'Authentic content strategy with micro-influencers for the Jeep × MAJA capsule, connecting with local audiences.',
+        },
       },
     },
   },
