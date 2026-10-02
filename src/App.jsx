@@ -23,6 +23,7 @@ const Contact = lazy(() => import('./components/Contact'))
 const Privacy = lazy(() => import('./components/Privacy'))
 const BrandPage = lazy(() => import('./components/BrandPage'))
 const ServicePage = lazy(() => import('./components/ServicePage'))
+const CasePage = lazy(() => import('./components/CasePage'))
 const NotFound = lazy(() => import('./components/NotFound'))
 
 /* The intro overlay plays once per page load. Later visits to the home
@@ -280,6 +281,7 @@ const PAGE_COMPONENTS = {
 const pageElement = (page) => {
   if (page.brandId) return <BrandPage brandId={page.brandId} />
   if (page.serviceId) return <ServicePage serviceId={page.serviceId} />
+  if (page.caseId) return <CasePage caseId={page.caseId} />
   const Page = PAGE_COMPONENTS[page.id]
   return <Page />
 }

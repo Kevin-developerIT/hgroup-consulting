@@ -89,6 +89,26 @@ export const translations = {
       others: 'Other services',
       next: 'Next service'
     },
+    case: {
+      eyebrow: 'Case study',
+      client: 'Client',
+      brand: 'H Group brand',
+      services: 'Services',
+      year: 'Year',
+      challenge: 'The challenge',
+      solution: 'The solution',
+      results: 'Results',
+      gallery: 'Gallery',
+      next: 'Next case',
+      moreFrom: 'More from',
+      viewCase: 'View case',
+      draft: 'Draft — this case is waiting for content and is not published.',
+      pending: {
+        challenge: 'Pending: what did the client need to solve? Goal, context and audience.',
+        solution: 'Pending: what did we do? Idea, execution and the H Group services involved.',
+        results: 'Pending: measurable results (reach, attendance, sales, press mentions, engagement…).'
+      }
+    },
     workWithUs: {
       title: 'Work with H Group',
       text1: 'We are HGROUP, a holding company with 11 specialized brands in different market niches. With a young and passionate vision, we connect the impossible through innovative strategies and measurable results.',
@@ -247,6 +267,26 @@ export const translations = {
       featured: 'Proyectos destacados',
       others: 'Otros servicios',
       next: 'Siguiente servicio'
+    },
+    case: {
+      eyebrow: 'Caso de éxito',
+      client: 'Cliente',
+      brand: 'Marca de H Group',
+      services: 'Servicios',
+      year: 'Año',
+      challenge: 'El reto',
+      solution: 'La solución',
+      results: 'Resultados',
+      gallery: 'Galería',
+      next: 'Siguiente caso',
+      moreFrom: 'Más de',
+      viewCase: 'Ver caso',
+      draft: 'Borrador — este caso espera contenido y no está publicado.',
+      pending: {
+        challenge: 'Pendiente: ¿qué necesitaba resolver el cliente? Objetivo, contexto y audiencia.',
+        solution: 'Pendiente: ¿qué hicimos? Idea, ejecución y servicios de H Group involucrados.',
+        results: 'Pendiente: resultados medibles (alcance, asistentes, ventas, menciones en medios, engagement…).'
+      }
     },
     workWithUs: {
       title: 'Trabaja con H Group',

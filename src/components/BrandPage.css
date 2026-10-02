@@ -510,6 +510,23 @@
   color: var(--bp-body);
 }
 
+/* Link to the project's case study (only once it's published). */
+.brand-project__case {
+  display: inline-block;
+  margin-top: 22px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--bp-line);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: border-color 0.3s ease;
+}
+
+.brand-project__case:hover {
+  border-color: var(--bp-ink);
+}
+
 /* Landscape photo: full width, text underneath in two columns. */
 .brand-project--wide {
   grid-template-columns: minmax(0, 1fr);

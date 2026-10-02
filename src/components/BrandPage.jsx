@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 import { holdingsLogos } from '../assets/logos'
 import { BRAND_PAGES } from '../data/brands'
 import { SERVICE_PAGES, servicesForBrand } from '../data/services'
-import { BRAND_PAGE_IDS, servicePath } from '../data/seo'
+import { publishedCaseFor } from '../data/cases'
+import { BRAND_PAGE_IDS, casePath, servicePath } from '../data/seo'
 import { useLanguage } from '../contexts/useLanguage'
 import { keepTogether, pad, useBarTone, useScrollReveal } from '../hooks/useBrandPage'
 import LocaleLink from './LocaleLink'
@@ -135,6 +136,11 @@ function BrandPage({ brandId }) {
                   )}
                   <h3 className="brand-project__name">{project.name}</h3>
                   <p className="brand-project__text">{copy.projects[project.id]}</p>
+                  {publishedCaseFor(brandId, project.id) && (
+                    <LocaleLink to={casePath(publishedCaseFor(brandId, project.id))} className="brand-project__case">
+                      {t('case.viewCase')} <span aria-hidden="true">→</span>
+                    </LocaleLink>
+                  )}
                 </div>
               </article>
             ))}

@@ -348,6 +348,71 @@ const SERVICE_SEO = {
 
 export const SERVICE_PAGE_IDS = Object.keys(SERVICE_SEO)
 
+/* Case studies (report point 2): /casos/<slug>, EN /en/cases/<slug>.
+   Content lives in src/data/cases.js. A draft case is noindex, out of the
+   sitemap and not linked from anywhere until its challenge, solution and
+   results are in — remove `draft` to publish it. */
+const CASE_SEO = {
+  'lamborghini-urus-se': {
+    draft: true,
+    og: 'hook',
+    es: {
+      title: 'Lamborghini Urus SE: evento de lanzamiento | Caso HOOK',
+      description:
+        'Caso de éxito de HOOK, de H Group: evento de presentación del Lamborghini Urus SE con una experiencia inmersiva.',
+    },
+    en: {
+      title: 'Lamborghini Urus SE launch event | HOOK case study',
+      description:
+        'HOOK case study, from H Group: launch event for the Lamborghini Urus SE with an immersive experience.',
+    },
+  },
+  'bvlgari-cancun': {
+    draft: true,
+    og: 'here',
+    es: {
+      title: 'BVLGARI Cancún: convocatoria de influencers | Caso HERE',
+      description:
+        'Caso de éxito de HERE, de H Group: convocatoria de influencers de lujo para la apertura de la boutique BVLGARI en La Isla Cancún.',
+    },
+    en: {
+      title: 'BVLGARI Cancún: influencer outreach | HERE case study',
+      description:
+        'HERE case study, from H Group: luxury influencer outreach for the opening of the BVLGARI boutique at La Isla Cancún.',
+    },
+  },
+  'aston-martin': {
+    draft: true,
+    og: 'halo',
+    es: {
+      title: 'Aston Martin: contenido audiovisual de lujo | Caso HALO',
+      description:
+        'Caso de éxito de HALO, de H Group: contenido audiovisual exclusivo para el lanzamiento de los modelos de lujo de Aston Martin.',
+    },
+    en: {
+      title: 'Aston Martin: luxury video content | HALO case study',
+      description:
+        "HALO case study, from H Group: exclusive video content for the launch of Aston Martin's luxury models.",
+    },
+  },
+  'volvo-ooh': {
+    draft: true,
+    og: 'hunt',
+    es: {
+      title: 'Volvo: campaña de medios OOH | Caso HUNT',
+      description:
+        'Caso de éxito de HUNT, de H Group: campaña integral de medios OOH para Volvo en puntos estratégicos de la ciudad.',
+    },
+    en: {
+      title: 'Volvo: OOH media campaign | HUNT case study',
+      description:
+        'HUNT case study, from H Group: a full OOH media campaign for Volvo at strategic points across the city.',
+    },
+  },
+}
+
+export const CASE_PAGE_IDS = Object.keys(CASE_SEO)
+
 export const PAGES = [
   ...PAGES_BASE,
   ...SERVICE_PAGE_IDS.map((id) => ({
@@ -368,10 +433,22 @@ export const PAGES = [
     draft: Boolean(BRAND_SEO[id].draft),
     seo: BRAND_SEO[id],
   })),
+  ...CASE_PAGE_IDS.map((id) => ({
+    id: `case:${id}`,
+    caseId: id,
+    paths: { es: `/casos/${id}`, en: `/en/cases/${id}` },
+    module: 'src/components/CasePage.jsx',
+    og: CASE_SEO[id].og,
+    draft: Boolean(CASE_SEO[id].draft),
+    seo: CASE_SEO[id],
+  })),
 ]
 
 /* Spanish path of a service page — what LocaleLink expects. */
 export const servicePath = (id) => SERVICE_SEO[id].paths.es
+
+export const casePath = (id) => `/casos/${id}`
+export const isPublishedCase = (id) => Boolean(CASE_SEO[id]) && !CASE_SEO[id].draft
 
 /* Social preview images live in public/og/<name>-<lang>.jpg (1200×630).
    Pages without their own `og` use default-<lang>.jpg. */

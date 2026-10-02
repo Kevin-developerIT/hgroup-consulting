@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { BRAND_PAGES } from '../data/brands'
 import { SERVICE_PAGES } from '../data/services'
-import { SERVICE_PAGE_IDS, servicePath } from '../data/seo'
+import { publishedCaseFor } from '../data/cases'
+import { SERVICE_PAGE_IDS, casePath, servicePath } from '../data/seo'
 import { useLanguage } from '../contexts/useLanguage'
 import { keepTogether, pad, useBarTone, useScrollReveal } from '../hooks/useBrandPage'
 import LocaleLink from './LocaleLink'
@@ -37,6 +38,7 @@ function ServicePage({ serviceId }) {
       brandId,
       brandName: brand.name,
       text: brand.copy[language].projects[projectId],
+      caseId: publishedCaseFor(brandId, projectId),
     }
   })
   const others = SERVICE_PAGE_IDS.filter((id) => id !== serviceId).map((id) => ({
@@ -104,7 +106,10 @@ function ServicePage({ serviceId }) {
             <ul className="service-cases">
               {featured.map((project) => (
                 <li key={`${project.brandId}-${project.id}`} data-reveal>
-                  <LocaleLink to={brandPath(project.brandId)} className="service-case">
+                  <LocaleLink
+                    to={project.caseId ? casePath(project.caseId) : brandPath(project.brandId)}
+                    className="service-case"
+                  >
                     <figure className="service-case__media">
                       <img
                         src={project.image}

@@ -1,10 +1,14 @@
 /* ==============================================================
    Service page — extends the brand page template (BrandPage.css).
+   Overrides of BrandPage classes use two classes so they win no matter
+   which stylesheet loads first.
    ============================================================== */
 
 /* Service names are longer than an H's four letters. */
-.service-hero__name {
-  font-size: clamp(3rem, 9.5vw, 9rem);
+.brand-hero__name.service-hero__name {
+  /* Scales with the viewport down to small phones: "experiencial" must
+     fit in 320px (the hero clips overflow). */
+  font-size: clamp(2.2rem, 13vw, 9rem);
   line-height: 0.9;
   letter-spacing: -0.03em;
 }

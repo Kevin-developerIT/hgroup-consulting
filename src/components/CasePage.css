@@ -1,0 +1,219 @@
+/* ==============================================================
+   Case study page — extends BrandPage.css + ServicePage.css.
+   Overrides of BrandPage classes use two classes so they win no matter
+   which stylesheet loads first.
+   ============================================================== */
+
+/* -------------------- Hero -------------------- */
+.case-hero {
+  display: flex;
+  align-items: flex-end;
+  min-height: 88vh;
+  min-height: 88svh;
+  padding: clamp(120px, 16vh, 160px) var(--bp-gutter) clamp(56px, 9vh, 110px);
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+.case-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(36px, 5vw, 72px) clamp(32px, 5vw, 96px);
+  width: 100%;
+  max-width: var(--bp-max);
+  margin: 0 auto;
+}
+
+/* The title gets the whole width: a long single word ("Lamborghini")
+   can't wrap, so it must never share a row with the photo. */
+.case-hero__content {
+  grid-column: 1 / -1;
+}
+
+.brand-hero__name.case-hero__name {
+  font-size: clamp(2.2rem, 13vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.case-hero__summary {
+  align-self: start;
+  max-width: 34ch;
+  margin: 0;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  font-weight: 200;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.case-hero__media {
+  justify-self: end;
+  width: min(100%, 560px);
+  margin: 0;
+}
+
+.case-hero__summary.brand-rise { animation-delay: 0.7s; }
+.case-hero__media.brand-rise { animation-delay: 0.8s; }
+
+.case-hero__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 66vh;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .case-hero {
+    min-height: 0;
+  }
+
+  .case-hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .case-hero__media {
+    justify-self: start;
+    width: min(100%, 520px);
+  }
+}
+
+/* Draft notice: only on unpublished cases (noindex, never linked). */
+.case-draft {
+  margin: 0;
+  padding: 14px var(--bp-gutter);
+  background: var(--bp-soft);
+  border-bottom: 1px solid var(--bp-line);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--bp-muted);
+  text-align: center;
+}
+
+/* -------------------- Fact sheet -------------------- */
+.brand-section.case-facts-section {
+  padding-bottom: 0;
+}
+
+.case-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 32px clamp(24px, 4vw, 64px);
+  margin: 0;
+  padding: clamp(28px, 3vw, 40px) 0;
+  border-top: 1px solid var(--bp-line);
+  border-bottom: 1px solid var(--bp-line);
+}
+
+.case-facts dt {
+  margin-bottom: 12px;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--bp-muted);
+}
+
+.case-facts dd {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  font-weight: 200;
+  line-height: 1.3;
+}
+
+.case-facts a {
+  border-bottom: 1px solid var(--bp-line);
+  transition: border-color 0.3s ease;
+}
+
+.case-facts a:hover {
+  border-color: var(--bp-ink);
+}
+
+.case-facts__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+/* -------------------- Story blocks -------------------- */
+.brand-section.case-block {
+  display: grid;
+  grid-template-columns: minmax(160px, 22%) minmax(0, 1fr);
+  column-gap: clamp(24px, 5vw, 80px);
+  padding-top: clamp(40px, 5vw, 72px);
+  padding-bottom: clamp(40px, 5vw, 72px);
+}
+
+.brand-label.case-block__label {
+  margin: 0.55em 0 0;
+  align-self: start;
+}
+
+.case-block__body {
+  max-width: 46rem;
+}
+
+.case-block__text {
+  margin: 0 0 1em;
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+
+.case-block__text:last-child {
+  margin-bottom: 0;
+}
+
+.case-pending {
+  margin: 0;
+  padding: 22px 26px;
+  border: 1px dashed rgba(13, 13, 13, 0.3);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--bp-muted);
+}
+
+/* -------------------- Results -------------------- */
+.case-metrics {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 32px;
+  margin: 0 0 clamp(28px, 3vw, 40px);
+  padding: 0;
+}
+
+.case-metrics__value {
+  display: block;
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.case-metrics__label {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--bp-muted);
+}
+
+@media (max-width: 900px) {
+  .brand-section.case-block {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+  }
+
+  .brand-label.case-block__label {
+    margin: 0;
+  }
+}

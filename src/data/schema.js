@@ -1,6 +1,7 @@
 import { holdingsLogos } from '../assets/logos'
 import { translations } from '../contexts/translations'
 import { BRAND_PAGES } from './brands'
+import { CASES } from './cases'
 import { COMPANY } from './company'
 import { SERVICE_PAGES } from './services'
 import { holdingLinks } from './holdings'
@@ -182,6 +183,55 @@ function serviceNodes(id, meta) {
   }
 }
 
+/* Extra nodes for a case study: a CreativeWork made by H Group and the
+   H that led it, for the client, plus a breadcrumb home → brand → case. */
+function caseNodes(id, meta) {
+  const item = CASES[id]
+  const copy = item.copy[meta.lang]
+  const brand = BRAND_PAGES[item.brand]
+  const home = meta.lang === 'es' ? 'Inicio' : 'Home'
+  const workId = `${meta.canonical}#work`
+  const image = item.gallery[0]?.full
+
+  return {
+    about: { '@id': workId },
+    breadcrumbId: `${meta.canonical}#breadcrumb`,
+    nodes: [
+      {
+        '@type': 'CreativeWork',
+        '@id': workId,
+        name: `${item.client} — ${copy.title}`,
+        headline: copy.title,
+        description: copy.summary,
+        inLanguage: meta.htmlLang,
+        url: meta.canonical,
+        creator: [{ '@id': ORG_ID }, { '@id': brandId(item.brand) }],
+        sourceOrganization: { '@id': brandId(item.brand) },
+        about: { '@type': 'Organization', name: item.client },
+        ...(image && { image: image.startsWith('http') ? image : `${SITE_ORIGIN}${image}` }),
+        ...(item.year && { dateCreated: String(item.year) }),
+        ...(item.services.length > 0 && {
+          genre: item.services.map((s) => SERVICE_PAGES[s].copy[meta.lang].name),
+        }),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${meta.canonical}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: home, item: canonicalFor(localizePath('/', meta.lang)) },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: brand.name,
+            item: canonicalFor(localizePath(`/marcas/${item.brand}`, meta.lang)),
+          },
+          { '@type': 'ListItem', position: 3, name: item.client, item: meta.canonical },
+        ],
+      },
+    ],
+  }
+}
+
 /* schema.org graph for one prerendered URL: Organization + WebSite on
    every page, a WebPage for the URL, and brand or service nodes (with a
    breadcrumb) on H and service pages. `page` is the PAGES entry. */
@@ -191,7 +241,9 @@ export function buildSchema(route, page = {}) {
     ? brandNodes(page.brandId, meta)
     : page.serviceId
       ? serviceNodes(page.serviceId, meta)
-      : null
+      : page.caseId
+        ? caseNodes(page.caseId, meta)
+        : null
 
   const webPage = {
     '@type': 'WebPage',

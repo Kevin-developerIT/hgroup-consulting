@@ -7,8 +7,10 @@ const pad = (n) => String(n).padStart(2, '0')
 /* Project photos in two groups — a masonry of event photos and a strip
    of creators' story screenshots (UGC) — sharing one full-screen viewer
    that loads the large version on demand. Esc closes, arrow keys
-   navigate across both groups, focus returns to the opening tile. */
-function BrandGallery({ photos: allPhotos }) {
+   navigate across both groups, focus returns to the opening tile.
+   `eventsTitle={null}` drops the group heading when the page section
+   already has one (case pages). */
+function BrandGallery({ photos: allPhotos, eventsTitle }) {
   const { t, language } = useLanguage()
   const [open, setOpen] = useState(null)
   const tileRefs = useRef([])
@@ -76,7 +78,9 @@ function BrandGallery({ photos: allPhotos }) {
     <>
       {events.length > 0 && (
         <div className="brand-gallery-group">
-          <h3 className="brand-gallery__title" data-reveal>{t('brand.galleryEvents')}</h3>
+          {eventsTitle !== null && (
+            <h3 className="brand-gallery__title" data-reveal>{eventsTitle ?? t('brand.galleryEvents')}</h3>
+          )}
           <div className="brand-gallery">{events.map(tile)}</div>
         </div>
       )}

@@ -66,9 +66,11 @@ function routeAssets(key) {
     const entry = manifest[k]
     if (!entry) throw new Error(`prerender: ${k} missing from the Vite manifest`)
     if (entry.isEntry) return
+    // Imports first, so shared styles (BrandPage.css) come before the
+    // page's own overrides in <head>.
+    entry.imports?.forEach(walk)
     js.add(entry.file)
     entry.css?.forEach((f) => css.add(f))
-    entry.imports?.forEach(walk)
   }
   if (key) walk(key)
   const notInTemplate = (f) => !template.includes(`/${f}"`)
